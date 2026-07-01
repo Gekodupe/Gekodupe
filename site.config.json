@@ -1,0 +1,9 @@
+{
+  "name": "Geckodupe",
+  "shortName": "Geckodupe",
+  "siteUrl": "https://gekodupe.github.io",
+  "description": "Universal deduplication for text, files, folders, zip archives, and image/video libraries. Excel, CSV, JSON, logs, code, photos, and videos. 100% in your browser.",
+  "contact": "https://github.com/orgs/Gekodupe/repositories",
+  "themeColor": "#b0cc45",
+  "backgroundColor": "#f7f9fa"
+}

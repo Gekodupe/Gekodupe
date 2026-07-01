@@ -1,0 +1,30 @@
+{
+  "name": "Geckodupe",
+  "short_name": "Geckodupe",
+  "description": "Universal deduplication for text, files, folders, zip archives, and image/video libraries. Excel, CSV, JSON, logs, code, photos, and videos. 100% in your browser.",
+  "start_url": "./#text-file",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f7f9fa",
+  "theme_color": "#b0cc45",
+  "icons": [
+    {
+      "src": "public/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "public/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "public/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

@@ -1,0 +1,3 @@
+Contact: https://github.com/orgs/Gekodupe/repositories
+Preferred-Languages: en
+Policy: https://gekodupe.github.io/.well-known/security.txt
