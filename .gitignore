@@ -1,0 +1,36 @@
+# Dependencies
+node_modules/
+
+# Build output (npm run build)
+css/*.min.css
+js/**/*.min.js
+
+# Generated benchmark data (npm run test:benchmark)
+js/benchmark-results.json
+
+# Audit / perf reports
+lighthouse-report.json
+
+# Test runners
+test-results/
+playwright-report/
+blob-report/
+playwright/.cache/
+coverage/
+
+# Environment
+.env
+.env.*
+
+# OS
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Editors
+.idea/

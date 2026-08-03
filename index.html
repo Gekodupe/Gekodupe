@@ -1,0 +1,1017 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Text / File - Geckodupe by Flareform</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Universal deduplication for text, files, folders, zip archives, and image/video libraries. Excel, CSV, JSON, logs, code, photos, and videos. 100% in your browser. Powered by Flareform.">
+  <meta name="robots" content="index, follow">
+  <meta name="application-name" content="Geckodupe by Flareform">
+  <meta name="theme-color" content="#F6821F">
+  <link rel="canonical" href="https://flareform.github.io/Geckodupe/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Geckodupe by Flareform">
+  <meta property="og:title" content="Geckodupe by Flareform — Remove Duplicates">
+  <meta property="og:description" content="Universal deduplication for text, files, folders, zip archives, and image/video libraries. 100% in your browser. Free and open-source.">
+  <meta property="og:url" content="https://flareform.github.io/Geckodupe/">
+  <meta property="og:image" content="https://flareform.github.io/Geckodupe/public/icon-512.png">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Geckodupe by Flareform — Remove Duplicates">
+  <meta name="twitter:description" content="Universal deduplication for text, files, folders, zip archives, and image/video libraries. 100% in your browser. Free and open-source.">
+  <meta name="twitter:image" content="https://flareform.github.io/Geckodupe/public/icon-512.png">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com https://d3js.org; script-src-attr 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob:; connect-src 'self'; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'; manifest-src 'self'">
+  <link rel="manifest" href="site.webmanifest">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" href="css/style.css" as="style">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" media="print" data-async-css>
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&display=swap"></noscript>
+  <link rel="icon" type="image/x-icon" href="public/favicon.ico">
+  <link rel="icon" type="image/png" sizes="192x192" href="public/icon-192.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="public/icon-512.png">
+  <link rel="apple-touch-icon" href="public/icon-192.png">
+  <link rel="stylesheet" href="css/style.css">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Geckodupe by Flareform",
+  "url": "https://flareform.github.io/Geckodupe/",
+  "description": "Universal deduplication for text, files, folders, zip archives, and image/video libraries. Excel, CSV, JSON, logs, code, photos, and videos. 100% in your browser. Free and open-source.",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Web browser",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "browserRequirements": "Requires a modern browser with JavaScript enabled",
+  "isAccessibleForFree": true
+}
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <div id="toast-container" class="toast-container"></div>
+
+  <div class="notebook-wrapper">
+    <nav class="tabs-nav" aria-label="Geckodupe by Flareform sections">
+    <ul class='tabs' role="tablist">
+      <li id='t-1' class='current' role="tab" aria-selected="true" aria-controls="s-1" data-slug="text-file">Text/File</li>
+      <li id='t-4' role="tab" aria-selected="false" aria-controls="s-4" tabindex="-1" data-slug="folder-zip">Folder/Zip</li>
+      <li id='t-5' role="tab" aria-selected="false" aria-controls="s-5" tabindex="-1" data-slug="image-video">Img/Vid</li>
+      <li id='t-2' role="tab" aria-selected="false" aria-controls="s-2" tabindex="-1" data-slug="demo">Demo</li>
+      <li id='t-3' role="tab" aria-selected="false" aria-controls="s-3" tabindex="-1" data-slug="info" aria-label="Info"><span class="tab-label-full">Info</span><span class="tab-label-compact" aria-hidden="true">?</span></li>
+    </ul>
+    <a class="tabs-support" id="t-support" href="https://buymeacoffee.com/galore" target="_blank" rel="noopener noreferrer">Support</a>
+    </nav>
+
+    <main id="main-content">
+      
+      <!-- Text/File Section (Input + Output) -->
+      <section id='s-1' class='current' role="tabpanel" aria-labelledby="t-1">
+        <div class="main-header">
+          <h1 class="demo-heading demo-heading--lime">
+            <span class="demo-heading-icon" aria-hidden="true">
+              <!-- Phosphor: File Text icon -->
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 256 256" fill="currentColor"><path d="M213.66,82.34l-56-56A8,8,0,0,0,152,24H56A16,16,0,0,0,40,40V216a16,16,0,0,0,16,16H200a16,16,0,0,0,16-16V88A8,8,0,0,0,213.66,82.34ZM160,51.31,188.69,80H160ZM200,216H56V40h88V88a8,8,0,0,0,8,8h48V216Zm-32-80a8,8,0,0,1-8,8H96a8,8,0,0,1,0-16h64A8,8,0,0,1,168,136Zm0,32a8,8,0,0,1-8,8H96a8,8,0,0,1,0-16h64A8,8,0,0,1,168,168Z"/></svg>
+            </span>
+            Remove Duplicates
+          </h1>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <img src="public/gecko-symbol.svg" alt="Geckodupe" class="gecko-logo" width="36" height="36" title="Geckodupe by Flareform">
+            <span style="font-size:0.7em;font-weight:600;color:#5C5A60;letter-spacing:0.04em;text-transform:uppercase;border:1px solid #E4E1E1;border-radius:4px;padding:2px 6px;">by Flareform</span>
+          </div>
+        </div>
+        
+        <textarea id="masterlist" placeholder="Paste data or drag & drop a file (.xlsx, .csv, .json, .log, .py, .todo, .md)..." autofocus autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></textarea>
+        
+        <div class="mobile-upload-container">
+          <input type="file" id="mobile-file-input" accept=".txt,.md,.markdown,.log,.sql,.csv,.tsv,.xlsx,.xls,.json,.jsonl,.yaml,.yml,.xml,.py,.js,.ts,.html,.css,.sh,.todo,.list,text/plain,application/json,text/csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" style="display: none;" onchange="handleMobileUpload(this)">
+          <button type="button" class="mobile-upload-btn" onclick="document.getElementById('mobile-file-input').click()">Upload</button>
+        </div>
+
+        <div class="options">
+          <div class="options-row">
+            <label title="Ignore markdown bullet points (*, -, 1.) when matching lines">
+              <input type="checkbox" id="md-bullets" onchange="updateLiveExample()">
+              Ignore Markdown List Bullets
+            </label>
+            <label>
+              <input type="checkbox" id="stack" checked onchange="updateLiveExample()">
+              Stack duplicates
+            </label>
+            <label>
+              <input type="checkbox" id="caps" onchange="updateLiveExample()">
+              Ignore Capitals
+            </label>
+            <label>
+              <input type="checkbox" id="kpblanks" onchange="updateLiveExample()">
+              Keep Leading Blanks
+            </label>
+            <label title="Ignore punctuation marks (. ! , ? ; :) when comparing lines">
+              <input type="checkbox" id="ignore-punct" onchange="updateLiveExample()">
+              Ignore Punctuation
+            </label>
+            <label title="Collapse multiple consecutive spaces/tabs into a single space">
+              <input type="checkbox" id="collapse-ws" onchange="updateLiveExample()">
+              Collapse Whitespace
+            </label>
+            <label style="display:none;">
+              <input type="checkbox" id="sort" onchange="updateLiveExample()">
+              Sort Results
+            </label>
+          </div>
+
+          <div class="options-row filter-sort-row">
+            <div class="control-group">
+              <label for="filter-mode">Filter Mode:</label>
+              <select id="filter-mode" onchange="updateLiveExample()" class="styled-select">
+                <option value="all">All Unique Lines (Default)</option>
+                <option value="duplicates">Only Duplicates (Appeared >1 Time)</option>
+                <option value="singletons">Only Singletons (Appeared Exactly 1 Time)</option>
+              </select>
+            </div>
+            <div class="control-group">
+              <label for="sort-order">Sort Order:</label>
+              <select id="sort-order" onchange="updateLiveExample()" class="styled-select">
+                <option value="original">Original Order</option>
+                <option value="alpha-asc">Alphabetical (A - Z)</option>
+                <option value="alpha-desc">Alphabetical (Z - A)</option>
+                <option value="freq-desc">Frequency (Most Common First)</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Format Specific Options -->
+          <div id="format-options-csv" class="format-options-sub" style="display: none;">
+            <span style="font-weight:700; color:#444; width:100%; margin-bottom:-5px;">CSV & Tabular Options:</span>
+            <label title="Keep the first row as header and never sort or deduplicate it out">
+              <input type="checkbox" id="csv-header" checked onchange="updateLiveExample()">
+              Preserve Header Row
+            </label>
+          </div>
+
+          <div id="format-options-excel" class="format-options-sub" style="display: none;">
+            <span style="font-weight:700; color:#444; width:100%; margin-bottom:-5px;">Spreadsheet Options:</span>
+            <label title="Keep the first row as header and never sort or deduplicate it out">
+              <input type="checkbox" id="excel-header" checked onchange="updateLiveExample()">
+              Preserve Spreadsheet Header Row
+            </label>
+          </div>
+
+          <div id="format-options-json" class="format-options-sub" style="display: none;">
+            <span style="font-weight:700; color:#444; width:100%; margin-bottom:-5px;">Structured Data Options:</span>
+            <label title="Format output as pretty-printed 2-space indented JSON">
+              <input type="checkbox" id="json-pretty" checked onchange="updateLiveExample()">
+              Pretty Print Output (2 spaces)
+            </label>
+            <label title="Treat items with same keys in different order as identical duplicates">
+              <input type="checkbox" id="json-canonical" checked onchange="updateLiveExample()">
+              Canonical Key Matching
+            </label>
+          </div>
+
+          <div id="format-options-log" class="format-options-sub" style="display: none;">
+            <span style="font-weight:700; color:#444; width:100%; margin-bottom:-5px;">Log & SQL Stripping Options:</span>
+            <label title="Ignore bracketed and ISO dates/timestamps when matching lines">
+              <input type="checkbox" id="log-strip-dates" checked onchange="updateLiveExample()">
+              Strip Dates & Timestamps
+            </label>
+            <label title="Ignore process IDs (PID), thread IDs, and request IDs">
+              <input type="checkbox" id="log-strip-pids" checked onchange="updateLiveExample()">
+              Strip PIDs & Request IDs
+            </label>
+            <label title="Ignore UUIDs and GUIDs">
+              <input type="checkbox" id="log-strip-uuids" checked onchange="updateLiveExample()">
+              Strip UUIDs & GUIDs
+            </label>
+            <label title="Ignore leading SQL auto-increment numbers in VALUES (...)">
+              <input type="checkbox" id="log-strip-sql" checked onchange="updateLiveExample()">
+              Strip SQL Serial IDs
+            </label>
+            <label title="Ignore IPv4, IPv6, and MAC addresses when matching lines">
+              <input type="checkbox" id="log-strip-ips" checked onchange="updateLiveExample()">
+              Strip IP / MAC Addresses
+            </label>
+            <label title="Ignore hex values and memory pointers (e.g., 0x7fff...)">
+              <input type="checkbox" id="log-strip-hex" checked onchange="updateLiveExample()">
+              Strip Hex / Memory Addrs
+            </label>
+            <label title="Normalize log severity levels ([INFO], [ERROR], [DEBUG], etc.)">
+              <input type="checkbox" id="log-strip-levels" checked onchange="updateLiveExample()">
+              Normalize Log Levels
+            </label>
+            <label title="Strip URL query parameters (?foo=bar)">
+              <input type="checkbox" id="log-strip-urls" checked onchange="updateLiveExample()">
+              Strip URL Query Strings
+            </label>
+          </div>
+
+          <div id="format-options-code" class="format-options-sub" style="display: none;">
+            <span style="font-weight:700; color:#444; width:100%; margin-bottom:-5px;">Code Deduplication Options:</span>
+            <label title="Ignore inline comments (// or #) when comparing code lines">
+              <input type="checkbox" id="code-comments" checked onchange="updateLiveExample()">
+              Ignore Inline Comments (// or #)
+            </label>
+            <label title="Ignore leading whitespace/indentation differences when matching lines">
+              <input type="checkbox" id="code-indent" checked onchange="updateLiveExample()">
+              Ignore Indentation Differences
+            </label>
+            <label title="Ignore trailing semicolons and commas at the end of lines">
+              <input type="checkbox" id="code-trailing" checked onchange="updateLiveExample()">
+              Ignore Trailing Semicolons / Commas
+            </label>
+            <label title="Ignore numeric literals and hex constants in code">
+              <input type="checkbox" id="code-numbers" onchange="updateLiveExample()">
+              Ignore Numbers / Constants
+            </label>
+            <label title="Ignore string literal contents ('...', '...') when comparing logic">
+              <input type="checkbox" id="code-strings" onchange="updateLiveExample()">
+              Ignore String Literals
+            </label>
+            <label title="Ignore multi-line docstrings and block comments (/*...*/, &quot;&quot;&quot;...&quot;&quot;&quot;)">
+              <input type="checkbox" id="code-docstrings" checked onchange="updateLiveExample()">
+              Ignore Block Comments / Docstrings
+            </label>
+            <label title="Group and alphabetize import/require statements at top of output">
+              <input type="checkbox" id="code-sort-imports" onchange="updateLiveExample()">
+              Group & Alphabetize Imports
+            </label>
+          </div>
+
+          <div id="format-options-todo" class="format-options-sub" style="display: none;">
+            <span style="font-weight:700; color:#444; width:100%; margin-bottom:-5px;">Todo & List Options:</span>
+            <label title="Treat checked [x] and unchecked [ ] items as identical duplicates">
+              <input type="checkbox" id="todo-state" checked onchange="updateLiveExample()">
+              Ignore Checkbox State ([ ] vs [x])
+            </label>
+            <label title="Ignore status prefixes like TODO:, DONE:, WAITING:, COMPLETED:">
+              <input type="checkbox" id="todo-prefixes" checked onchange="updateLiveExample()">
+              Ignore Status Prefixes (TODO:, DONE:)
+            </label>
+          </div>
+
+          <div class="slider-group">
+            <label for="similarity">
+              Fuzzy Match: <span id="sim-val" class="sim-val">Exact Matches Only</span>
+            </label>
+            <input type="range" id="similarity" min="50" max="100" value="100" step="5" oninput="updateSimValue(); updateLiveExample()">
+            <p class="slider-hint">Lower this to group lines together even if they have small differences.</p>
+          </div>
+        </div>
+
+        <div class="button-group">
+          <button onclick="deduplicate()">Deduplicate</button>
+          <button class="secondary-btn" onclick="clearAll()">Clear</button>
+        </div>
+
+        <!-- Output Container (Hidden initially) -->
+        <div id="output-container">
+          <h2>Results</h2>
+          <span class="status-text" id="status-text"></span>
+          
+          <textarea id="output" readonly onclick="this.focus();this.select()" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></textarea>
+          
+          <div class="button-group" style="margin-top: 15px;">
+            <button onclick="copyOutput()" id="btn-copy">Copy to Clipboard</button>
+            <button onclick="downloadOutput()" class="secondary-btn" id="btn-download">Download (.txt)</button>
+          </div>
+
+          <div class="activity-log-wrapper">
+            <button type="button" class="activity-log-toggle" onclick="toggleActivityLog()">
+              <span style="display: flex; align-items: center; gap: 8px;"><span>Diagnostics Log</span> <span id="activity-log-arrow" class="activity-log-arrow">&#9658;</span></span>
+              <span id="activity-log-badge" class="badge">0 events</span>
+            </button>
+            <div id="activity-log-panel" class="activity-log-panel" style="display: none;">
+              <div id="activity-log-content" class="activity-log-content"></div>
+              <div class="mobile-upload-container" style="margin-top: 10px; margin-bottom: 0;">
+                <button type="button" class="clear-diagnostics-btn" onclick="clearActivityLog()">Clear Diagnostics</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Folder/Zip Section -->
+      <section id='s-4' role="tabpanel" aria-labelledby="t-4" hidden>
+        <div class="main-header">
+          <h1 class="demo-heading demo-heading--yellow">
+            <span class="demo-heading-icon" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+            </span>
+            Remove Duplicates
+          </h1>
+          <img src="public/gecko-symbol.svg" alt="" class="gecko-logo" width="48" height="48" title="Geckodupe">
+        </div>
+
+        <textarea id="folder-manifest" readonly placeholder="Drag &amp; drop a folder or .zip archive here, or click Upload (.xlsx, .csv, .json, .log, .py, .js, .md, .txt)..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></textarea>
+
+        <div class="mobile-upload-container">
+          <input type="file" id="folder-upload-input" accept=".zip,application/zip" multiple style="display: none;" onchange="handleFolderUpload(this)">
+          <button type="button" class="mobile-upload-btn" onclick="openFolderUpload()">Upload</button>
+        </div>
+
+        <div class="options">
+          <div class="options-row filter-sort-row">
+            <div class="control-group">
+              <label for="folder-mode">Project mode:</label>
+              <select id="folder-mode" class="styled-select" onchange="updateFolderDemo()">
+                <option value="safe">Safe (recommended)</option>
+                <option value="data">Data files only</option>
+                <option value="report">Report only</option>
+                <option value="aggressive">Aggressive</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="folder-skip-panel">
+            <p class="folder-skip-title">Paths to leave alone</p>
+            <p class="folder-skip-desc">Matched files are kept in the zip with no changes. One entry per line: folder name, file name, path, or glob.</p>
+            <textarea id="folder-manual-skips" class="folder-skip-input" rows="3" spellcheck="false" placeholder="secrets&#10;config/local.env&#10;*.lock&#10;src/legacy/old.js" onchange="onFolderSkipOptionsChange()" oninput="onFolderSkipInput()"></textarea>
+            <div class="options-row folder-skip-builtins">
+              <span class="folder-skip-builtins-label">Also exclude from scan:</span>
+              <label title="Skip node_modules folders">
+                <input type="checkbox" id="folder-skip-node-modules" checked onchange="onFolderSkipOptionsChange()">
+                node_modules
+              </label>
+              <label title="Skip .git, .svn, and .hg folders">
+                <input type="checkbox" id="folder-skip-git" checked onchange="onFolderSkipOptionsChange()">
+                .git
+              </label>
+              <label title="Skip dist, build, .next, coverage, and out folders">
+                <input type="checkbox" id="folder-skip-dist" checked onchange="onFolderSkipOptionsChange()">
+                dist / build
+              </label>
+              <label title="Skip vendor, __pycache__, and .cache folders">
+                <input type="checkbox" id="folder-skip-vendor" checked onchange="onFolderSkipOptionsChange()">
+                vendor
+              </label>
+            </div>
+          </div>
+
+          <div class="options-row">
+            <label title="Ignore markdown bullet points (*, -, 1.) when matching lines">
+              <input type="checkbox" id="folder-md-bullets" onchange="updateFolderDemo()">
+              Ignore Markdown List Bullets
+            </label>
+            <label>
+              <input type="checkbox" id="folder-stack" checked onchange="updateFolderDemo()">
+              Stack duplicates
+            </label>
+            <label>
+              <input type="checkbox" id="folder-caps" onchange="updateFolderDemo()">
+              Ignore Capitals
+            </label>
+            <label>
+              <input type="checkbox" id="folder-kpblanks" onchange="updateFolderDemo()">
+              Keep Leading Blanks
+            </label>
+            <label title="Ignore punctuation marks (. ! , ? ; :) when comparing lines">
+              <input type="checkbox" id="folder-ignore-punct" onchange="updateFolderDemo()">
+              Ignore Punctuation
+            </label>
+            <label title="Collapse multiple consecutive spaces/tabs into a single space">
+              <input type="checkbox" id="folder-collapse-ws" onchange="updateFolderDemo()">
+              Collapse Whitespace
+            </label>
+          </div>
+
+          <div class="options-row filter-sort-row">
+            <div class="control-group">
+              <label for="folder-filter-mode">Filter Mode:</label>
+              <select id="folder-filter-mode" onchange="updateFolderDemo()" class="styled-select">
+                <option value="all">All Unique Lines (Default)</option>
+                <option value="duplicates">Only Duplicates (Appeared >1 Time)</option>
+                <option value="singletons">Only Singletons (Appeared Exactly 1 Time)</option>
+              </select>
+            </div>
+            <div class="control-group">
+              <label for="folder-sort-order">Sort Order:</label>
+              <select id="folder-sort-order" onchange="updateFolderDemo()" class="styled-select">
+                <option value="original">Original Order</option>
+                <option value="alpha-asc">Alphabetical (A - Z)</option>
+                <option value="alpha-desc">Alphabetical (Z - A)</option>
+                <option value="freq-desc">Frequency (Most Common First)</option>
+              </select>
+            </div>
+          </div>
+
+          <div id="folder-format-options-csv" class="format-options-sub folder-format-options">
+            <span style="font-weight:700; color:#444; width:100%; margin-bottom:-5px;">CSV &amp; Tabular Options:</span>
+            <label title="Keep the first row as header and never sort or deduplicate it out">
+              <input type="checkbox" id="folder-csv-header" checked onchange="updateFolderDemo()">
+              Preserve Header Row
+            </label>
+          </div>
+
+          <div id="folder-format-options-excel" class="format-options-sub folder-format-options">
+            <span style="font-weight:700; color:#444; width:100%; margin-bottom:-5px;">Spreadsheet Options:</span>
+            <label title="Keep the first row as header and never sort or deduplicate it out">
+              <input type="checkbox" id="folder-excel-header" checked onchange="updateFolderDemo()">
+              Preserve Spreadsheet Header Row
+            </label>
+          </div>
+
+          <div id="folder-format-options-json" class="format-options-sub folder-format-options">
+            <span style="font-weight:700; color:#444; width:100%; margin-bottom:-5px;">Structured Data Options:</span>
+            <label title="Format output as pretty-printed 2-space indented JSON">
+              <input type="checkbox" id="folder-json-pretty" checked onchange="updateFolderDemo()">
+              Pretty Print Output (2 spaces)
+            </label>
+            <label title="Treat items with same keys in different order as identical duplicates">
+              <input type="checkbox" id="folder-json-canonical" checked onchange="updateFolderDemo()">
+              Canonical Key Matching
+            </label>
+          </div>
+
+          <div id="folder-format-options-log" class="format-options-sub folder-format-options">
+            <span style="font-weight:700; color:#444; width:100%; margin-bottom:-5px;">Log &amp; SQL Stripping Options:</span>
+            <label title="Ignore bracketed and ISO dates/timestamps when matching lines">
+              <input type="checkbox" id="folder-log-strip-dates" checked onchange="updateFolderDemo()">
+              Strip Dates &amp; Timestamps
+            </label>
+            <label title="Ignore process IDs (PID), thread IDs, and request IDs">
+              <input type="checkbox" id="folder-log-strip-pids" checked onchange="updateFolderDemo()">
+              Strip PIDs &amp; Request IDs
+            </label>
+            <label title="Ignore UUIDs and GUIDs">
+              <input type="checkbox" id="folder-log-strip-uuids" checked onchange="updateFolderDemo()">
+              Strip UUIDs &amp; GUIDs
+            </label>
+            <label title="Ignore leading SQL auto-increment numbers in VALUES (...)">
+              <input type="checkbox" id="folder-log-strip-sql" checked onchange="updateFolderDemo()">
+              Strip SQL Serial IDs
+            </label>
+            <label title="Ignore IPv4, IPv6, and MAC addresses when matching lines">
+              <input type="checkbox" id="folder-log-strip-ips" checked onchange="updateFolderDemo()">
+              Strip IP / MAC Addresses
+            </label>
+            <label title="Ignore hex values and memory pointers (e.g., 0x7fff...)">
+              <input type="checkbox" id="folder-log-strip-hex" checked onchange="updateFolderDemo()">
+              Strip Hex / Memory Addrs
+            </label>
+            <label title="Normalize log severity levels ([INFO], [ERROR], [DEBUG], etc.)">
+              <input type="checkbox" id="folder-log-strip-levels" checked onchange="updateFolderDemo()">
+              Normalize Log Levels
+            </label>
+            <label title="Strip URL query parameters (?foo=bar)">
+              <input type="checkbox" id="folder-log-strip-urls" checked onchange="updateFolderDemo()">
+              Strip URL Query Strings
+            </label>
+          </div>
+
+          <div id="folder-format-options-code" class="format-options-sub folder-format-options">
+            <span style="font-weight:700; color:#444; width:100%; margin-bottom:-5px;">Code Deduplication Options:</span>
+            <label title="Ignore inline comments (// or #) when comparing code lines">
+              <input type="checkbox" id="folder-code-comments" checked onchange="updateFolderDemo()">
+              Ignore Inline Comments (// or #)
+            </label>
+            <label title="Ignore leading whitespace/indentation differences when matching lines">
+              <input type="checkbox" id="folder-code-indent" checked onchange="updateFolderDemo()">
+              Ignore Indentation Differences
+            </label>
+            <label title="Ignore trailing semicolons and commas at the end of lines">
+              <input type="checkbox" id="folder-code-trailing" checked onchange="updateFolderDemo()">
+              Ignore Trailing Semicolons / Commas
+            </label>
+            <label title="Ignore numeric literals and hex constants in code">
+              <input type="checkbox" id="folder-code-numbers" onchange="updateFolderDemo()">
+              Ignore Numbers / Constants
+            </label>
+            <label title="Ignore string literal contents when comparing logic">
+              <input type="checkbox" id="folder-code-strings" onchange="updateFolderDemo()">
+              Ignore String Literals
+            </label>
+            <label title="Ignore multi-line docstrings and block comments">
+              <input type="checkbox" id="folder-code-docstrings" checked onchange="updateFolderDemo()">
+              Ignore Block Comments / Docstrings
+            </label>
+            <label title="Group and alphabetize import/require statements at top of output">
+              <input type="checkbox" id="folder-code-sort-imports" onchange="updateFolderDemo()">
+              Group &amp; Alphabetize Imports
+            </label>
+          </div>
+
+          <div id="folder-format-options-todo" class="format-options-sub folder-format-options">
+            <span style="font-weight:700; color:#444; width:100%; margin-bottom:-5px;">Todo &amp; List Options:</span>
+            <label title="Treat checked [x] and unchecked [ ] items as identical duplicates">
+              <input type="checkbox" id="folder-todo-state" checked onchange="updateFolderDemo()">
+              Ignore Checkbox State ([ ] vs [x])
+            </label>
+            <label title="Ignore status prefixes like TODO:, DONE:, WAITING:, COMPLETED:">
+              <input type="checkbox" id="folder-todo-prefixes" checked onchange="updateFolderDemo()">
+              Ignore Status Prefixes (TODO:, DONE:)
+            </label>
+          </div>
+
+          <div class="slider-group">
+            <label for="folder-similarity">
+              Fuzzy Match: <span id="folder-sim-val" class="sim-val">Exact Matches Only</span>
+            </label>
+            <input type="range" id="folder-similarity" min="50" max="100" value="100" step="5" oninput="updateFolderSimValue(); updateFolderDemo()">
+            <p class="slider-hint">Lower this to group lines together even if they have small differences.</p>
+          </div>
+        </div>
+
+        <div class="button-group">
+          <button onclick="deduplicateFolder()">Deduplicate</button>
+          <button class="secondary-btn" onclick="clearFolderProject()">Clear</button>
+        </div>
+
+        <div id="folder-output-container">
+          <h2>Results</h2>
+          <span class="status-text" id="folder-status-text"></span>
+          <textarea id="folder-output" readonly onclick="this.focus();this.select()" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></textarea>
+          <div class="button-group" style="margin-top: 15px;">
+            <button onclick="copyFolderOutput()" id="folder-btn-copy">Copy to Clipboard</button>
+            <button onclick="downloadFolderZip()" class="secondary-btn" id="folder-btn-download">Download (.zip)</button>
+          </div>
+          <div class="activity-log-wrapper">
+            <button type="button" class="activity-log-toggle" onclick="toggleFolderActivityLog()">
+              <span style="display: flex; align-items: center; gap: 8px;"><span>Diagnostics Log</span> <span id="folder-activity-log-arrow" class="activity-log-arrow">&#9658;</span></span>
+              <span id="folder-activity-log-badge" class="badge">0 events</span>
+            </button>
+            <div id="folder-activity-log-panel" class="activity-log-panel" style="display: none;">
+              <div id="folder-activity-log-content" class="activity-log-content"></div>
+              <div class="mobile-upload-container" style="margin-top: 10px; margin-bottom: 0;">
+                <button type="button" class="clear-diagnostics-btn" onclick="clearFolderActivityLog()">Clear Diagnostics</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Img/Vid Section -->
+      <section id='s-5' role="tabpanel" aria-labelledby="t-5" hidden>
+        <div class="main-header">
+          <h1 class="demo-heading demo-heading--lime">
+            <span class="demo-heading-icon" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+            </span>
+            Remove Duplicate Photos &amp; Videos
+          </h1>
+          <img src="public/gecko-symbol.svg" alt="" class="gecko-logo" width="48" height="48" title="Geckodupe">
+        </div>
+
+        <p class="media-intro">Drop a folder or zip of images and videos. Geckodupe finds files that look the same even when names differ: burst shots, resized copies, re-exports, and near-identical frames.</p>
+
+        <textarea id="media-manifest" readonly placeholder="Drag and drop a folder or .zip here (.jpg, .png, .webp, .gif, .mp4, .mov, .webm)..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></textarea>
+
+        <div class="mobile-upload-container">
+          <input type="file" id="media-upload-input" accept=".zip,application/zip" multiple style="display: none;" onchange="handleMediaUpload(this)">
+          <button type="button" class="mobile-upload-btn" onclick="openMediaUpload()">Upload</button>
+        </div>
+
+        <div class="options">
+          <div class="folder-skip-panel">
+            <p class="folder-skip-title">Paths to keep unchanged</p>
+            <p class="folder-skip-desc">Matched files stay in the output zip exactly as uploaded. One rule per line: folder name, file name, path, or glob.</p>
+            <textarea id="media-manual-skips" class="folder-skip-input" rows="2" spellcheck="false" placeholder="final-edits&#10;*.thumb.jpg&#10;exports/approved/" onchange="updateMediaDemo()" oninput="onMediaSkipInput()"></textarea>
+            <div class="options-row folder-skip-builtins">
+              <span class="folder-skip-builtins-label">Quick skips:</span>
+              <label title="Skip common thumbnail and preview folders">
+                <input type="checkbox" id="media-skip-thumbs" checked onchange="updateMediaDemo()">
+                thumbnail folders
+              </label>
+              <label title="Skip macOS metadata folders">
+                <input type="checkbox" id="media-skip-ds-store" checked onchange="updateMediaDemo()">
+                .DS_Store / __MACOSX
+              </label>
+            </div>
+          </div>
+
+          <div class="folder-skip-panel media-target-panel">
+            <p class="folder-skip-title">Reference target (optional)</p>
+            <p class="folder-skip-desc">Pick one photo or video to keep as the original. Only variations of that file are removed; everything else stays.</p>
+            <label title="Compare every file only against your chosen target instead of finding duplicates across the whole library">
+              <input type="checkbox" id="media-use-target" onchange="onMediaTargetToggle()">
+              Only remove variations of my target
+            </label>
+            <div class="media-target-actions" id="media-target-actions">
+              <input type="file" id="media-target-input" accept="image/*,video/*" style="display:none" onchange="handleMediaTargetPick(this)">
+              <button type="button" class="secondary-btn mobile-upload-btn" onclick="openMediaTargetPicker()">Pick target file</button>
+              <button type="button" class="secondary-btn mobile-upload-btn" onclick="clearMediaTarget()" id="media-target-clear" style="display:none">Clear target</button>
+              <select id="media-target-from-library" class="styled-select media-target-library" onchange="setMediaTargetFromLibrary(this.value)" disabled>
+                <option value="">From loaded library...</option>
+              </select>
+            </div>
+            <p id="media-target-label" class="media-target-label">No target selected</p>
+          </div>
+
+          <div class="options-row">
+            <label title="Reduce rapid burst sequences (for example 60 photos per second) down to a few unique frames">
+              <input type="checkbox" id="media-collapse-bursts" checked onchange="updateMediaDemo()">
+              Collapse burst sequences
+            </label>
+            <label title="When files match, keep the largest copy (usually highest resolution)">
+              <input type="checkbox" id="media-keep-largest" checked onchange="updateMediaDemo()">
+              Keep best quality copy
+            </label>
+            <label title="Match the same photo at different sizes (thumbnail vs full size)">
+              <input type="checkbox" id="media-allow-resize" checked onchange="updateMediaDemo()">
+              Match across sizes
+            </label>
+          </div>
+
+          <div class="options-row filter-sort-row">
+            <div class="control-group">
+              <label for="media-burst-keep">Keep per burst:</label>
+              <select id="media-burst-keep" class="styled-select" onchange="updateMediaDemo()">
+                <option value="1">1 frame</option>
+                <option value="2" selected>2 frames</option>
+                <option value="3">3 frames</option>
+              </select>
+            </div>
+            <div class="control-group">
+              <label for="media-frame-interval">Video frame sampling:</label>
+              <select id="media-frame-interval" class="styled-select" onchange="updateMediaDemo()">
+                <option value="33">Every 33ms (fast bursts)</option>
+                <option value="100" selected>Every 100ms (balanced)</option>
+                <option value="250">Every 250ms (faster scan)</option>
+                <option value="500">Every 500ms (long clips)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="slider-group">
+            <label for="media-similarity">
+              Similarity threshold: <span id="media-sim-val" class="sim-val">92% match</span>
+            </label>
+            <input type="range" id="media-similarity" min="85" max="100" value="92" step="1" oninput="updateMediaSimValue(); updateMediaDemo()">
+            <p class="media-hint">100% matches identical file bytes only. Lower values group photos and videos that look nearly the same.</p>
+          </div>
+        </div>
+
+        <div id="media-progress-wrap" class="media-progress-wrap" style="display: none;">
+          <div class="media-progress-track"><div id="media-progress-bar" class="media-progress-bar"></div></div>
+          <p id="media-progress-text" class="media-progress-text">Analyzing...</p>
+        </div>
+
+        <div class="button-group">
+          <button id="media-btn-dedupe" onclick="deduplicateMedia()">Deduplicate</button>
+          <button id="media-btn-cancel" class="secondary-btn" style="display: none;" onclick="cancelMediaRun()">Cancel</button>
+          <button class="secondary-btn" onclick="revertMediaProject()">Revert</button>
+          <button class="secondary-btn" onclick="clearMediaProject()">Clear</button>
+        </div>
+
+        <div id="media-output-container">
+          <h2>Results</h2>
+          <div class="media-results-header">
+            <span class="status-text" id="media-status-text"></span>
+            <button type="button" class="mobile-upload-btn media-preview-open-btn" id="media-preview-open" aria-label="Preview kept vs removed" title="Preview kept vs removed" disabled>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            </button>
+          </div>
+          <div class="media-results-wrap">
+            <textarea id="media-output" readonly onclick="this.focus();this.select()" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></textarea>
+          </div>
+          <div class="button-group" style="margin-top: 15px;">
+            <button onclick="copyMediaOutput()" id="media-btn-copy">Copy to Clipboard</button>
+            <button onclick="downloadMediaZip()" class="secondary-btn" id="media-btn-download">Download (.zip)</button>
+          </div>
+          <div class="activity-log-wrapper">
+            <button type="button" class="activity-log-toggle" onclick="toggleMediaActivityLog()">
+              <span style="display: flex; align-items: center; gap: 8px;"><span>Diagnostics Log</span> <span id="media-activity-log-arrow" class="activity-log-arrow">&#9658;</span></span>
+              <span id="media-activity-log-badge" class="badge">0 events</span>
+            </button>
+            <div id="media-activity-log-panel" class="activity-log-panel" style="display: none;">
+              <div id="media-activity-log-content" class="activity-log-content"></div>
+              <div class="mobile-upload-container" style="margin-top: 10px; margin-bottom: 0;">
+                <button type="button" class="clear-diagnostics-btn" onclick="clearMediaActivityLog()">Clear Diagnostics</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Demo Section -->
+      <section id='s-2' role="tabpanel" aria-labelledby="t-2" hidden>
+        <h1>Demo</h1>
+        <p class="demo-intro">Updates when you change options on the Text/File, Folder/Zip, or Img/Vid tab.</p>
+
+        <h2 class="demo-heading demo-heading--lime">
+          <span class="demo-heading-icon" aria-hidden="true">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="13" y2="17"/></svg>
+          </span>
+          Text / File
+        </h2>
+        <div class="demo-field-wrap">
+          <textarea class="demo-field" id="example-input" readonly spellcheck="false">Harbor View
+red
+blue
+blue
+harbor view
+red alert 500</textarea>
+          <div class="demo-field-toolbar">
+            <button type="button" class="mobile-upload-btn demo-preview-btn" aria-label="Preview input" data-demo-source="example-input" data-demo-title="Text / File: Input">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            </button>
+          </div>
+        </div>
+        <div class="demo-flow" aria-hidden="true">
+          <span class="demo-flow-badge demo-flow-badge--lime">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="4" x2="12" y2="18"/><polyline points="6 12 12 18 18 12"/></svg>
+          </span>
+          <span class="demo-flow-label">Deduplicate</span>
+        </div>
+        <div class="demo-results">
+          <span class="status-text" id="example-status"></span>
+          <div class="demo-field-wrap">
+            <textarea class="demo-field demo-field--out" id="example-output" readonly spellcheck="false"></textarea>
+            <div class="demo-field-toolbar">
+              <button type="button" class="mobile-upload-btn demo-preview-btn" aria-label="Preview output" data-demo-source="example-output" data-demo-title="Text / File: Output">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <h2 class="demo-heading demo-heading--yellow">
+          <span class="demo-heading-icon" aria-hidden="true">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+          </span>
+          Folder / Zip
+        </h2>
+        <div class="demo-field-wrap">
+          <textarea class="demo-field demo-field--tree" id="folder-example-input" readonly spellcheck="false">my-project/
+  data/users.csv
+  backup/users-copy.csv
+  logs/app.log
+  logs/app.log.bak
+  readme.md</textarea>
+          <div class="demo-field-toolbar">
+            <button type="button" class="mobile-upload-btn demo-preview-btn" aria-label="Preview project" data-demo-source="folder-example-input" data-demo-title="Folder / Zip: Project">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            </button>
+          </div>
+        </div>
+        <div class="demo-flow" aria-hidden="true">
+          <span class="demo-flow-badge demo-flow-badge--yellow">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="4" x2="12" y2="18"/><polyline points="6 12 12 18 18 12"/></svg>
+          </span>
+          <span class="demo-flow-label">Deduplicate</span>
+        </div>
+        <div class="demo-results">
+          <span class="status-text" id="folder-example-status"></span>
+          <div class="demo-field-wrap">
+            <textarea class="demo-field demo-field--out" id="folder-example-output" readonly spellcheck="false"></textarea>
+            <div class="demo-field-toolbar">
+              <button type="button" class="mobile-upload-btn demo-preview-btn" aria-label="Preview result" data-demo-source="folder-example-output" data-demo-title="Folder / Zip: Result">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <h2 class="demo-heading demo-heading--lime">
+          <span class="demo-heading-icon" aria-hidden="true">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          </span>
+          Img / Vid
+        </h2>
+        <div class="demo-field-wrap">
+          <textarea class="demo-field demo-field--tree" id="media-example-input" readonly spellcheck="false">camera-roll/
+  IMG_0001.jpg
+  IMG_0002.jpg
+  IMG_0003.jpg
+  exports/vacation_copy.jpg
+  exports/vacation_final.jpg
+  clip_A.mp4
+  clip_A_renamed.mp4</textarea>
+          <div class="demo-field-toolbar">
+            <button type="button" class="mobile-upload-btn demo-preview-btn" aria-label="Preview library" data-demo-source="media-example-input" data-demo-title="Img / Vid: Library">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            </button>
+          </div>
+        </div>
+        <div class="demo-flow" aria-hidden="true">
+          <span class="demo-flow-badge demo-flow-badge--lime">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="4" x2="12" y2="18"/><polyline points="6 12 12 18 18 12"/></svg>
+          </span>
+          <span class="demo-flow-label">Deduplicate</span>
+        </div>
+        <div class="demo-results">
+          <span class="status-text" id="media-example-status"></span>
+          <div class="demo-field-wrap">
+            <textarea class="demo-field demo-field--out" id="media-example-output" readonly spellcheck="false"></textarea>
+            <div class="demo-field-toolbar">
+              <button type="button" class="mobile-upload-btn demo-preview-btn" aria-label="Preview result" data-demo-source="media-example-output" data-demo-title="Img / Vid: Result">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Info Section -->
+      <section id='s-3' role="tabpanel" aria-labelledby="t-3" hidden>
+        <h1>How It Works</h1>
+        <p>Paste text, upload a file, load a folder or zip, or drop a library of photos and videos. Select options, click Deduplicate, and get clean output in your browser. No uploads, no servers, and no waiting.</p>
+
+        <h2>Privacy Guarantee</h2>
+        <p>Everything is processed 100% locally on your device. Zero data ever leaves your browser.</p>
+
+        <h2>Supported File Types</h2>
+        <ul class="info-list">
+          <li><strong>Text and Markdown:</strong> bullet points and list symbols.</li>
+          <li><strong>Excel (.xlsx):</strong> duplicate rows removed, headers preserved.</li>
+          <li><strong>CSV and TSV:</strong> tabular data with header support.</li>
+          <li><strong>JSON, YAML, and similar:</strong> canonical key matching.</li>
+          <li><strong>Logs and SQL:</strong> strips timestamps, IDs, and serial numbers.</li>
+          <li><strong>Code:</strong> Python, JavaScript, TypeScript, HTML, CSS, Shell, and more.</li>
+          <li><strong>Todo and Lists:</strong> checkbox state and status prefixes.</li>
+          <li><strong>Images:</strong> JPG, PNG, WebP, GIF, BMP, AVIF, TIFF (HEIC where your browser supports it).</li>
+          <li><strong>Videos:</strong> MP4, MOV, WebM, MKV, AVI, and more.</li>
+        </ul>
+
+        <h2>Why Deduplicate?</h2>
+        <p>Duplicate rows in spreadsheets, repeated log lines, redundant list items, and near-identical photos all inflate storage and slow down every tool that touches your data. Geckodupe strips the noise so you keep only what matters.</p>
+
+        <div class="info-folder-note">
+          <p class="info-folder-note__title demo-heading demo-heading--yellow">
+            <span class="demo-heading-icon" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+            </span>
+            Folders &amp; zip archives
+          </p>
+          <p class="info-folder-note__text">Load a project or archive, deduplicate files and lines, download a cleaned .zip. Add your own skip paths on the Folder/Zip tab to leave specific files untouched. Spreadsheets inside archives are supported.</p>
+          <p class="info-folder-note__skips">Skips <span class="info-tag">node_modules</span><span class="info-tag">.git</span><span class="info-tag">dist</span><span class="info-tag">vendor</span></p>
+        </div>
+
+        <div class="info-folder-note info-media-note">
+          <p class="info-folder-note__title demo-heading demo-heading--lime">
+            <span class="demo-heading-icon" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+            </span>
+            Img / Vid libraries
+          </p>
+          <p class="info-folder-note__text">Drop a folder or zip of photos and videos. Geckodupe compares file content visually, not by filename, so renamed copies and burst sequences collapse to a small set of unique shots. Optional reference-target mode keeps one file you pick and removes only its variations. Use the skip list on the Img/Vid tab to leave specific files untouched. Everything runs locally in your browser.</p>
+          <p class="info-folder-note__skips">Handles <span class="info-tag">burst frames</span><span class="info-tag">resized copies</span><span class="info-tag">video near-dupes</span><span class="info-tag">reference target</span></p>
+        </div>
+
+        <h2>Geckodupe</h2>
+        <p class="info-math-lead">Every tab follows the same idea. Clean the input, fingerprint it, check whether you have already kept something like it, and leave one canonical copy.</p>
+
+        <div class="info-math-flow">
+
+          <div class="info-math-block">
+            <div class="info-stats-copy">
+              <h3 class="demo-heading demo-heading--lime">
+                <span class="demo-heading-icon" aria-hidden="true">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="13" y2="17"/></svg>
+                </span>
+                Text / File
+              </h3>
+              <p>Your input is split into lines, trimmed, optionally lowercased, and filtered. Log and SQL modes strip timestamps, UUIDs, and request IDs first so you compare the message, not the metadata. Below 100% similarity, each line becomes a set of word tokens and two lines are close when they share enough words.</p>
+              <p class="info-math-eq">J(A, B) = |W(A) ∩ W(B)| / |W(A) ∪ W(B)|</p>
+              <p>Your similarity slider is the minimum overlap required. Meet it and the line counts as a duplicate. At 100%, only exact keys match after normalization.</p>
+              <p class="info-math-eq">duplicate if J(A, B) ≥ θ</p>
+            </div>
+          </div>
+
+          <div class="info-math-block">
+            <div class="info-stats-copy">
+              <h3 class="demo-heading demo-heading--yellow">
+                <span class="demo-heading-icon" aria-hidden="true">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+                </span>
+                Folder / Zip
+              </h3>
+              <p>Geckodupe walks the tree, respects your skip list, and fingerprints each file. Identical byte content produces the same hash, so full copies are grouped and only one path is kept.</p>
+              <p class="info-math-eq">h(f) = FNV-1a(content<sub>f</sub>)</p>
+              <p>Each file is routed to the right format engine and line dedupe runs inside it. With cross-file dedupe on, comparison keys are tracked across the whole project. JSON rows are canonicalized with sorted keys first.</p>
+              <p class="info-math-eq">exact: keep if k(row) ∉ seen</p>
+              <p class="info-math-eq">fuzzy: duplicate if J(k, k′) ≥ θ</p>
+            </div>
+          </div>
+
+          <div class="info-math-block">
+            <div class="info-stats-copy">
+              <h3 class="demo-heading demo-heading--lime">
+                <span class="demo-heading-icon" aria-hidden="true">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                </span>
+                Img / Vid
+              </h3>
+              <p>Images decode in your browser, scale to several sizes, and convert to grayscale before hashing so a thumbnail can still match a full export.</p>
+              <p class="info-math-eq">Y = 0.299R + 0.587G + 0.114B</p>
+              <p>Five perceptual hashes capture gradient, brightness, block layout, fine detail, and color placement. Bit mismatches between fingerprints form the Hamming distance.</p>
+              <p class="info-math-eq">d(h<sub>1</sub>, h<sub>2</sub>) = Σ<sub>i</sub> [h<sub>1i</sub> ≠ h<sub>2i</sub>]</p>
+              <p>Your similarity slider (75% to 100%) sets how many bit differences you allow. The score uses the mean of the two largest hash distances. At 100%, only SHA-256 byte matches count.</p>
+              <p class="info-math-eq">match% = 100(1 − d/64)</p>
+              <p class="info-math-eq">S<sub>img</sub> = 1 − d<sub>strict</sub>/64 ≥ 1 − d<sub>max</sub>/64</p>
+              <p>Videos are sampled on a timer. Frames get hashes and hue histograms, timelines are aligned with banded dynamic time warping, and each matched pair is scored.</p>
+              <p class="info-math-eq">S<sub>frame</sub> = 0.42·S<sub>hash</sub> + 0.38·S<sub>hue</sub> + 0.08·S<sub>luma</sub> + 0.07·S<sub>contrast</sub> + 0.05·S<sub>sat</sub></p>
+              <p>Burst sequences collapse by comparing filename neighbors. LSH banding and union-find keep large libraries fast.</p>
+            </div>
+          </div>
+
+        </div>
+
+        <div id="info-stats-section" class="info-stats-section">
+          <h2>Performance &amp; Savings</h2>
+
+          <div class="info-stats-rows">
+            <div class="info-stats-row info-stats-row--chart-left">
+              <div class="info-stats-visual">
+                <div id="chart-reduction-area" class="info-chart"></div>
+              </div>
+              <div class="info-stats-copy">
+                <h3>Duplicate reduction</h3>
+                <p class="info-stat-highlight"><span id="stat-avg-reduction"></span></p>
+                <p>Average share of repeated lines removed across sample runs. Unique entries stay put as input grows.</p>
+              </div>
+            </div>
+
+            <div class="info-stats-row info-stats-row--chart-right">
+              <div class="info-stats-copy">
+                <h3>Processing speed</h3>
+                <p class="info-stat-highlight"><span id="stat-peak-throughput"></span> <span class="info-stat-unit">lines/sec</span></p>
+                <p>Peak throughput at <span id="stat-peak-at"></span>. Largest batch tested: <span id="stat-large-batch"></span>. No uploads, no server queue.</p>
+              </div>
+              <div class="info-stats-visual">
+                <div id="chart-throughput" class="info-chart"></div>
+              </div>
+            </div>
+
+            <div class="info-stats-row info-stats-row--chart-left">
+              <div class="info-stats-visual">
+                <div id="chart-savings-bars" class="info-chart"></div>
+              </div>
+              <div class="info-stats-copy">
+                <h3>File-size savings</h3>
+                <p class="info-stat-highlight"><span id="stat-bytes-saved"></span></p>
+                <p>Recovered on a 10k-line sample with heavy duplication (<span id="stat-savings-reduction"></span> of lines removed). Log workloads typically drop <span id="stat-log-reduction"></span> of noise after timestamp and ID stripping.</p>
+              </div>
+            </div>
+
+            <div class="info-stats-row info-stats-row--chart-right">
+              <div class="info-stats-copy">
+                <h3>Folder / Zip projects</h3>
+                <p class="info-stat-highlight"><span id="stat-folder-throughput"></span> <span class="info-stat-unit">files/sec</span></p>
+                <p>Peak scan speed at <span id="stat-folder-at"></span>. The chart shows how scan time grows with file count.</p>
+              </div>
+              <div class="info-stats-visual">
+                <div id="chart-folder" class="info-chart"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <p class="info-github">
+          <a href="https://github.com/orgs/Gekodupe/repositories" class="info-github-link" target="_blank" rel="noopener noreferrer">
+            <img src="public/git-icon.svg" alt="" class="info-github-icon" width="26" height="26">
+            <span class="info-github-label">GitHub</span>
+          </a>
+        </p>
+      </section>
+
+    </main>
+  </div>
+
+  <div id="media-preview-modal" class="media-preview-modal" hidden>
+    <div class="media-preview-backdrop" data-media-preview-close></div>
+    <div class="media-preview-dialog" role="dialog" aria-modal="true" aria-labelledby="media-preview-title">
+      <div class="media-preview-header">
+        <span id="media-preview-title" class="media-preview-title">Kept vs removed</span>
+        <button type="button" class="demo-preview-close-btn" data-media-preview-close aria-label="Close">&times;</button>
+      </div>
+      <div id="media-preview-content" class="media-preview-content"></div>
+    </div>
+  </div>
+
+  <div id="demo-preview-modal" class="demo-preview-modal" hidden>
+    <div class="demo-preview-backdrop" data-demo-close></div>
+    <div class="demo-preview-dialog" role="dialog" aria-modal="true" aria-labelledby="demo-preview-title">
+      <div class="demo-preview-header">
+        <span id="demo-preview-title" class="demo-preview-title"></span>
+        <div class="demo-preview-header-actions">
+          <button type="button" class="demo-preview-copy-btn" id="demo-preview-copy">Copy</button>
+          <button type="button" class="demo-preview-close-btn" data-demo-close aria-label="Close">&times;</button>
+        </div>
+      </div>
+      <textarea id="demo-preview-content" class="demo-preview-textarea" readonly spellcheck="false"></textarea>
+    </div>
+  </div>
+
+  <script src="js/deps.js" defer></script>
+  <script src="js/engines/options.js" defer></script>
+  <script src="js/engines/intelligence.js" defer></script>
+  <script src="js/engines/checkpoint.js" defer></script>
+  <script src="js/engines/dedup-utils.js" defer></script>
+  <script src="js/engines/core.js" defer></script>
+  <script src="js/engines/csv.js" defer></script>
+  <script src="js/engines/excel.js" defer></script>
+  <script src="js/engines/json.js" defer></script>
+  <script src="js/engines/log.js" defer></script>
+  <script src="js/engines/code.js" defer></script>
+  <script src="js/engines/todo.js" defer></script>
+  <script src="js/engines/comparison-keys.js" defer></script>
+  <script src="js/engines/verify.js" defer></script>
+  <script src="js/engines/folder.js" defer></script>
+  <script src="js/engines/media.js" defer></script>
+  <script src="js/engines/pipeline.js" defer></script>
+  <script src="js/app.js" defer></script>
+</body>
+</html>

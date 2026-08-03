@@ -1,0 +1,28 @@
+{
+  "name": "@flareform/geckodupe",
+  "version": "1.0.0",
+  "description": "Geckodupe by Flareform - heuristic deduplication and anti-spam engine for text, files, folders, and media. 100% browser-based.",
+  "homepage": "https://flareform.github.io/Geckodupe/",
+  "private": false,
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:folder": "node scripts/test-folder.js",
+    "test:media": "node scripts/test-media.js",
+    "test:benchmark": "node scripts/run-benchmark.js",
+    "test:e2e": "playwright test",
+    "test:all": "npm run test && npm run test:folder && npm run test:media && npm run test:benchmark && npm run test:e2e",
+    "test:audit": "vitest run tests/audit.test.js && playwright test tests/e2e/audit.spec.js",
+    "lighthouse": "node scripts/run-lighthouse.js",
+    "build": "node scripts/build.js",
+    "site-meta": "node scripts/site-meta.js",
+    "serve": "node scripts/serve.js"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.51.0",
+    "chrome-launcher": "^1.2.1",
+    "esbuild": "^0.25.0",
+    "lighthouse": "^13.4.0",
+    "vitest": "^3.0.9"
+  }
+}
