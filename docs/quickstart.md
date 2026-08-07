@@ -62,6 +62,6 @@ curl -s -X POST https://geckodupe-spam.nic-58f.workers.dev/v1/spam/score \
 
 ## Next
 
-- [SDK](sdk.md) for Express, Fastify, Hono, Bun, Workers
+- [SDK](sdk.md) for Express, Fastify, Hono, Bun, and Node
 - [Events API](events-api.md) for retries and webhooks
 - [Plans and limits](plans.md) for quotas

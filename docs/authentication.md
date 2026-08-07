@@ -46,8 +46,6 @@ You do not use `sess_` tokens in your application servers. Use `gd_live_` keys o
 | Forgot password | Reset link to `#account?reset=...` |
 | Verify email | Link to `#account?verify=...` |
 
-Mail is sent from Blacnova Development (`nic@blacnova.net`) via Brevo.
-
 ## Health (no auth)
 
 ```bash

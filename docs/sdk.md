@@ -14,9 +14,7 @@ Default API base: `https://geckodupe-spam.nic-58f.workers.dev`
 import { createClient } from 'geckodupe';
 
 const gecko = createClient({
-  apiKey: process.env.GECKODUPE_API_KEY,
-  // baseUrl: 'https://geckodupe-spam.nic-58f.workers.dev',
-  // timeoutMs: 30000,
+  apiKey: process.env.GECKODUPE_API_KEY
 });
 ```
 

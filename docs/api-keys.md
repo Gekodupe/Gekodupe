@@ -1,6 +1,6 @@
 # Get an API key
 
-Keys are created in the product UI. There is no self-serve key mint for guests.
+Keys are created in the Geckodupe product after you sign in and verify your email.
 
 ## Steps
 

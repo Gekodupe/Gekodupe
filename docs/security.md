@@ -2,26 +2,26 @@
 
 ## API keys
 
-- Server-side only
-- Rotate by creating a new key, updating deploys, then revoking the old one
+- Use server-side only
+- Rotate by creating a new key, updating your apps, then revoking the old one
 - Treat a leaked `gd_live_` key as compromised immediately
 
 ## What we store
 
-| Data | Where |
+| Data | Notes |
 |------|-------|
-| Account email, password hash (PBKDF2), plan | Worker KV |
-| Session tokens | Worker KV with TTL |
-| API key hashes (not raw secrets after mint) | Worker KV |
-| Short burst / event fingerprints | Worker KV with TTL |
-| Daily usage counters | Worker KV with TTL |
-| Billing customer / subscription ids | Worker KV + Stripe |
+| Account email, password hash (PBKDF2), plan | Account store |
+| Session tokens | Short-lived |
+| API key hashes (not raw secrets after mint) | Account store |
+| Short burst / event fingerprints | TTL |
+| Daily usage counters | TTL |
+| Billing customer / subscription ids | Stripe + account store |
 
-Browser tool tabs (Text, Directories, Media, Spam) process files in your browser. They do not upload your datasets to Geckodupe for dedupe.
+Browser tool tabs (Text, Directories, Media, Spam) process files locally. They do not upload your datasets to Geckodupe for dedupe.
 
 ## Email
 
-Transactional mail (sign-in codes, verify, reset) is sent through Brevo from Blacnova Development.
+Transactional mail covers sign-in codes, verification, and password reset.
 
 ## Payments
 
