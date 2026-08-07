@@ -9,6 +9,7 @@ Allow: /pricing/
 Allow: /account/
 Allow: /docs-landing/
 Allow: /legal/
+Allow: /support/
 Allow: /public/
 Allow: /css/
 Allow: /js/

@@ -567,7 +567,8 @@ var TAB_PAGE_TITLES = {
   '8': 'Pricing',
   '9': 'Account',
   '10': 'Geckodupe Docs',
-  '11': 'Legal'
+  '11': 'Legal',
+  '12': 'Support'
 };
 
 function updatePageTitle(tabId) {

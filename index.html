@@ -211,6 +211,7 @@
         </div>
         <button class="mobile-menu-link" data-tab="3">About ?</button>
         <button class="mobile-menu-link" data-tab="11">Legal</button>
+        <button class="mobile-menu-link" data-tab="12">Support</button>
         <button class="mobile-menu-link" data-tab="9">Account</button>
         <div style="margin-top: auto; display: flex; flex-direction: column; gap: 0px; padding-bottom: 24px;">
           <a class="mobile-menu-link mobile-menu-flareform" href="https://flareform.com" target="_blank" rel="noopener noreferrer" style="display: flex; align-items: center; gap: 8px; margin-top: 4px; margin-bottom: -18px;">
@@ -1474,6 +1475,85 @@
         <p class="legal-note">This page is provided for transparency and risk allocation. It is not personalized legal advice. If your use case requires a signed MSA, DPA, or other contract, contact Flareform before relying on the Service for regulated workloads.</p>
       </section>
 
+      <!-- Support -->
+      <section id="s-12" class="support-panel" role="tabpanel" aria-labelledby="t-12" hidden>
+        <h1>Support</h1>
+        <p class="tool-intro">Questions about billing, API keys, local tools, or your account. Send a message and we will get back to you.</p>
+
+        <div class="support-layout">
+          <div class="api-panel support-form-card">
+            <p class="api-panel-title">Contact us</p>
+            <p class="api-panel-desc">Tell us what you need help with. Do not include API keys or passwords.</p>
+
+            <form id="support-form" class="support-form" action="#" method="post" onsubmit="return false;">
+              <div class="support-field">
+                <label for="support-name">Name</label>
+                <input type="text" id="support-name" name="name" class="api-input" placeholder="Your name" autocomplete="name" maxlength="120">
+              </div>
+              <div class="support-field">
+                <label for="support-email">Email</label>
+                <input type="email" id="support-email" name="email" class="api-input" placeholder="you@company.com" autocomplete="email" maxlength="254">
+              </div>
+              <div class="support-field">
+                <label for="support-topic">Topic</label>
+                <select id="support-topic" name="topic" class="api-input support-select">
+                  <option value="">Select a topic</option>
+                  <option value="billing">Billing and plans</option>
+                  <option value="api">API keys and usage</option>
+                  <option value="local">Local tools</option>
+                  <option value="account">Account and sign-in</option>
+                  <option value="bug">Bug report</option>
+                  <option value="other">Something else</option>
+                </select>
+              </div>
+              <div class="support-field">
+                <label for="support-message">Message</label>
+                <textarea id="support-message" name="message" class="api-mono support-message" rows="7" placeholder="Describe the issue or question..." maxlength="4000"></textarea>
+              </div>
+              <div class="button-group support-actions">
+                <button type="button" id="support-submit-btn">Send message</button>
+              </div>
+            </form>
+          </div>
+
+          <aside class="api-panel support-aside" aria-label="Other ways to get help">
+            <p class="api-panel-title">Also helpful</p>
+            <ul class="support-links">
+              <li>
+                <button type="button" class="support-link-btn" onclick="location.hash='docs';if(typeof switchToTab==='function')switchToTab('10')">
+                  <i class="ph-fill ph-book-open" aria-hidden="true"></i>
+                  <span>Geckodupe Docs</span>
+                </button>
+              </li>
+              <li>
+                <button type="button" class="support-link-btn" onclick="location.hash='pricing';if(typeof switchToTab==='function')switchToTab('8')">
+                  <i class="ph-fill ph-currency-dollar" aria-hidden="true"></i>
+                  <span>Pricing and plans</span>
+                </button>
+              </li>
+              <li>
+                <button type="button" class="support-link-btn" onclick="location.hash='account';if(typeof switchToTab==='function')switchToTab('9')">
+                  <i class="ph-fill ph-user-circle" aria-hidden="true"></i>
+                  <span>Account and billing</span>
+                </button>
+              </li>
+              <li>
+                <button type="button" class="support-link-btn" onclick="location.hash='legal';if(typeof switchToTab==='function')switchToTab('11')">
+                  <i class="ph-fill ph-scales" aria-hidden="true"></i>
+                  <span>Legal</span>
+                </button>
+              </li>
+              <li>
+                <a class="support-link-btn" href="https://github.com/orgs/Gekodupe/repositories" target="_blank" rel="noopener noreferrer">
+                  <i class="ph-fill ph-github-logo" aria-hidden="true"></i>
+                  <span>GitHub</span>
+                </a>
+              </li>
+            </ul>
+          </aside>
+        </div>
+      </section>
+
     </main>
 
     <aside class="right-sidebar">
@@ -1521,6 +1601,11 @@
         <li role="presentation">
           <button class="nav-tab-btn" id="t-11" role="tab" aria-selected="false" aria-controls="s-11" tabindex="-1" data-slug="legal">
             <i class="ph-fill ph-scales"></i> Legal
+          </button>
+        </li>
+        <li role="presentation">
+          <button class="nav-tab-btn" id="t-12" role="tab" aria-selected="false" aria-controls="s-12" tabindex="-1" data-slug="support">
+            <i class="ph-fill ph-lifebuoy"></i> Support
           </button>
         </li>
       </ul>

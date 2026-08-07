@@ -100,6 +100,15 @@ const LANDING_PAGES = [
     h1: 'Legal',
     lead: 'Terms, privacy, acceptable use, API and billing rules, and liability limits for Geckodupe by Flareform.',
     keywords: 'geckodupe terms, privacy policy, acceptable use, api terms, flareform legal'
+  },
+  {
+    slug: 'support',
+    dir: 'support',
+    title: 'Support',
+    description: 'Contact Geckodupe support for billing, API keys, local tools, and account help. Operated by Flareform.',
+    h1: 'Support',
+    lead: 'Get help with Geckodupe billing, API keys, local tools, and your account.',
+    keywords: 'geckodupe support, contact, billing help, api help, flareform support'
   }
 ];
 
@@ -358,6 +367,7 @@ const robots = [
   'Allow: /account/',
   'Allow: /docs-landing/',
   'Allow: /legal/',
+  'Allow: /support/',
   'Allow: /public/',
   'Allow: /css/',
   'Allow: /js/',
