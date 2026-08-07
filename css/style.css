@@ -1460,7 +1460,7 @@ tr:nth-child(even) td { background: var(--surface); color: #fff !important; }
 
   .button-group { flex-direction: column; width: 100%; }
 
-  button:not(.toast-close):not(.clear-diagnostics-btn):not(.demo-preview-close-btn) {
+  button:not(.toast-close):not(.clear-diagnostics-btn):not(.demo-preview-close-btn):not(.auth-text-btn):not(.quota-link-btn) {
     width: 100%;
   }
   .mobile-upload-btn {
