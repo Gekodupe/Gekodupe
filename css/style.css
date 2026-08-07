@@ -1853,27 +1853,12 @@ tr:nth-child(even) td { background: var(--surface); color: #fff !important; }
   min-height: 100%;
 }
 
-.pricing-card--guest {
-  background: #fff;
-  border-style: dashed;
-}
-
-.pricing-card-featured {
-  border-color: #f7831e;
-  background: #fff;
-  box-shadow: inset 3px 0 0 #f7831e;
-}
-
 .pricing-card-name {
   margin: 0;
   font-size: 12px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: #6b7280;
-}
-
-.pricing-card-featured .pricing-card-name {
-  color: #f7831e;
 }
 
 .pricing-card-price {
