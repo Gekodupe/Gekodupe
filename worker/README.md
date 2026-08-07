@@ -1,6 +1,6 @@
 # Geckodupe API (hosted Worker)
 
-Hosted spam prevention and event idempotency API. Customers never deploy Cloudflare themselves — they use a **Geckodupe API key** with the [`geckodupe`](../sdk/) npm package (or raw HTTP).
+Hosted spam prevention and event idempotency API. Customers never deploy Cloudflare themselves - they use a **Geckodupe API key** with the [`geckodupe`](../sdk/) npm package (or raw HTTP).
 
 The browser Spam tab stays local-only. This Worker is the product API for server-side integrations.
 
@@ -29,7 +29,7 @@ npx wrangler secret put APP_ORIGIN        # e.g. https://gekodupe.github.io/Geko
 | GET | `/v1/account` | Profile + keys |
 | POST/GET/DELETE | `/v1/account/keys` | Create / list / revoke API keys |
 
-Issued keys (`gd_live_…`) work on `/v1/spam/*` and `/v1/events/*` the same as static `API_KEYS`.
+Issued keys (`gd_live_...`) work on `/v1/spam/*` and `/v1/events/*` the same as static `API_KEYS`.
 
 When `API_KEYS` is set, all `/v1/spam/*` and `/v1/events/*` routes require:
 
@@ -37,7 +37,7 @@ When `API_KEYS` is set, all `/v1/spam/*` and `/v1/events/*` routes require:
 Authorization: Bearer <geckodupe_api_key>
 ```
 
-`/v1/health` stays open. Account routes use `Authorization: Bearer sess_…`.
+`/v1/health` stays open. Account routes use `Authorization: Bearer sess_...`.
 
 Tenant KV namespaces are derived from a hash of the API key (raw keys are never stored in KV paths).
 

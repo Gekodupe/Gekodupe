@@ -1,5 +1,5 @@
 /**
- * Express — reject double-submits / retries / spam with one middleware.
+ * Express - reject double-submits / retries / spam with one middleware.
  *
  *   npm i express geckodupe
  *   GECKODUPE_API_KEY=... node examples/express.mjs

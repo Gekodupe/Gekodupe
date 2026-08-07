@@ -72,7 +72,7 @@ async function pricingCheckout(plan) {
     return;
   }
   try {
-    if (typeof showToast === 'function') showToast('Opening secure checkout…', 'warning');
+    if (typeof showToast === 'function') showToast('Opening secure checkout...', 'warning');
     var res = await pricingFetch('/v1/billing/checkout', { method: 'POST', body: { plan: plan } });
     if (res.url) {
       window.location.href = res.url;

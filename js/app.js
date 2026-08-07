@@ -566,7 +566,8 @@ var TAB_PAGE_TITLES = {
   '7': 'API',
   '8': 'Pricing',
   '9': 'Account',
-  '10': 'Geckodupe Docs'
+  '10': 'Geckodupe Docs',
+  '11': 'Legal'
 };
 
 function updatePageTitle(tabId) {
@@ -659,6 +660,18 @@ function onTabActivated(tabId) {
     });
   } else if (typeof teardownDocsTab === 'function') {
     teardownDocsTab();
+  }
+  if (tabId === '11') {
+    var legalPanel = document.getElementById('s-11');
+    if (legalPanel && !legalPanel.dataset.tocBound) {
+      legalPanel.dataset.tocBound = '1';
+      legalPanel.addEventListener('click', function (e) {
+        var btn = e.target.closest('[data-legal-scroll]');
+        if (!btn) return;
+        var target = document.getElementById(btn.getAttribute('data-legal-scroll'));
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    }
   }
 }
 

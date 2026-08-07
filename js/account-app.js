@@ -62,7 +62,7 @@ async function acctFetch(path, opts) {
       body: opts.body != null ? JSON.stringify(opts.body) : undefined
     });
   } catch (e) {
-    var net = new Error('Network error — could not reach Geckodupe API');
+    var net = new Error('Network error - could not reach Geckodupe API');
     net.status = 0;
     throw net;
   }
@@ -72,7 +72,7 @@ async function acctFetch(path, opts) {
   try {
     data = text ? JSON.parse(text) : null;
   } catch (e) {
-    data = { error: res.status >= 500 ? 'Server error — try again in a moment' : 'Invalid response' };
+    data = { error: res.status >= 500 ? 'Server error - try again in a moment' : 'Invalid response' };
   }
   if (!res.ok) {
     var err = new Error((data && (data.error || data.message)) || ('Request failed (' + res.status + ')'));
@@ -106,10 +106,12 @@ function acctRenderSignedIn(account) {
 
   var planEl = document.getElementById('acct-user-plan');
   if (planEl) {
-    var plan = (account && account.planName) || (account && account.plan) || 'Basic';
-    var status = (account && account.planStatus) || 'active';
+    var plan = (account && account.planName) || (account && account.plan) || 'Guest';
+    var status = (account && account.planStatus) || 'none';
+    var paid = account && account.paid === true;
     var line = plan;
-    if (status && status !== 'active') line += ' · ' + status.replace(/_/g, ' ');
+    if (!paid) line += ' · no API until Basic';
+    else if (status && status !== 'active' && status !== 'none') line += ' · ' + status.replace(/_/g, ' ');
     if (account && account.emailVerified === false) line += ' · email not verified';
     planEl.textContent = line;
   }
@@ -127,7 +129,7 @@ function acctRenderSignedIn(account) {
         (account.usage.maxKeys || 0) +
         ' keys';
     } else {
-      usageEl.textContent = '—';
+      usageEl.textContent = 'n/a';
     }
   }
 
@@ -153,7 +155,7 @@ async function acctRegister() {
     return;
   }
   try {
-    acctSetStatus('Creating account…');
+    acctSetStatus('Creating account...');
     var res = await acctFetch('/v1/auth/register', {
       method: 'POST',
       body: { email: email, password: password, rememberMe: acctRememberMe() }
@@ -163,9 +165,9 @@ async function acctRegister() {
     acctSetStatus(res.message || 'Account created');
     if (typeof showToast === 'function') {
       if (res.emailSent === false) {
-        showToast(res.message || 'Account created — verification email failed to send', 'warning');
+        showToast(res.message || 'Account created - verification email failed to send', 'warning');
       } else {
-        showToast('Account created — check email to verify', 'success');
+        showToast('Account created - check email to verify', 'success');
       }
     }
   } catch (e) {
@@ -182,7 +184,7 @@ async function acctLogin() {
     return;
   }
   try {
-    acctSetStatus('Signing in…');
+    acctSetStatus('Signing in...');
     var res = await acctFetch('/v1/auth/login', {
       method: 'POST',
       body: { email: email, password: password, rememberMe: acctRememberMe() }
@@ -205,7 +207,7 @@ async function acctStartSignIn() {
     return;
   }
   try {
-    acctSetStatus('Sending sign-in email…');
+    acctSetStatus('Sending sign-in email...');
     var res = await acctFetch('/v1/auth/start', { method: 'POST', body: { email: email } });
     acctShow('acct-code-panel', true);
     var emailHint = document.getElementById('acct-email-hint');
@@ -227,7 +229,7 @@ async function acctForgot() {
     return;
   }
   try {
-    acctSetStatus('Sending reset link…');
+    acctSetStatus('Sending reset link...');
     var res = await acctFetch('/v1/auth/forgot', { method: 'POST', body: { email: email } });
     acctSetStatus(res.message || 'Check your email');
     if (typeof showToast === 'function') showToast(res.message || 'Check your email', 'success');
@@ -284,7 +286,7 @@ async function acctVerify(tokenOrCode) {
     body.email = emailEl ? emailEl.value : '';
   }
   try {
-    acctSetStatus('Verifying…');
+    acctSetStatus('Verifying...');
     var res = await acctFetch('/v1/auth/verify', { method: 'POST', body: body });
     acctSaveSession(res.session, res.email);
     await acctRefreshAccount();

@@ -1,5 +1,5 @@
 /**
- * Hono — middleware for spam + event dedupe.
+ * Hono - middleware for spam + event dedupe.
  *
  *   npm i hono geckodupe
  *   GECKODUPE_API_KEY=... node examples/hono.mjs

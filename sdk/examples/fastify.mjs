@@ -1,5 +1,5 @@
 /**
- * Fastify — preHandler idempotency guard.
+ * Fastify - preHandler idempotency guard.
  *
  *   npm i fastify geckodupe
  *   GECKODUPE_API_KEY=... node examples/fastify.mjs

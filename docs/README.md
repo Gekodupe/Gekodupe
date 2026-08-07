@@ -18,11 +18,12 @@ Authenticate with a Geckodupe API key from the product. No infrastructure setup 
 
 ## Start here
 
-1. [Quick start](quickstart.md) — account, key, first call
+1. [Quick start](quickstart.md) - account, key, first call
 2. [Get an API key](api-keys.md)
 3. [SDK](sdk.md) or [Spam API](spam-api.md) / [Events API](events-api.md)
-4. [Local browser tools](local-tools.md) — options and settings for Text, Directories, Media, Spam
-5. [Account and billing](account-billing.md) · [Plans](plans.md) · [Security](security.md)
+4. [Local browser tools](local-tools.md) - options and settings for Text, Directories, Media, Spam
+5. [Plans](plans.md) · [Security](security.md)
+6. Legal: Terms, Privacy, and Acceptable Use live in the app under **Legal** (`#legal`)
 
 ## Surfaces
 
@@ -30,8 +31,7 @@ Authenticate with a Geckodupe API key from the product. No infrastructure setup 
 |---------|-------|--------------------|
 | Text Data, Directories, Media, Spam | Browser | No |
 | API keys and usage | API tab | Session and API traffic only |
-| Account and billing | Account tab | Auth and Stripe |
-| Hosted score / clean / check / events | API | Yes — called from your server |
+| Hosted score / clean / check / events | API | Yes - called from your server |
 
 ## How it works
 

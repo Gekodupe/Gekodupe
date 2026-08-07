@@ -1,5 +1,5 @@
 /**
- * Bun.serve — Idempotency-Key aware event check.
+ * Bun.serve - Idempotency-Key aware event check.
  *
  *   GECKODUPE_API_KEY=... bun examples/bun.mjs
  */

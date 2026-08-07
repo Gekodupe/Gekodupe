@@ -1,5 +1,5 @@
 /**
- * Cloudflare Worker fetch handler — still only needs a Geckodupe API key.
+ * Cloudflare Worker fetch handler - still only needs a Geckodupe API key.
  * You do not deploy Geckodupe's Worker; you call ours.
  *
  *   GECKODUPE_API_KEY secret on your Worker

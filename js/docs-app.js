@@ -11,8 +11,7 @@ var DOCS_NAV = [
   { label: 'Plans and limits', hash: '#/plans' },
   { label: 'Errors', hash: '#/errors' },
   { label: 'Security', hash: '#/security' },
-  { label: 'Local browser tools', hash: '#/local-tools' },
-  { label: 'Account and billing', hash: '#/account-billing' }
+  { label: 'Local browser tools', hash: '#/local-tools' }
 ];
 
 var docsNavReady = false;

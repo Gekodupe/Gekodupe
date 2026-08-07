@@ -103,7 +103,7 @@ function despamLocal() {
   }
 
   try {
-    spamSetStatus('Despamming…');
+    spamSetStatus('Despamming...');
     var run = runSpamPipeline(txt, spamReadOpts());
     if (run.result && run.result.parseError === 'invalid_json') {
       spamShowOutput(

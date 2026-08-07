@@ -114,7 +114,7 @@
       if (!res.ok) throw new Error('session');
       var data = await res.json();
       state.email = data.email || '';
-      applyPlan(data.plan || 'free', data.limits);
+      applyPlan(data.plan || 'guest', data.limits);
     } catch (e) {
       state.email = '';
       applyPlan('guest');

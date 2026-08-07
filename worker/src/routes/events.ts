@@ -3,6 +3,7 @@ import { requireApiKey, type AuthOk } from '../lib/auth';
 import { jsonResponse } from '../lib/cors';
 import type { Env } from '../lib/env';
 import { enforceApiQuota } from '../lib/users';
+import { appendApiLog } from '../lib/request-log';
 import { hasSpamInput, readJsonBody, sanitizeEventId } from '../lib/validate';
 
 function rateKey(auth: AuthOk): string {
@@ -67,7 +68,7 @@ export async function handleEventRoutes(request: Request, env: Env, path: string
   const quota = await enforceApiQuota(env, {
     tenant: auth.tenant,
     email: auth.email,
-    plan: auth.email ? undefined : 'free'
+    plan: auth.email ? undefined : 'guest'
   });
   if (!quota.ok) {
     return jsonResponse(
@@ -141,6 +142,17 @@ export async function handleEventRoutes(request: Request, env: Env, path: string
 
   let decision = score.decision;
   if (duplicate && decision === 'allow') decision = 'soft_reject';
+
+  await appendApiLog(env, {
+    email: auth.email,
+    tenant: auth.tenant,
+    path,
+    status: 200,
+    decision,
+    score: score.score,
+    duplicate,
+    detail: eventId ? 'eventId' : (score.reasons || []).slice(0, 3).join(',')
+  });
 
   return jsonResponse(
     {

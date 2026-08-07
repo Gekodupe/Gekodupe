@@ -118,7 +118,7 @@ section.content {
   text-decoration-color: #18181b !important;
 }
 
-/* Inline code — neutral chip, never brand accent */
+/* Inline code - neutral chip, never brand accent */
 .markdown-section :not(pre) > code {
   background: var(--docs-code-inline-bg) !important;
   color: #18181b !important;
@@ -130,7 +130,7 @@ section.content {
   border: 1px solid #e4e4e7 !important;
 }
 
-/* Code blocks — GitHub-dark style */
+/* Code blocks - GitHub-dark style */
 .markdown-section pre,
 .markdown-section pre[data-lang],
 .markdown-section pre[class*="language-"] {

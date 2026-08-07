@@ -3,8 +3,8 @@
   "brandName": "Geckodupe by Flareform",
   "shortName": "Geckodupe",
   "siteUrl": "https://gekodupe.github.io/Gekodupe",
-  "description": "Local-first data normalization and deduplication for text, files, folders, zip archives, image/video libraries, and spam. Everything becomes comparable first. 100% in your browser.",
-  "keywords": "data normalization, deduplication, remove duplicates, csv dedupe, spam prevention, photo dedupe, zip cleanup, browser deduplication, Geckodupe, Flareform",
+  "description": "Geckodupe normalizes and deduplicates text, CSV, Excel, folders, zip archives, images, videos, and spam in your browser. Hosted API for form spam prevention and event idempotency. Local-first by Flareform.",
+  "keywords": "Geckodupe, Gekodupe, Flareform, data normalization, deduplication, remove duplicates, csv dedupe, excel dedupe, folder dedupe, zip cleanup, photo dedupe, video dedupe, spam prevention, form spam API, event idempotency, browser deduplication",
   "contact": "https://github.com/orgs/Gekodupe/repositories",
   "sameAs": [
     "https://github.com/Gekodupe/Gekodupe",

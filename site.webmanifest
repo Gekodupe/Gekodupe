@@ -1,7 +1,7 @@
 {
   "name": "Geckodupe by Flareform",
   "short_name": "Geckodupe",
-  "description": "Local-first data normalization and deduplication for text, files, folders, zip archives, image/video libraries, and spam. Everything becomes comparable first. 100% in your browser.",
+  "description": "Geckodupe normalizes and deduplicates text, CSV, Excel, folders, zip archives, images, videos, and spam in your browser. Hosted API for form spam prevention and event idempotency. Local-first by Flareform.",
   "start_url": "./#text-file",
   "scope": "./",
   "display": "standalone",

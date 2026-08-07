@@ -1,5 +1,5 @@
 /**
- * Plain Node script — local normalize + hosted event check.
+ * Plain Node script - local normalize + hosted event check.
  *
  *   GECKODUPE_API_KEY=... node examples/node.mjs
  */

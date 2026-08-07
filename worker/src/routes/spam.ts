@@ -4,6 +4,7 @@ import { jsonResponse } from '../lib/cors';
 import type { Env } from '../lib/env';
 import { verifyTurnstile } from '../lib/turnstile';
 import { enforceApiQuota } from '../lib/users';
+import { appendApiLog } from '../lib/request-log';
 import { hasSpamInput, readJsonBody, sanitizeBlocklist } from '../lib/validate';
 
 export type { Env };
@@ -98,7 +99,7 @@ export async function handleSpamRoutes(request: Request, env: Env, path: string)
   const quota = await enforceApiQuota(env, {
     tenant: auth.tenant,
     email: auth.email,
-    plan: auth.email ? undefined : 'free'
+    plan: auth.email ? undefined : 'guest'
   });
   if (!quota.ok) {
     emit(env, ['quota', path, auth.tenant, quota.plan]);
@@ -150,6 +151,15 @@ export async function handleSpamRoutes(request: Request, env: Env, path: string)
     const input = fields || text;
     const result = scorePayload(input, options);
     emit(env, ['score', result.decision, ...result.reasons], [result.score]);
+    await appendApiLog(env, {
+      email: auth.email,
+      tenant: auth.tenant,
+      path,
+      status: 200,
+      decision: result.decision,
+      score: result.score,
+      detail: (result.reasons || []).slice(0, 4).join(',')
+    });
     return jsonResponse(result, 200, request);
   }
 
@@ -159,6 +169,15 @@ export async function handleSpamRoutes(request: Request, env: Env, path: string)
     }
     const cleaned = cleanText(text || JSON.stringify(fields || {}), options);
     emit(env, ['clean', cleaned.score.decision], [cleaned.removedCount, cleaned.keptCount]);
+    await appendApiLog(env, {
+      email: auth.email,
+      tenant: auth.tenant,
+      path,
+      status: 200,
+      decision: cleaned.score.decision,
+      score: cleaned.score.score,
+      detail: 'removed=' + cleaned.removedCount + ' kept=' + cleaned.keptCount
+    });
     return jsonResponse(cleaned, 200, request);
   }
 
@@ -193,6 +212,16 @@ export async function handleSpamRoutes(request: Request, env: Env, path: string)
 
     const burst = score.reasons.indexOf('burst') >= 0 || score.reasons.indexOf('near_duplicate') >= 0;
     emit(env, ['check', score.decision, burst ? 'burst' : 'ok'], [score.score]);
+    await appendApiLog(env, {
+      email: auth.email,
+      tenant: auth.tenant,
+      path,
+      status: 200,
+      decision: score.decision,
+      score: score.score,
+      duplicate: burst,
+      detail: burst ? 'burst' : 'ok'
+    });
     return jsonResponse({ score, cleaned: cleaned.cleaned, burst, turnstile }, 200, request);
   }
 

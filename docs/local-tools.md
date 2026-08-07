@@ -34,26 +34,26 @@ Quotas apply (guest soft caps until you sign in). See the banner on each tab.
 | Ignore Punctuation | Off | Ignore `. ! , ? ; :` while comparing |
 | Collapse Whitespace | Off | Collapse runs of spaces/tabs to one space |
 | Filter Mode | All unique | `all` / only duplicates / only singletons |
-| Sort Order | Original | Original order, A–Z, Z–A, or by frequency |
+| Sort Order | Original | Original order, A-Z, Z-A, or by frequency |
 
 ### Format-specific options
 
 Panels appear after the engine sniff. Defaults are tuned for each format.
 
-**CSV / Excel** — Preserve header row (on). Header is never treated as a duplicate.
+**CSV / Excel** - Preserve header row (on). Header is never treated as a duplicate.
 
-**JSON** — Pretty print (on); canonical key matching (on) so same object with different key order counts as a duplicate.
+**JSON** - Pretty print (on); canonical key matching (on) so same object with different key order counts as a duplicate.
 
-**Log & SQL** (all on by default) — Strip dates/timestamps, PIDs/request IDs, UUIDs, SQL serial IDs, IP/MAC, hex addresses, normalize log levels, strip URL query strings. You compare the message, not the metadata.
+**Log & SQL** (all on by default) - Strip dates/timestamps, PIDs/request IDs, UUIDs, SQL serial IDs, IP/MAC, hex addresses, normalize log levels, strip URL query strings. You compare the message, not the metadata.
 
-**Code** — Ignore inline comments, indentation, trailing `;`/`,`, and block comments/docstrings (on). Optionally ignore numbers, string literals, or group/alphabetize imports.
+**Code** - Ignore inline comments, indentation, trailing `;`/`,`, and block comments/docstrings (on). Optionally ignore numbers, string literals, or group/alphabetize imports.
 
-**Todo & lists** — Ignore checkbox state and status prefixes like `TODO:` / `DONE:` (on). Prefer completed markers when merging.
+**Todo & lists** - Ignore checkbox state and status prefixes like `TODO:` / `DONE:` (on). Prefer completed markers when merging.
 
 ### Similarity slider
 
 - **100%** (default): exact matches only after normalization
-- **50–95%**: soft match using word overlap (Jaccard). Lower = more aggressive grouping
+- **50-95%**: soft match using word overlap (Jaccard). Lower = more aggressive grouping
 
 ---
 
@@ -122,7 +122,7 @@ When **Only remove variations of my target** is on and a target is set (from the
 ### Similarity
 
 - **100%**: identical bytes only
-- **Lower (85–99%)**: perceptual / near-visual matches (hashes, hue, video timeline alignment)
+- **Lower (85-99%)**: perceptual / near-visual matches (hashes, hue, video timeline alignment)
 
 ---
 
@@ -132,7 +132,7 @@ This tab is **local only**. Hosted prevention for apps is on the **API** tab aft
 
 ### How to use
 
-1. Paste form fields (`name=…`), a JSON object, a list, or log lines
+1. Paste form fields (`name=...`), a JSON object, a list, or log lines
 2. Pick **Mode**
 3. Toggle detectors and set near-duplicate threshold
 4. Optional blocklist (one phrase per line)

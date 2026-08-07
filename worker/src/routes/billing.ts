@@ -100,7 +100,7 @@ export async function handleBillingRoutes(
       const plan = planFromPriceId(priceId, prices);
       if (email) {
         if (type === 'customer.subscription.deleted') {
-          await applyPlanToEmail(env, email, 'free', 'canceled', obj.id);
+          await applyPlanToEmail(env, email, 'guest', 'canceled', obj.id);
         } else {
           await applyPlanToEmail(env, email, plan, obj.status || 'active', obj.id);
         }
@@ -135,7 +135,7 @@ export async function handleBillingRoutes(
   const session = await requireSession(request, env);
   if (!session.ok) return jsonResponse({ error: session.error }, 401, request);
   const email = session.email;
-  let user = (await getUser(env, email)) || { email, createdAt: Date.now(), keyIds: [], plan: 'free' };
+  let user = (await getUser(env, email)) || { email, createdAt: Date.now(), keyIds: [], plan: 'guest', planStatus: 'none' };
 
   if (path === '/v1/billing/usage' && request.method === 'GET') {
     const plan = userPlan(user);
@@ -145,7 +145,7 @@ export async function handleBillingRoutes(
     return jsonResponse(
       {
         plan,
-        planStatus: user.planStatus || 'active',
+        planStatus: user.planStatus || 'none',
         limits: PLANS[plan].limits,
         apiUsedToday: used,
         apiLimit: PLANS[plan].limits.apiRequestsPerDay,

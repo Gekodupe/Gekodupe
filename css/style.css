@@ -1,5 +1,5 @@
 /* ============================================================
-   Geckodupe by Flareform — Professional Design System
+   Geckodupe by Flareform - Professional Design System
    Inspired by: Formspree, Linear, Vercel tool aesthetics
    Font: Geist (Google Fonts)
    Colors: Flareform Orange #f7831e, dark neutrals, clean whites
@@ -855,6 +855,18 @@ button:disabled { opacity: 0.4; cursor: not-allowed; }
   border-color: var(--color-border-strong);
 }
 
+.ink-btn {
+  background: #1a1a1a !important;
+  color: #ffffff !important;
+  border: 1px solid #1a1a1a !important;
+}
+
+.ink-btn:hover {
+  background: #ffffff !important;
+  color: #1a1a1a !important;
+  border-color: #1a1a1a !important;
+}
+
 /* Upload button */
 .mobile-upload-container {
   display: flex;
@@ -935,7 +947,18 @@ button:disabled { opacity: 0.4; cursor: not-allowed; }
 }
 
 /* ---------- CODE / PRE ---------- */
-code, pre {
+code {
+  display: inline;
+  background: var(--surface);
+  padding: 2px 6px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  font-family: var(--mono);
+  font-size: 12px;
+  color: #fff;
+  word-break: break-word;
+}
+pre {
   display: block;
   background: var(--surface);
   padding: 12px 14px;
@@ -945,8 +968,14 @@ code, pre {
   white-space: pre-wrap;
   font-family: var(--mono);
   font-size: 12px;
-  line-height: 1.6;
-  color: var(--text);
+  color: #fff;
+  overflow-x: auto;
+}
+pre code {
+  display: inline;
+  padding: 0;
+  border: none;
+  background: transparent;
 }
 
 /* ---------- TYPOGRAPHY ---------- */
@@ -993,6 +1022,71 @@ ul.info-list {
   font-size: 16px;
   line-height: 1.7;
   color: var(--text);
+}
+
+.legal-panel {
+  max-width: 720px;
+}
+.legal-lead {
+  color: var(--color-text-secondary, #484848);
+  margin-bottom: 20px;
+}
+.legal-toc {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 16px;
+  margin: 0 0 32px;
+  padding: 16px 0;
+  border-top: 1px solid var(--color-border-muted, #e5e5e5);
+  border-bottom: 1px solid var(--color-border-muted, #e5e5e5);
+}
+.legal-toc a,
+.legal-toc-btn {
+  color: #1a1a1a;
+  text-decoration: none;
+  font-size: 13px;
+  border: none;
+  border-bottom: 1px solid rgba(26, 26, 26, 0.25);
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+  font-family: inherit;
+}
+.legal-toc a:hover,
+.legal-toc-btn:hover {
+  border-bottom-color: #f7831e;
+  color: #f7831e;
+}
+.legal-panel h2 {
+  margin-top: 36px;
+  scroll-margin-top: 80px;
+}
+.legal-panel h3 {
+  margin-top: 20px;
+  font-size: 15px;
+  font-weight: 600;
+}
+.legal-list {
+  margin: 12px 0 16px 1.25rem;
+  padding: 0;
+}
+.legal-list li {
+  margin-bottom: 8px;
+}
+.legal-note {
+  margin-top: 32px;
+  padding-top: 16px;
+  border-top: 1px solid var(--color-border-muted, #e5e5e5);
+  font-size: 13px;
+  color: var(--color-text-secondary, #484848);
+}
+.sidebar-legal-link {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.sidebar-legal-link:hover {
+  color: #f7831e;
 }
 
 #s-3 p {
@@ -1460,7 +1554,7 @@ tr:nth-child(even) td { background: var(--surface); color: #fff !important; }
 
   .button-group { flex-direction: column; width: 100%; }
 
-  button:not(.toast-close):not(.clear-diagnostics-btn):not(.demo-preview-close-btn):not(.auth-text-btn):not(.quota-link-btn) {
+  button:not(.toast-close):not(.clear-diagnostics-btn):not(.demo-preview-close-btn):not(.auth-text-btn):not(.quota-link-btn):not(.legal-toc-btn) {
     width: 100%;
   }
   .mobile-upload-btn {
@@ -1517,7 +1611,7 @@ tr:nth-child(even) td { background: var(--surface); color: #fff !important; }
   .control-group { width: 100%; }
   .button-group { flex-direction: column; width: 100%; }
   
-  button:not(.toast-close):not(.clear-diagnostics-btn):not(.demo-preview-close-btn):not(.auth-text-btn):not(.quota-link-btn) {
+  button:not(.toast-close):not(.clear-diagnostics-btn):not(.demo-preview-close-btn):not(.auth-text-btn):not(.quota-link-btn):not(.legal-toc-btn) {
     width: 100%;
   }
 
@@ -1735,7 +1829,7 @@ tr:nth-child(even) td { background: var(--surface); color: #fff !important; }
   border-radius: 0;
 }
 
-/* Account / auth — match API & Pricing light panels */
+/* Account / auth - match API & Pricing light panels */
 .acct-workspace {
   display: flex;
   flex-direction: column;

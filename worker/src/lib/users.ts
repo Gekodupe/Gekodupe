@@ -12,11 +12,12 @@ export async function putUser(env: Env, user: any): Promise<void> {
 export function userPlan(user: any | null): PlanId {
   if (!user) return 'guest';
   const plan = normalizePlan(user.plan);
-  if (plan === 'guest') return 'free';
-  if (user.planStatus && user.planStatus !== 'active' && user.planStatus !== 'trialing') {
-    if (plan !== 'free') return 'free';
-  }
-  return plan === 'guest' ? 'free' : plan;
+  const status = String(user.planStatus || 'none');
+  const paidStatus = status === 'active' || status === 'trialing';
+  // Basic ($5) and higher require an active Stripe subscription. Unpaid accounts stay Guest (no API keys).
+  const hasStripe = !!user.stripeSubscriptionId;
+  if (!paidStatus || !hasStripe || plan === 'guest') return 'guest';
+  return plan;
 }
 
 export function dayKey(d = new Date()): string {
@@ -67,7 +68,7 @@ export async function enforceApiQuota(
   env: Env,
   opts: { tenant: string; email?: string; plan?: PlanId }
 ): Promise<{ ok: true; used: number; limit: number; plan: PlanId } | { ok: false; error: string; status: number; plan: PlanId; used: number; limit: number }> {
-  let plan: PlanId = opts.plan || 'free';
+  let plan: PlanId = opts.plan || 'guest';
   if (opts.email) {
     const user = await getUser(env, opts.email);
     plan = userPlan(user);

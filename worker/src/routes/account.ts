@@ -4,6 +4,7 @@ import { jsonResponse } from '../lib/cors';
 import type { Env } from '../lib/env';
 import { PLANS, type PlanId } from '../lib/plans';
 import { getApiUsage, getUsageHistory, getUser, putUser, tenantIdFromEmail, userPlan } from '../lib/users';
+import { formatApiLogLine, readApiLogs } from '../lib/request-log';
 import { readJsonBody } from '../lib/validate';
 
 export async function handleAccountRoutes(
@@ -23,7 +24,8 @@ export async function handleAccountRoutes(
     email,
     createdAt: Date.now(),
     keyIds: [],
-    plan: 'free' as PlanId,
+    plan: 'guest' as PlanId,
+    planStatus: 'none',
     emailVerified: false
   };
 
@@ -38,7 +40,8 @@ export async function handleAccountRoutes(
         email,
         plan,
         planName: PLANS[plan].name,
-        planStatus: user.planStatus || 'active',
+        planStatus: user.planStatus || 'none',
+        paid: plan !== 'guest',
         emailVerified: !!user.emailVerified,
         hasPassword: !!user.passwordHash,
         stripeCustomerId: user.stripeCustomerId ? true : false,
@@ -65,6 +68,17 @@ export async function handleAccountRoutes(
   if (path === '/v1/account/keys' && request.method === 'POST') {
     const plan = userPlan(user);
     const maxKeys = PLANS[plan].limits.maxKeys;
+    if (maxKeys <= 0) {
+      return jsonResponse(
+        {
+          error: 'API keys require a paid Basic plan or higher. Subscribe on Pricing ($5/mo).',
+          code: 'plan_required',
+          plan
+        },
+        403,
+        request
+      );
+    }
     if ((user.keyIds || []).length >= maxKeys) {
       return jsonResponse(
         {
@@ -127,7 +141,6 @@ export async function handleAccountRoutes(
       {
         ok: true,
         apiKey: raw,
-        envExample: 'GECKODUPE_API_KEY=' + raw,
         key: {
           id,
           label,
@@ -171,6 +184,20 @@ export async function handleAccountRoutes(
     user.keyIds = (user.keyIds || []).filter((x) => x !== id);
     await putUser(env, user);
     return jsonResponse({ ok: true }, 200, request);
+  }
+
+  if (path === '/v1/account/logs' && request.method === 'GET') {
+    const logs = await readApiLogs(env, email);
+    const lines = logs.map(formatApiLogLine);
+    return jsonResponse(
+      {
+        logs,
+        lines,
+        count: logs.length
+      },
+      200,
+      request
+    );
   }
 
   // Legacy body-based revoke

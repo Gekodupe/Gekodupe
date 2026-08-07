@@ -1,4 +1,4 @@
-// TypeScript port of js/engines/spam.js — keep scorePayload / cleanText API aligned for parity tests
+// TypeScript port of js/engines/spam.js - keep scorePayload / cleanText API aligned for parity tests
 
 export type SpamMode = 'form' | 'list' | 'log';
 export type SpamDecision = 'allow' | 'soft_reject' | 'block';

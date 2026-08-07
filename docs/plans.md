@@ -12,17 +12,18 @@ When the daily API quota is hit, endpoints return `429` with a clear error. Upgr
 
 Quota is per account, shared across keys.
 
-## Local browser tools (guest vs signed in)
+## Local browser tools (guest vs paid)
 
-Guests can try Text Data, Directories, Media, and Spam with soft caps. Sign in on **Account** for higher local limits. Exact caps show on each tool banner.
+Guests and unpaid signed-in accounts can try Text Data, Directories, Media, and Spam with soft caps. **API keys require a paid Basic plan or higher** ($5/mo). Creating an account is free; subscribe on **Pricing** to unlock keys.
 
-Examples (guest):
+Examples (guest / unpaid):
 
 - Text: about 2,000 lines, 5 runs / day
 - Directories: about 40 files
 - Media: about 25 files
 - Spam: about 1,000 lines, 5 runs / day
 
+Basic and higher raise local caps and unlock API quota.
 ## Billing
 
 - Checkout and invoices run through Stripe

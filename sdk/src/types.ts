@@ -69,7 +69,7 @@ export class GeckodupeApiError extends Error {
   body: GeckodupeErrorBody;
 
   constructor(status: number, body: GeckodupeErrorBody) {
-    const detail = [body.error, body.reason, body.hint].filter(Boolean).join(' — ');
+    const detail = [body.error, body.reason, body.hint].filter(Boolean).join(' - ');
     super(detail || 'Geckodupe API error (' + status + ')');
     this.name = 'GeckodupeApiError';
     this.status = status;

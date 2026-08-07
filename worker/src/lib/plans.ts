@@ -25,7 +25,7 @@ export const PLANS: Record<PlanId, PlanInfo> = {
     id: 'guest',
     name: 'Guest',
     priceMonthly: 0,
-    blurb: 'Try the local tools with soft limits.',
+    blurb: 'Try local tools with soft limits. Create an account anytime; API keys need Basic or higher.',
     limits: {
       apiRequestsPerDay: 0,
       maxKeys: 0,
@@ -36,13 +36,13 @@ export const PLANS: Record<PlanId, PlanInfo> = {
       spamMaxLines: 1000,
       spamRunsPerDay: 5
     },
-    features: ['Local normalize & dedupe', 'Soft daily caps', 'Sign in to unlock more']
+    features: ['Local normalize & dedupe', 'Soft daily caps', 'Subscribe to Basic for API keys']
   },
   free: {
     id: 'free',
     name: 'Basic',
     priceMonthly: 5,
-    blurb: 'Signed-in local tools plus a starter API allowance.',
+    blurb: 'Paid plan: higher local limits plus API keys and a daily request allowance.',
     limits: {
       apiRequestsPerDay: 1500,
       maxKeys: 3,

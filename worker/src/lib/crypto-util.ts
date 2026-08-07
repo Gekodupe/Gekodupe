@@ -24,5 +24,5 @@ export function mintApiKey(): string {
 }
 
 export function keyPrefix(apiKey: string): string {
-  return apiKey.slice(0, 12) + '…';
+  return apiKey.slice(0, 12) + '...';
 }

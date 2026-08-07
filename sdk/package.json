@@ -1,7 +1,7 @@
 {
   "name": "geckodupe",
   "version": "0.1.1",
-  "description": "Local-first data normalization and spam/idempotency engine. Use a Geckodupe API key for hosted burst and event dedupe — no Cloudflare setup required.",
+  "description": "Local-first data normalization and spam/idempotency engine. Use a Geckodupe API key for hosted burst and event dedupe - no Cloudflare setup required.",
   "license": "GPL-3.0-or-later",
   "author": "Flareform",
   "homepage": "https://gekodupe.github.io/Gekodupe/",

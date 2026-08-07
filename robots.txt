@@ -4,6 +4,11 @@ Allow: /text-file/
 Allow: /folder-zip/
 Allow: /image-video/
 Allow: /spam/
+Allow: /api/
+Allow: /pricing/
+Allow: /account/
+Allow: /docs-landing/
+Allow: /legal/
 Allow: /public/
 Allow: /css/
 Allow: /js/
@@ -15,7 +20,7 @@ Disallow: /package.json
 Disallow: /package-lock.json
 Disallow: /site.config.json
 
-# AI / training crawlers — keep product pages discoverable, block tooling paths
+# AI / training crawlers - keep product pages discoverable, block tooling paths
 User-agent: GPTBot
 Allow: /
 Disallow: /scripts/

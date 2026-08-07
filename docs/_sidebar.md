@@ -10,4 +10,3 @@
 * [Errors](errors.md)
 * [Security](security.md)
 * [Local browser tools](local-tools.md)
-* [Account and billing](account-billing.md)

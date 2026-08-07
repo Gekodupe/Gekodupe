@@ -8,7 +8,7 @@ The biggest value isn’t removing duplicates. It’s that everything first beco
 npm install geckodupe
 ```
 
-You only need a **Geckodupe API key**. You do not need Cloudflare, Workers, or KV of your own — hosted burst memory and event dedupe run on Geckodupe’s API.
+You only need a **Geckodupe API key**. You do not need Cloudflare, Workers, or KV of your own - hosted burst memory and event dedupe run on Geckodupe’s API.
 
 ```
 https://geckodupe-spam.nic-58f.workers.dev
@@ -38,13 +38,13 @@ const result = await gecko.checkEvent({
 });
 
 if (result.duplicate || result.decision === 'block') {
-  // reject — already seen or spam
+  // reject - already seen or spam
 }
 ```
 
 ## Local (no network)
 
-Normalization and scoring run offline — useful in tests, Electron main, and edge cases before calling the API.
+Normalization and scoring run offline - useful in tests, Electron main, and edge cases before calling the API.
 
 ```ts
 import { normalize, fingerprint, scorePayload, cleanText } from 'geckodupe';

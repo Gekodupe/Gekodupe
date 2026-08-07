@@ -66,7 +66,7 @@ async function apiFetch(path, opts) {
       body: opts.body != null ? JSON.stringify(opts.body) : undefined
     });
   } catch (e) {
-    var net = new Error('Network error — could not reach Geckodupe API');
+    var net = new Error('Network error - could not reach Geckodupe API');
     net.status = 0;
     throw net;
   }
@@ -76,7 +76,7 @@ async function apiFetch(path, opts) {
   try {
     data = text ? JSON.parse(text) : null;
   } catch (e) {
-    data = { error: res.status >= 500 ? 'Server error — try again in a moment' : 'Invalid response' };
+    data = { error: res.status >= 500 ? 'Server error - try again in a moment' : 'Invalid response' };
   }
   if (!res.ok) {
     var err = new Error((data && (data.error || data.message)) || ('Request failed (' + res.status + ')'));
@@ -112,19 +112,104 @@ function apiRenderSignedIn(account) {
   if (emailEl) emailEl.textContent = (account && account.email) || apiEmail || '';
 
   var planEl = document.getElementById('api-user-plan');
+  var usage = account && account.usage;
+  var maxKeys = (usage && usage.maxKeys) || 0;
+  var paid = account && account.paid === true;
   if (planEl) {
-    var plan = (account && account.planName) || (account && account.plan) || 'Basic';
-    var usage = account && account.usage;
+    var plan = (account && account.planName) || (account && account.plan) || 'Guest';
     var line = plan;
     if (usage) {
       line += ' · ' + (usage.apiUsedToday || 0).toLocaleString() + ' / ' + (usage.apiLimit || 0).toLocaleString() + ' today';
     }
-    if (account && account.emailVerified === false) line += ' · verify email to create keys';
+    if (!paid || maxKeys <= 0) line += ' · subscribe to Basic for API keys';
+    else if (account && account.emailVerified === false) line += ' · verify email to create keys';
     planEl.textContent = line;
+  }
+
+  var createRow = document.getElementById('api-create-row');
+  var upgradeRow = document.getElementById('api-upgrade-row');
+  var createDesc = document.getElementById('api-create-desc');
+  var canCreate = paid && maxKeys > 0;
+  if (createRow) createRow.style.display = canCreate ? '' : 'none';
+  if (upgradeRow) upgradeRow.style.display = canCreate ? 'none' : 'flex';
+  if (createDesc) {
+    createDesc.textContent = canCreate
+      ? 'One key works for score, clean, check, and event idempotency. Email must be verified on Account.'
+      : 'API keys require Basic ($5/mo) or higher. Create an account is free; subscribe on Pricing to unlock keys.';
   }
 
   apiRenderKeyList(account);
   apiRenderUsageCharts(account);
+  apiRefreshLogs();
+}
+
+var apiLogsCache = [];
+
+async function apiRefreshLogs() {
+  var rawEl = document.getElementById('api-logs-raw');
+  var dedupedEl = document.getElementById('api-logs-deduped');
+  var dedupeLabel = document.getElementById('api-logs-dedupe-label');
+  if (!apiSession) {
+    if (rawEl) rawEl.value = '';
+    return;
+  }
+  try {
+    var res = await apiFetch('/v1/account/logs');
+    apiLogsCache = (res && res.lines) || [];
+    if (rawEl) {
+      rawEl.value = apiLogsCache.length
+        ? apiLogsCache.join('\n')
+        : 'No requests yet. Call score, clean, check, or events from your server.';
+    }
+    if (dedupedEl) {
+      dedupedEl.value = '';
+      dedupedEl.hidden = true;
+    }
+    if (dedupeLabel) dedupeLabel.hidden = true;
+  } catch (e) {
+    if (rawEl) rawEl.value = (e && e.message) || 'Could not load logs';
+  }
+}
+
+function apiDedupeLogs() {
+  var rawEl = document.getElementById('api-logs-raw');
+  var dedupedEl = document.getElementById('api-logs-deduped');
+  var dedupeLabel = document.getElementById('api-logs-dedupe-label');
+  var text = rawEl ? String(rawEl.value || '') : '';
+  if (!text.trim() || text.indexOf('No requests yet') === 0) {
+    if (typeof showToast === 'function') showToast('Nothing to dedupe yet', 'warning');
+    return;
+  }
+  if (typeof processLog !== 'function') {
+    if (typeof showToast === 'function') showToast('Log engine not loaded', 'warning');
+    return;
+  }
+  try {
+    var result = processLog(text, false, false, true, 'original', 0.92, 'all', false, true);
+    var lines = (result && result.lines) || [];
+    var out = lines.join('\n');
+    if (dedupedEl) {
+      dedupedEl.value = out;
+      dedupedEl.hidden = false;
+    }
+    if (dedupeLabel) {
+      dedupeLabel.hidden = false;
+      dedupeLabel.textContent =
+        'Deduped · ' +
+        ((result && result.remaining) || lines.length) +
+        ' kept of ' +
+        ((result && result.total) || text.split('\n').length) +
+        ' (log mode)';
+    }
+    if (typeof showToast === 'function') {
+      showToast(
+        'Deduped logs: removed ' + ((result && result.removed) || 0) + ' duplicate lines',
+        'success'
+      );
+    }
+  } catch (e) {
+    if (typeof showToast === 'function') showToast((e && e.message) || 'Dedupe failed', 'error');
+  }
 }
 
 function apiRenderKeyList(account) {
@@ -141,7 +226,7 @@ function apiRenderKeyList(account) {
     row.className = 'api-key-row';
     row.innerHTML =
       '<div><strong style="font-weight:500;">' + (k.label || 'Default') + '</strong>' +
-      '<div class="api-panel-meta" style="margin:2px 0 0;">' + (k.prefix || '') + '</div></div>';
+      '<div class="api-panel-meta" style="margin:2px 0 0;">' + String(k.prefix || '').replace(/\u2026/g, '...') + '</div></div>';
     var btn = document.createElement('button');
     btn.type = 'button';
     btn.className = 'secondary-btn';
@@ -332,17 +417,15 @@ async function apiCreateKey() {
   var labelEl = document.getElementById('api-key-label');
   var label = labelEl ? labelEl.value.trim() : 'Default';
   try {
-    apiSetStatus('Creating key…');
+    apiSetStatus('Creating key...');
     var res = await apiFetch('/v1/account/keys', {
       method: 'POST',
       body: { label: label || 'Default' }
     });
     var box = document.getElementById('api-new-key-panel');
     var out = document.getElementById('api-new-key-value');
-    var envOut = document.getElementById('api-env-example');
     if (box) box.style.display = 'block';
     if (out) out.value = res.apiKey || (res.key && res.key.secret) || '';
-    if (envOut) envOut.value = res.envExample || ('GECKODUPE_API_KEY=' + (out ? out.value : ''));
     if (labelEl) labelEl.value = '';
     await apiRefreshAccount();
     apiSetStatus(res.warning || 'Key created. Copy it now.');

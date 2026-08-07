@@ -24,7 +24,7 @@ async function rateOk(env: Env, key: string): Promise<boolean> {
     const r = await env.SPAM_RATE_LIMITER.limit({ key });
     return r.success;
   } catch {
-    // Fail open if the limiter binding errors — do not lock out all auth
+    // Fail open if the limiter binding errors - do not lock out all auth
     return true;
   }
 }
@@ -50,8 +50,8 @@ function ensureUserShape(email: string, existing: any | null): any {
     ...base,
     email,
     keyIds: Array.isArray(base.keyIds) ? base.keyIds : [],
-    plan: base.plan || 'free',
-    planStatus: base.planStatus || 'active',
+    plan: base.plan || 'guest',
+    planStatus: base.planStatus || 'none',
     emailVerified: !!base.emailVerified
   };
 }
@@ -83,7 +83,8 @@ export async function handleAuthRoutes(request: Request, env: Env, path: string)
     user.passwordHash = hash;
     // Preserve verification if this email already signed in via magic link
     user.emailVerified = !!(existing && existing.emailVerified);
-    user.plan = user.plan || 'free';
+    user.plan = user.plan || 'guest';
+    user.planStatus = user.planStatus || 'none';
     await putUser(env, user);
 
     const verifyToken = 'ver_' + randomToken(18);
@@ -416,7 +417,7 @@ export async function handleAuthRoutes(request: Request, env: Env, path: string)
         email: session.email,
         emailVerified: !!user.emailVerified,
         plan,
-        planStatus: user.planStatus || 'active',
+        planStatus: user.planStatus || 'none',
         limits: PLANS[plan].limits
       },
       200,

@@ -35,7 +35,7 @@ const LANDING_PAGES = [
     title: 'Folder / Zip Deduplication',
     description: 'Deduplicate files and lines inside project folders and zip archives. Skip node_modules, download a cleaned zip. Runs entirely in your browser.',
     h1: 'Folder and zip archive deduplication',
-    lead: 'Load a project folder or zip archive. Geckodupe fingerprints files, removes byte-identical copies, and deduplicates lines inside each file — with configurable skip paths.',
+    lead: 'Load a project folder or zip archive. Geckodupe fingerprints files, removes byte-identical copies, and deduplicates lines inside each file - with configurable skip paths.',
     keywords: 'folder deduplication, zip dedupe, remove duplicate files, project cleanup, archive deduplication'
   },
   {
@@ -44,7 +44,7 @@ const LANDING_PAGES = [
     title: 'Image / Video Deduplication',
     description: 'Find duplicate and near-duplicate photos and videos by visual content, not filename. Burst frames, resized copies, reference-target mode. 100% local.',
     h1: 'Image and video library deduplication',
-    lead: 'Drop a folder or zip of photos and videos. Geckodupe compares visual fingerprints to collapse burst shots, resized exports, and near-duplicate clips — with optional reference-target mode.',
+    lead: 'Drop a folder or zip of photos and videos. Geckodupe compares visual fingerprints to collapse burst shots, resized exports, and near-duplicate clips - with optional reference-target mode.',
     keywords: 'photo deduplication, duplicate images, video dedupe, near duplicate photos, burst photo cleanup'
   },
   {
@@ -71,7 +71,7 @@ const LANDING_PAGES = [
     title: 'Pricing',
     description: 'Geckodupe plans for local tools and hosted API. Basic, Starter, and Pro via Stripe. Cancel anytime in the customer portal.',
     h1: 'Geckodupe pricing',
-    lead: 'Start with Basic for API keys and a daily allowance, or upgrade for production volume. Billing by Stripe — edit or cancel anytime.',
+    lead: 'Start with Basic for API keys and a daily allowance, or upgrade for production volume. Billing by Stripe - edit or cancel anytime.',
     keywords: 'geckodupe pricing, spam api pricing, form spam plans, geckodupe subscription'
   },
   {
@@ -91,6 +91,15 @@ const LANDING_PAGES = [
     h1: 'Geckodupe Docs',
     lead: 'Everything you need to use the Geckodupe API and browser tools. Straight answers, full coverage.',
     keywords: 'geckodupe docs, api documentation, spam api docs, geckodupe sdk'
+  },
+  {
+    slug: 'legal',
+    dir: 'legal',
+    title: 'Legal',
+    description: 'Geckodupe Terms of Service, Privacy Policy, Acceptable Use, API and billing terms, disclaimers, and liability limits. Operated by Flareform.',
+    h1: 'Legal',
+    lead: 'Terms, privacy, acceptable use, API and billing rules, and liability limits for Geckodupe by Flareform.',
+    keywords: 'geckodupe terms, privacy policy, acceptable use, api terms, flareform legal'
   }
 ];
 
@@ -110,8 +119,8 @@ function buildLandingPage(page) {
   const pageUrl = siteUrl + '/' + page.dir + '/';
   const appUrl = appHashUrl(page.slug);
   const redirectScript = 'location.replace(new URL(' + JSON.stringify(appUrl) + ', location.href).href)';
-  // Spam landing avoids em dashes in titles and visible copy
-  const titleJoin = page.slug === 'spam' ? ' - ' : ' — ';
+  // Always use ASCII hyphen in titles (never em dash)
+  const titleJoin = ' - ';
   const pageTitleFull = page.title + titleJoin + brandName;
   const appTitleFull = brandName + titleJoin + page.title;
   const jsonLd = {
@@ -295,7 +304,7 @@ ${JSON.stringify(jsonLd, null, 2)}
       <p class="lp-eyebrow">Geckodupe</p>
       <h1>${escapeHtml(page.h1)}</h1>
       <p class="lp-lead">${escapeHtml(page.lead)}</p>
-      <p class="lp-redirect">Redirecting to <a href="${appUrl}">${escapeHtml(config.name)} ${escapeHtml(page.title)}</a>…</p>
+      <p class="lp-redirect">Redirecting to <a href="${appUrl}">${escapeHtml(config.name)} ${escapeHtml(page.title)}</a>...</p>
     </main>
   </div>
   <footer class="lp-footer">&copy; 2026 Geckodupe by Flareform</footer>
@@ -344,6 +353,11 @@ const robots = [
   'Allow: /folder-zip/',
   'Allow: /image-video/',
   'Allow: /spam/',
+  'Allow: /api/',
+  'Allow: /pricing/',
+  'Allow: /account/',
+  'Allow: /docs-landing/',
+  'Allow: /legal/',
   'Allow: /public/',
   'Allow: /css/',
   'Allow: /js/',
@@ -355,7 +369,7 @@ const robots = [
   'Disallow: /package-lock.json',
   'Disallow: /site.config.json',
   '',
-  '# AI / training crawlers — keep product pages discoverable, block tooling paths',
+  '# AI / training crawlers - keep product pages discoverable, block tooling paths',
   'User-agent: GPTBot',
   'Allow: /',
   'Disallow: /scripts/',
@@ -451,7 +465,8 @@ const jsonLd = {
         'Text and spreadsheet deduplication',
         'Folder and zip archive cleanup',
         'Image and video near-duplicate detection',
-        '100% browser-based, no uploads'
+        'Local spam despam and hosted spam API',
+        '100% browser-based local tools, no dataset uploads'
       ],
       screenshot: iconUrl,
       image: iconUrl,
@@ -460,10 +475,40 @@ const jsonLd = {
       sameAs: sameAs
     },
     {
+      '@type': 'FAQPage',
+      '@id': siteUrl + '/#faq',
+      mainEntity: [
+        {
+          '@type': 'Question',
+          name: 'Does Geckodupe upload my files?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'Local browser tools (Text Data, Directories, Media, Spam) process data on your device. Datasets are not uploaded to Geckodupe for dedupe. The hosted API only receives payloads your servers send with an API key.'
+          }
+        },
+        {
+          '@type': 'Question',
+          name: 'How do I get a Geckodupe API key?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'Sign in on Account, verify your email, open the API tab, and create a key. Use gd_live_ keys only on your server.'
+          }
+        },
+        {
+          '@type': 'Question',
+          name: 'What is Geckodupe used for?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'Geckodupe normalizes messy text, spreadsheets, folders, media libraries, and form spam so duplicates become comparable, then keeps one canonical copy. Hosted endpoints add spam scoring and event idempotency.'
+          }
+        }
+      ]
+    },
+    {
       '@type': 'WebPage',
       '@id': siteUrl + '/#webpage',
       url: siteUrl + '/',
-      name: brandName + ' — Remove Duplicates',
+      name: brandName + ' - Remove Duplicates',
       description: config.description,
       isPartOf: { '@id': siteUrl + '/#website' },
       about: { '@id': siteUrl + '/#app' },
@@ -476,7 +521,7 @@ const indexPath = path.join(ROOT, 'index.html');
 let index = fs.readFileSync(indexPath, 'utf8');
 index = index.replace(
   /<title>[^<]*<\/title>/,
-  `<title>${brandName} — Remove Duplicates</title>`
+  `<title>${brandName} - Remove Duplicates</title>`
 );
 index = index.replace(
   /<meta name="description" content="[^"]*">/,
@@ -517,7 +562,7 @@ index = index.replace(
 );
 index = index.replace(
   /<meta property="og:title" content="[^"]*">/,
-  `<meta property="og:title" content="${escapeHtml(brandName)} — Remove Duplicates">`
+  `<meta property="og:title" content="${escapeHtml(brandName)} - Remove Duplicates">`
 );
 index = index.replace(
   /<meta property="og:description" content="[^"]*">/,
@@ -527,9 +572,12 @@ index = index.replace(
   /<meta property="og:url" content="[^"]*">/,
   `<meta property="og:url" content="${siteUrl}/">`
 );
+// Deduplicate image/locale tags then write a single clean OG image block
+index = index.replace(/\n?\s*<meta property="og:image(?::[^"]*)?" content="[^"]*">/g, '');
+index = index.replace(/\n?\s*<meta property="og:locale" content="[^"]*">/g, '');
 index = index.replace(
-  /<meta property="og:image" content="[^"]*">/,
-  `<meta property="og:image" content="${iconUrl}">\n  <meta property="og:image:width" content="${ogImageWidth}">\n  <meta property="og:image:height" content="${ogImageHeight}">\n  <meta property="og:image:alt" content="${escapeHtml(brandName)} icon">\n  <meta property="og:locale" content="${escapeHtml(locale)}">`
+  /(<meta property="og:url" content="[^"]*">)/,
+  `$1\n  <meta property="og:image" content="${iconUrl}">\n  <meta property="og:image:width" content="${ogImageWidth}">\n  <meta property="og:image:height" content="${ogImageHeight}">\n  <meta property="og:image:alt" content="${escapeHtml(brandName)} icon">\n  <meta property="og:locale" content="${escapeHtml(locale)}">`
 );
 index = index.replace(
   /<meta name="twitter:card" content="[^"]*">/,
@@ -537,15 +585,16 @@ index = index.replace(
 );
 index = index.replace(
   /<meta name="twitter:title" content="[^"]*">/,
-  `<meta name="twitter:title" content="${escapeHtml(brandName)} — Remove Duplicates">`
+  `<meta name="twitter:title" content="${escapeHtml(brandName)} - Remove Duplicates">`
 );
 index = index.replace(
   /<meta name="twitter:description" content="[^"]*">/,
   `<meta name="twitter:description" content="${escapeHtml(config.description)}">`
 );
+index = index.replace(/\n?\s*<meta name="twitter:image(?::alt)?" content="[^"]*">/g, '');
 index = index.replace(
-  /<meta name="twitter:image" content="[^"]*">/,
-  `<meta name="twitter:image" content="${iconUrl}">\n  <meta name="twitter:image:alt" content="${escapeHtml(brandName)} icon">`
+  /(<meta name="twitter:description" content="[^"]*">)/,
+  `$1\n  <meta name="twitter:image" content="${iconUrl}">\n  <meta name="twitter:image:alt" content="${escapeHtml(brandName)} icon">`
 );
 index = index.replace(
   /<meta http-equiv="Content-Security-Policy" content="[^"]*">/,

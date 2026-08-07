@@ -11,17 +11,17 @@
 ## API keys
 
 - Format: `gd_live_<hex>`
-- Send as `Authorization: Bearer …`
-- **Server-side only** — never ship keys in browsers, mobile binaries, or public repos
+- Send as `Authorization: Bearer ...`
+- **Server-side only** - never ship keys in browsers, mobile binaries, or public repos
 - Shown once at creation; afterward only a prefix is stored in the UI
 - Rotate: create a new key → update apps → revoke the old key
 - Treat a leaked key as compromised immediately and revoke it
 
 ## Passwords and sessions
 
-- Passwords hashed with PBKDF2-SHA-256 (100,000 iterations — Cloudflare Workers maximum)
+- Passwords hashed with PBKDF2-SHA-256 (100,000 iterations - Cloudflare Workers maximum)
 - Salt stored per account; raw passwords are never stored
-- Sessions are opaque `sess_…` tokens in KV with TTL (shorter without Remember me, longer with it)
+- Sessions are opaque `sess_...` tokens in KV with TTL (shorter without Remember me, longer with it)
 - Magic codes and reset/verify tokens expire (minutes to hours depending on flow)
 
 ## What we store
@@ -38,7 +38,7 @@
 
 ## Email
 
-Transactional mail covers sign-in codes, email verification, and password reset. Delivery depends on the configured email provider. If mail fails, Account surfaces an error on register/resend when possible — check spam and use **Resend verification**.
+Transactional mail covers sign-in codes, email verification, and password reset. Delivery depends on the configured email provider. If mail fails, Account surfaces an error on register/resend when possible - check spam and use **Resend verification**.
 
 ## Payments
 
