@@ -2183,38 +2183,51 @@ tr:nth-child(even) td { background: var(--surface); color: #fff !important; }
   position: relative;
 }
 .api-logs-field .api-mono {
-  padding-top: 36px;
+  padding-top: 40px;
+  padding-right: 72px;
   min-height: 160px;
 }
 .api-logs-actions {
   position: absolute;
-  top: 6px;
-  right: 6px;
-  z-index: 2;
+  top: 8px;
+  right: 8px;
+  left: auto;
+  z-index: 3;
   display: flex;
-  gap: 2px;
+  flex-direction: row;
+  justify-content: flex-end;
+  gap: 4px;
+  pointer-events: none;
 }
 .api-logs-icon-btn {
-  width: 28px;
-  height: 28px;
-  min-width: 28px;
-  padding: 0;
-  display: inline-flex;
+  pointer-events: auto;
+  width: 28px !important;
+  height: 28px !important;
+  min-width: 28px !important;
+  max-width: 28px !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  display: inline-flex !important;
   align-items: center;
   justify-content: center;
-  background: transparent;
-  border: none;
-  color: #484848;
+  flex: 0 0 28px !important;
+  background: #1a1a1a !important;
+  border: 1px solid #1a1a1a !important;
+  color: #ffffff !important;
   cursor: pointer;
   border-radius: 0;
+  box-shadow: none;
 }
 .api-logs-icon-btn:hover {
-  color: #1a1a1a;
-  background: rgba(26, 26, 26, 0.06);
+  background: #333333 !important;
+  border-color: #333333 !important;
+  color: #ffffff !important;
 }
-.api-logs-icon-btn i {
+.api-logs-icon-btn i,
+.api-logs-icon-btn .ph-fill {
   font-size: 16px;
   line-height: 1;
+  color: #ffffff !important;
 }
 
 .api-usage-panel .api-chart {

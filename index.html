@@ -986,6 +986,7 @@
             <p class="api-panel-title">Request logs</p>
             <p class="api-panel-desc">Recent spam and events API calls for your account (metadata only, no payloads).</p>
             <div class="api-logs-field">
+              <textarea id="api-logs-raw" class="api-mono" readonly rows="8" placeholder="No requests yet. Call score, clean, check, or events from your server."></textarea>
               <div class="api-logs-actions">
                 <button type="button" class="api-logs-icon-btn" onclick="apiRefreshLogs()" title="Refresh" aria-label="Refresh logs">
                   <i class="ph-fill ph-arrow-clockwise" aria-hidden="true"></i>
@@ -994,7 +995,6 @@
                   <i class="ph-fill ph-copy" aria-hidden="true"></i>
                 </button>
               </div>
-              <textarea id="api-logs-raw" class="api-mono" readonly rows="8" placeholder="No requests yet. Call score, clean, check, or events from your server."></textarea>
             </div>
           </div>
 
