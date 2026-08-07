@@ -9,8 +9,15 @@ const ROOT = path.join(__dirname, '..');
 const config = JSON.parse(fs.readFileSync(path.join(ROOT, 'site.config.json'), 'utf8'));
 
 const siteUrl = config.siteUrl.replace(/\/$/, '');
+const brandName = config.brandName || (config.name + ' by Flareform');
 const today = new Date().toISOString().slice(0, 10);
 const cspMeta = buildMetaContentSecurityPolicy();
+const iconUrl = siteUrl + (config.ogImage || '/public/icon-512.png');
+const publisher = config.publisher || { name: 'Flareform', url: 'https://flareform.com' };
+const sameAs = Array.isArray(config.sameAs) ? config.sameAs : [];
+const locale = config.locale || 'en_US';
+const ogImageWidth = config.ogImageWidth || 512;
+const ogImageHeight = config.ogImageHeight || 512;
 
 const LANDING_PAGES = [
   {
@@ -58,59 +65,191 @@ function buildLandingPage(page) {
   const pageUrl = siteUrl + '/' + page.dir + '/';
   const appUrl = appHashUrl(page.slug);
   const redirectScript = 'location.replace(new URL(' + JSON.stringify(appUrl) + ', location.href).href)';
-  const iconUrl = siteUrl + '/public/icon-512.png';
   const jsonLd = {
     '@context': 'https://schema.org',
-    '@type': 'WebApplication',
-    name: config.name + ' — ' + page.title,
-    url: pageUrl,
-    description: page.description,
-    applicationCategory: 'UtilitiesApplication',
-    operatingSystem: 'Web browser',
-    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
-    isAccessibleForFree: true
+    '@graph': [
+      {
+        '@type': 'WebApplication',
+        '@id': pageUrl + '#app',
+        name: brandName + ' — ' + page.title,
+        url: pageUrl,
+        description: page.description,
+        applicationCategory: 'UtilitiesApplication',
+        operatingSystem: 'Web browser',
+        browserRequirements: 'Requires a modern browser with JavaScript enabled',
+        offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+        isAccessibleForFree: true,
+        publisher: { '@type': 'Organization', name: publisher.name, url: publisher.url },
+        isPartOf: { '@id': siteUrl + '/#website' }
+      },
+      {
+        '@type': 'BreadcrumbList',
+        '@id': pageUrl + '#breadcrumb',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: brandName, item: siteUrl + '/' },
+          { '@type': 'ListItem', position: 2, name: page.title, item: pageUrl }
+        ]
+      },
+      {
+        '@type': 'WebPage',
+        '@id': pageUrl + '#webpage',
+        url: pageUrl,
+        name: page.title + ' — ' + brandName,
+        description: page.description,
+        isPartOf: { '@id': siteUrl + '/#website' },
+        about: { '@id': pageUrl + '#app' },
+        breadcrumb: { '@id': pageUrl + '#breadcrumb' }
+      }
+    ]
   };
 
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>${escapeHtml(page.title)} — ${escapeHtml(config.name)}</title>
+  <title>${escapeHtml(page.title)} — ${escapeHtml(brandName)}</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="${escapeHtml(page.description)}">
   <meta name="keywords" content="${escapeHtml(page.keywords)}">
-  <meta name="robots" content="index, follow">
-  <meta name="application-name" content="${escapeHtml(config.name)}">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <meta name="googlebot" content="index, follow">
+  <meta name="application-name" content="${escapeHtml(brandName)}">
+  <meta name="author" content="${escapeHtml(publisher.name)}">
   <meta name="theme-color" content="${escapeHtml(config.themeColor)}">
+  <meta name="color-scheme" content="light">
   <link rel="canonical" href="${pageUrl}">
+  <link rel="alternate" href="${siteUrl}/#${page.slug}" title="${escapeHtml(page.title)} app view">
   <meta property="og:type" content="website">
-  <meta property="og:site_name" content="${escapeHtml(config.name)}">
-  <meta property="og:title" content="${escapeHtml(page.title)} — ${escapeHtml(config.name)}">
+  <meta property="og:locale" content="${escapeHtml(locale)}">
+  <meta property="og:site_name" content="${escapeHtml(brandName)}">
+  <meta property="og:title" content="${escapeHtml(page.title)} — ${escapeHtml(brandName)}">
   <meta property="og:description" content="${escapeHtml(page.description)}">
   <meta property="og:url" content="${pageUrl}">
   <meta property="og:image" content="${iconUrl}">
-  <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="${escapeHtml(page.title)} — ${escapeHtml(config.name)}">
+  <meta property="og:image:width" content="${ogImageWidth}">
+  <meta property="og:image:height" content="${ogImageHeight}">
+  <meta property="og:image:alt" content="${escapeHtml(brandName)} icon">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="${escapeHtml(page.title)} — ${escapeHtml(brandName)}">
   <meta name="twitter:description" content="${escapeHtml(page.description)}">
   <meta name="twitter:image" content="${iconUrl}">
+  <meta name="twitter:image:alt" content="${escapeHtml(brandName)} icon">
   <meta http-equiv="refresh" content="0;url=${appUrl}">
   <link rel="icon" type="image/x-icon" href="../public/favicon.ico">
   <link rel="icon" type="image/png" sizes="192x192" href="../public/icon-192.png">
+  <link rel="apple-touch-icon" href="../public/icon-192.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap">
   <script type="application/ld+json">
 ${JSON.stringify(jsonLd, null, 2)}
   </script>
   <style>
-    body { font-family: system-ui, sans-serif; margin: 2rem auto; max-width: 42rem; line-height: 1.5; color: #333; padding: 0 1rem; }
-    h1 { font-size: 1.5rem; }
-    a { color: #5a6b1a; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { height: 100%; }
+    body {
+      min-height: 100%;
+      display: flex;
+      flex-direction: column;
+      background: #ffffff;
+      color: #1a1a1a;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 400;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+    .lp-nav {
+      height: 56px;
+      background: #1a1a1a;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      padding: 0 24px;
+      flex-shrink: 0;
+    }
+    .lp-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: inherit;
+    }
+    .lp-brand img {
+      width: 28px;
+      height: 28px;
+      object-fit: contain;
+    }
+    .lp-brand-name { font-size: 14px; line-height: 1; color: #fff; }
+    .lp-brand-sub {
+      font-size: 11px;
+      line-height: 1.2;
+      color: #a1a1aa;
+      letter-spacing: 0.03em;
+      margin-top: 2px;
+    }
+    .lp-wrap {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 48px 24px;
+    }
+    .lp-main { width: 100%; max-width: 560px; }
+    .lp-eyebrow {
+      font-size: 13px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #f7831e;
+      margin-bottom: 12px;
+    }
+    h1 {
+      font-size: 32px;
+      font-weight: 400;
+      line-height: 1.2;
+      margin-bottom: 12px;
+      color: #1a1a1a;
+    }
+    .lp-lead { font-size: 15px; color: #484848; margin-bottom: 24px; }
+    .lp-redirect { font-size: 13px; color: #6b7280; }
+    .lp-redirect a {
+      color: #f7831e;
+      text-decoration: none;
+      border-bottom: 1px solid rgba(247, 131, 30, 0.35);
+    }
+    .lp-redirect a:hover { border-bottom-color: #f7831e; }
+    .lp-footer {
+      padding: 24px;
+      text-align: center;
+      font-size: 11px;
+      color: #6b7280;
+      flex-shrink: 0;
+    }
+    @media (max-width: 480px) {
+      .lp-nav { padding: 0 16px; }
+      h1 { font-size: 26px; }
+      .lp-wrap { padding: 32px 16px; }
+    }
   </style>
 </head>
 <body>
-  <main>
-    <h1>${escapeHtml(page.h1)}</h1>
-    <p>${escapeHtml(page.lead)}</p>
-    <p>Redirecting to <a href="${appUrl}">${escapeHtml(config.name)} ${escapeHtml(page.title)}</a>…</p>
-  </main>
+  <header class="lp-nav">
+    <a href="${appUrl}" class="lp-brand">
+      <img src="../public/logo-white.png" alt="Flareform">
+      <div>
+        <div class="lp-brand-name">Geckodupe</div>
+        <div class="lp-brand-sub">by Flareform</div>
+      </div>
+    </a>
+  </header>
+  <div class="lp-wrap">
+    <main class="lp-main">
+      <p class="lp-eyebrow">Geckodupe</p>
+      <h1>${escapeHtml(page.h1)}</h1>
+      <p class="lp-lead">${escapeHtml(page.lead)}</p>
+      <p class="lp-redirect">Redirecting to <a href="${appUrl}">${escapeHtml(config.name)} ${escapeHtml(page.title)}</a>…</p>
+    </main>
+  </div>
+  <footer class="lp-footer">&copy; 2026 Geckodupe by Flareform</footer>
   <script>${redirectScript};</script>
 </body>
 </html>
@@ -126,19 +265,24 @@ function writeLandingPages() {
 }
 
 const sitemapUrls = [
-  { loc: siteUrl + '/', priority: '1.0' }
+  { loc: siteUrl + '/', priority: '1.0', changefreq: 'weekly' }
 ].concat(LANDING_PAGES.map(function (page) {
-  return { loc: siteUrl + '/' + page.dir + '/', priority: '0.9' };
+  return { loc: siteUrl + '/' + page.dir + '/', priority: '0.9', changefreq: 'monthly' };
 }));
 
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
 ${sitemapUrls.map(function (entry) {
   return `  <url>
     <loc>${entry.loc}</loc>
     <lastmod>${today}</lastmod>
-    <changefreq>weekly</changefreq>
+    <changefreq>${entry.changefreq || 'weekly'}</changefreq>
     <priority>${entry.priority}</priority>
+    <image:image>
+      <image:loc>${iconUrl}</image:loc>
+      <image:title>${escapeHtml(brandName)}</image:title>
+    </image:image>
   </url>`;
 }).join('\n')}
 </urlset>
@@ -147,22 +291,44 @@ ${sitemapUrls.map(function (entry) {
 const robots = [
   'User-agent: *',
   'Allow: /',
+  'Allow: /text-file/',
+  'Allow: /folder-zip/',
+  'Allow: /image-video/',
+  'Allow: /public/',
+  'Allow: /css/',
+  'Allow: /js/',
   '',
   'Disallow: /404.html',
   'Disallow: /node_modules/',
-  'Disallow: /tests/',
+  'Disallow: /scripts/',
+  'Disallow: /package.json',
+  'Disallow: /package-lock.json',
+  'Disallow: /site.config.json',
+  '',
+  '# AI / training crawlers — keep product pages discoverable, block tooling paths',
+  'User-agent: GPTBot',
+  'Allow: /',
+  'Disallow: /scripts/',
+  'Disallow: /node_modules/',
+  '',
+  'User-agent: Google-Extended',
+  'Allow: /',
   '',
   `Sitemap: ${siteUrl}/sitemap.xml`,
+  `Host: ${siteUrl.replace(/^https?:\/\//, '')}`,
   ''
 ].join('\n');
 
 const manifest = {
-  name: config.name,
+  name: brandName,
   short_name: config.shortName,
   description: config.description,
   start_url: './#text-file',
   scope: './',
   display: 'standalone',
+  lang: 'en',
+  dir: 'ltr',
+  categories: ['utilities', 'productivity'],
   background_color: config.backgroundColor,
   theme_color: config.themeColor,
   icons: [
@@ -190,8 +356,9 @@ fs.writeFileSync(path.join(wellKnownDir, 'security.txt'), security);
 
 const humans = [
   '/* TEAM */',
-  'Project: Geckodupe',
+  'Project: ' + brandName,
   'Site: ' + siteUrl,
+  'Publisher: ' + publisher.name + ' (' + publisher.url + ')',
   'GitHub: ' + config.contact,
   '',
   '/* THANKS */',
@@ -202,22 +369,109 @@ fs.writeFileSync(path.join(ROOT, 'humans.txt'), humans);
 
 const jsonLd = {
   '@context': 'https://schema.org',
-  '@type': 'WebApplication',
-  name: config.name,
-  url: siteUrl + '/',
-  description: config.description,
-  applicationCategory: 'UtilitiesApplication',
-  operatingSystem: 'Web browser',
-  offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
-  browserRequirements: 'Requires a modern browser with JavaScript enabled',
-  isAccessibleForFree: true
+  '@graph': [
+    {
+      '@type': 'Organization',
+      '@id': publisher.url + '/#organization',
+      name: publisher.name,
+      url: publisher.url,
+      sameAs: sameAs
+    },
+    {
+      '@type': 'WebSite',
+      '@id': siteUrl + '/#website',
+      url: siteUrl + '/',
+      name: brandName,
+      description: config.description,
+      inLanguage: 'en',
+      publisher: { '@id': publisher.url + '/#organization' }
+    },
+    {
+      '@type': 'WebApplication',
+      '@id': siteUrl + '/#app',
+      name: brandName,
+      url: siteUrl + '/',
+      description: config.description,
+      applicationCategory: 'UtilitiesApplication',
+      operatingSystem: 'Web browser',
+      browserRequirements: 'Requires a modern browser with JavaScript enabled',
+      offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+      isAccessibleForFree: true,
+      featureList: [
+        'Text and spreadsheet deduplication',
+        'Folder and zip archive cleanup',
+        'Image and video near-duplicate detection',
+        '100% browser-based, no uploads'
+      ],
+      screenshot: iconUrl,
+      image: iconUrl,
+      publisher: { '@id': publisher.url + '/#organization' },
+      isPartOf: { '@id': siteUrl + '/#website' },
+      sameAs: sameAs
+    },
+    {
+      '@type': 'WebPage',
+      '@id': siteUrl + '/#webpage',
+      url: siteUrl + '/',
+      name: brandName + ' — Remove Duplicates',
+      description: config.description,
+      isPartOf: { '@id': siteUrl + '/#website' },
+      about: { '@id': siteUrl + '/#app' },
+      primaryImageOfPage: { '@type': 'ImageObject', url: iconUrl }
+    }
+  ]
 };
 
 const indexPath = path.join(ROOT, 'index.html');
 let index = fs.readFileSync(indexPath, 'utf8');
 index = index.replace(
+  /<title>[^<]*<\/title>/,
+  `<title>${brandName} — Remove Duplicates</title>`
+);
+index = index.replace(
+  /<meta name="description" content="[^"]*">/,
+  `<meta name="description" content="${escapeHtml(config.description)}">`
+);
+if (/<meta name="keywords" content="[^"]*">/.test(index)) {
+  index = index.replace(
+    /<meta name="keywords" content="[^"]*">/,
+    `<meta name="keywords" content="${escapeHtml(config.keywords || '')}">`
+  );
+} else {
+  index = index.replace(
+    /<meta name="description" content="[^"]*">/,
+    `<meta name="description" content="${escapeHtml(config.description)}">\n  <meta name="keywords" content="${escapeHtml(config.keywords || '')}">`
+  );
+}
+index = index.replace(
+  /<meta name="robots" content="[^"]*">/,
+  `<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">`
+);
+index = index.replace(
+  /<meta name="application-name" content="[^"]*">/,
+  `<meta name="application-name" content="${escapeHtml(brandName)}">`
+);
+if (!/<meta name="author" content=/.test(index)) {
+  index = index.replace(
+    /<meta name="application-name" content="[^"]*">/,
+    `<meta name="application-name" content="${escapeHtml(brandName)}">\n  <meta name="author" content="${escapeHtml(publisher.name)}">`
+  );
+}
+index = index.replace(
   /<link rel="canonical" href="[^"]*">/,
   `<link rel="canonical" href="${siteUrl}/">`
+);
+index = index.replace(
+  /<meta property="og:site_name" content="[^"]*">/,
+  `<meta property="og:site_name" content="${escapeHtml(brandName)}">`
+);
+index = index.replace(
+  /<meta property="og:title" content="[^"]*">/,
+  `<meta property="og:title" content="${escapeHtml(brandName)} — Remove Duplicates">`
+);
+index = index.replace(
+  /<meta property="og:description" content="[^"]*">/,
+  `<meta property="og:description" content="${escapeHtml(config.description)}">`
 );
 index = index.replace(
   /<meta property="og:url" content="[^"]*">/,
@@ -225,11 +479,23 @@ index = index.replace(
 );
 index = index.replace(
   /<meta property="og:image" content="[^"]*">/,
-  `<meta property="og:image" content="${siteUrl}/public/icon-512.png">`
+  `<meta property="og:image" content="${iconUrl}">\n  <meta property="og:image:width" content="${ogImageWidth}">\n  <meta property="og:image:height" content="${ogImageHeight}">\n  <meta property="og:image:alt" content="${escapeHtml(brandName)} icon">\n  <meta property="og:locale" content="${escapeHtml(locale)}">`
+);
+index = index.replace(
+  /<meta name="twitter:card" content="[^"]*">/,
+  `<meta name="twitter:card" content="summary_large_image">`
+);
+index = index.replace(
+  /<meta name="twitter:title" content="[^"]*">/,
+  `<meta name="twitter:title" content="${escapeHtml(brandName)} — Remove Duplicates">`
+);
+index = index.replace(
+  /<meta name="twitter:description" content="[^"]*">/,
+  `<meta name="twitter:description" content="${escapeHtml(config.description)}">`
 );
 index = index.replace(
   /<meta name="twitter:image" content="[^"]*">/,
-  `<meta name="twitter:image" content="${siteUrl}/public/icon-512.png">`
+  `<meta name="twitter:image" content="${iconUrl}">\n  <meta name="twitter:image:alt" content="${escapeHtml(brandName)} icon">`
 );
 index = index.replace(
   /<meta http-equiv="Content-Security-Policy" content="[^"]*">/,

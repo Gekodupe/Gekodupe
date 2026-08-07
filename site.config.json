@@ -1,9 +1,25 @@
 {
   "name": "Geckodupe",
+  "brandName": "Geckodupe by Flareform",
   "shortName": "Geckodupe",
-  "siteUrl": "https://gekodupe.github.io",
+  "siteUrl": "https://gekodupe.github.io/Gekodupe",
   "description": "Universal deduplication for text, files, folders, zip archives, and image/video libraries. Excel, CSV, JSON, logs, code, photos, and videos. 100% in your browser.",
+  "keywords": "deduplication, remove duplicates, csv dedupe, excel duplicate rows, photo dedupe, video dedupe, zip cleanup, browser deduplication, Geckodupe, Flareform",
   "contact": "https://github.com/orgs/Gekodupe/repositories",
-  "themeColor": "#F6821F",
-  "backgroundColor": "#f7f9fa"
+  "sameAs": [
+    "https://github.com/Gekodupe/Gekodupe",
+    "https://github.com/orgs/Gekodupe/repositories",
+    "https://flareform.com",
+    "https://x.com/blacnovadev"
+  ],
+  "publisher": {
+    "name": "Flareform",
+    "url": "https://flareform.com"
+  },
+  "themeColor": "#f7831e",
+  "backgroundColor": "#ffffff",
+  "locale": "en_US",
+  "ogImage": "/public/icon-512.png",
+  "ogImageWidth": 512,
+  "ogImageHeight": 512
 }

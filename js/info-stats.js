@@ -1,7 +1,7 @@
 // Geckodupe by Flareform Info Page: D3 area charts
 
 var INFO_COLORS = {
-  primary: '#F6821F',
+  primary: '#f7831e',
   secondary: '#D96C10',
   primaryStroke: 'rgba(246,130,31,0.9)',
   secondaryStroke: 'rgba(217,108,16,0.85)',
@@ -64,19 +64,7 @@ function getChartDimensions(el, margin) {
   return { width: width, height: height };
 }
 
-function appendGradients(svg) {
-  var defs = svg.append('defs');
-  defs.append('linearGradient').attr('id', 'area-grad-primary').attr('x1', '0').attr('y1', '0').attr('x2', '0').attr('y2', '1')
-    .selectAll('stop').data([
-      { offset: '0%', color: 'rgba(246,130,31,0.28)' },
-      { offset: '100%', color: 'rgba(246,130,31,0.03)' }
-    ]).enter().append('stop').attr('offset', function(d) { return d.offset; }).attr('stop-color', function(d) { return d.color; });
-  defs.append('linearGradient').attr('id', 'area-grad-secondary').attr('x1', '0').attr('y1', '0').attr('x2', '2').attr('y2', '1')
-    .selectAll('stop').data([
-      { offset: '0%', color: 'rgba(217,108,16,0.22)' },
-      { offset: '100%', color: 'rgba(217,108,16,0.03)' }
-    ]).enter().append('stop').attr('offset', function(d) { return d.offset; }).attr('stop-color', function(d) { return d.color; });
-}
+
 
 function drawAxes(g, x, y, width, height, xFormat, yFormat) {
   g.append('g').attr('class', 'chart-axis chart-axis-x').attr('transform', 'translate(0,' + height + ')')
@@ -107,7 +95,7 @@ function renderReductionArea(rows) {
   var margin = { top: 12, right: 16, bottom: 32, left: 48 };
   var dims = getChartDimensions(el, margin);
   var svg = d3.select(el).append('svg').attr('width', dims.width + margin.left + margin.right).attr('height', dims.height + margin.top + margin.bottom).attr('class', 'chart-svg');
-  appendGradients(svg);
+
   var g = svg.append('g').attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
   var data = rows.map(function(r) { return { lines: r.total, unique: r.remaining, removed: r.removed }; });
   var x = d3.scaleLinear().domain(d3.extent(data, function(d) { return d.lines; })).range([0, dims.width]);
@@ -115,7 +103,7 @@ function renderReductionArea(rows) {
   drawAxes(g, x, y, dims.width, dims.height, function(d) { return d >= 1000 ? (d / 1000) + 'k' : d; }, function(d) { return d >= 1000 ? (d / 1000) + 'k' : d; });
   var series = d3.stack().keys(['unique', 'removed'])(data);
   var area = d3.area().curve(d3.curveMonotoneX).x(function(d) { return x(d.data.lines); }).y0(function(d) { return y(d[0]); }).y1(function(d) { return y(d[1]); });
-  var fills = ['url(#area-grad-secondary)', 'url(#area-grad-primary)'];
+  var fills = ['rgba(217,108,16,0.15)', 'rgba(246,130,31,0.15)'];
   var strokes = [INFO_COLORS.secondaryStroke, INFO_COLORS.primaryStroke];
   g.selectAll('.area-layer').data(series).enter().append('path').attr('class', 'area-layer').attr('fill', function(_, i) { return fills[i]; }).attr('d', area);
   g.selectAll('.area-line').data(series).enter().append('path').attr('class', 'area-line').attr('fill', 'none').attr('stroke', function(_, i) { return strokes[i]; }).attr('stroke-width', 1.25)
@@ -133,7 +121,7 @@ function renderThroughputArea(rows, yKey, yFormat, legendLabel) {
   var margin = { top: 12, right: 16, bottom: 32, left: 52 };
   var dims = getChartDimensions(el, margin);
   var svg = d3.select(el).append('svg').attr('width', dims.width + margin.left + margin.right).attr('height', dims.height + margin.top + margin.bottom).attr('class', 'chart-svg');
-  appendGradients(svg);
+
   var g = svg.append('g').attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
   var data = rows.map(function(r) { return { x: r.total, y: r[yKey] }; });
   var x = d3.scaleLinear().domain(d3.extent(data, function(d) { return d.x; })).range([0, dims.width]);
@@ -141,7 +129,7 @@ function renderThroughputArea(rows, yKey, yFormat, legendLabel) {
   drawAxes(g, x, y, dims.width, dims.height, function(d) { return d >= 1000 ? (d / 1000) + 'k' : d; }, yFormat);
   var area = d3.area().curve(d3.curveMonotoneX).x(function(d) { return x(d.x); }).y0(dims.height).y1(function(d) { return y(d.y); });
   var line = d3.line().curve(d3.curveMonotoneX).x(function(d) { return x(d.x); }).y(function(d) { return y(d.y); });
-  g.append('path').datum(data).attr('class', 'area-layer').attr('fill', 'url(#area-grad-primary)').attr('d', area);
+  g.append('path').datum(data).attr('class', 'area-layer').attr('fill', 'rgba(246,130,31,0.15)').attr('d', area);
   g.append('path').datum(data).attr('class', 'area-line').attr('fill', 'none').attr('stroke', INFO_COLORS.primaryStroke).attr('stroke-width', 1.25).attr('d', line);
   g.selectAll('.area-dot').data(data).enter().append('circle').attr('cx', function(d) { return x(d.x); }).attr('cy', function(d) { return y(d.y); }).attr('r', 3).attr('fill', '#F7F7F4').attr('stroke', INFO_COLORS.primaryStroke).attr('stroke-width', 1.5);
   drawLegend(d3.select(el), [{ label: legendLabel, color: INFO_COLORS.primary }]);
@@ -154,7 +142,7 @@ function renderFolderArea(rows) {
   var margin = { top: 12, right: 16, bottom: 32, left: 52 };
   var dims = getChartDimensions(el, margin);
   var svg = d3.select(el).append('svg').attr('width', dims.width + margin.left + margin.right).attr('height', dims.height + margin.top + margin.bottom).attr('class', 'chart-svg');
-  appendGradients(svg);
+
   var g = svg.append('g').attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
   var data = rows.map(function(r) { return { files: r.total, ms: r.ms }; });
   var x = d3.scaleLinear().domain(d3.extent(data, function(d) { return d.files; })).range([0, dims.width]);
@@ -162,7 +150,7 @@ function renderFolderArea(rows) {
   drawAxes(g, x, y, dims.width, dims.height, function(d) { return d + ' files'; }, function(d) { return d + ' ms'; });
   var area = d3.area().curve(d3.curveMonotoneX).x(function(d) { return x(d.files); }).y0(dims.height).y1(function(d) { return y(d.ms); });
   var line = d3.line().curve(d3.curveMonotoneX).x(function(d) { return x(d.files); }).y(function(d) { return y(d.ms); });
-  g.append('path').datum(data).attr('class', 'area-layer').attr('fill', 'url(#area-grad-secondary)').attr('d', area);
+  g.append('path').datum(data).attr('class', 'area-layer').attr('fill', 'rgba(217,108,16,0.15)').attr('d', area);
   g.append('path').datum(data).attr('class', 'area-line').attr('fill', 'none').attr('stroke', INFO_COLORS.secondaryStroke).attr('stroke-width', 1.25).attr('d', line);
   drawLegend(d3.select(el), [{ label: 'Project scan time (ms)', color: INFO_COLORS.secondary }]);
 }
@@ -174,7 +162,7 @@ function renderSavingsArea(rows, savingsDemo, logDemo) {
   var margin = { top: 12, right: 16, bottom: 32, left: 56 };
   var dims = getChartDimensions(el, margin);
   var svg = d3.select(el).append('svg').attr('width', dims.width + margin.left + margin.right).attr('height', dims.height + margin.top + margin.bottom).attr('class', 'chart-svg');
-  appendGradients(svg);
+
   var g = svg.append('g').attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
   var data = rows.map(function(r) { return { lines: r.total, original: r.bytesIn, deduped: r.bytesOut }; });
   data.push({ lines: savingsDemo.total, original: savingsDemo.bytesIn, deduped: savingsDemo.bytesOut });
@@ -186,8 +174,8 @@ function renderSavingsArea(rows, savingsDemo, logDemo) {
   function makeArea(key) {
     return d3.area().curve(d3.curveMonotoneX).x(function(d) { return x(d.lines); }).y0(dims.height).y1(function(d) { return y(d[key]); });
   }
-  g.append('path').datum(data).attr('fill', 'url(#area-grad-secondary)').attr('d', makeArea('original'));
-  g.append('path').datum(data).attr('fill', 'url(#area-grad-primary)').attr('d', makeArea('deduped'));
+  g.append('path').datum(data).attr('fill', 'rgba(217,108,16,0.15)').attr('d', makeArea('original'));
+  g.append('path').datum(data).attr('fill', 'rgba(246,130,31,0.15)').attr('d', makeArea('deduped'));
   g.append('path').datum(data).attr('fill', 'none').attr('stroke', INFO_COLORS.secondaryStroke).attr('stroke-width', 1.25)
     .attr('d', d3.line().curve(d3.curveMonotoneX).x(function(d) { return x(d.lines); }).y(function(d) { return y(d.original); }));
   g.append('path').datum(data).attr('fill', 'none').attr('stroke', INFO_COLORS.primaryStroke).attr('stroke-width', 1.25)

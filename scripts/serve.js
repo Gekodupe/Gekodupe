@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Minimal static file server for Playwright e2e tests
+// Minimal static file server for local preview and Playwright e2e
 
 const http = require('http');
 const fs = require('fs');
@@ -9,6 +9,7 @@ const { getSecurityHeaders } = require('./security-policy');
 const ROOT = path.join(__dirname, '..');
 const PORT = Number(process.env.PORT) || 4173;
 const USE_MINIFIED = process.env.USE_MINIFIED === '1';
+const DEV_FIXTURES = path.resolve(ROOT, '..', '..', '.development', 'geckodupe', 'tests', 'fixtures');
 
 const MIME = {
   '.html': 'text/html; charset=utf-8',
@@ -23,10 +24,31 @@ const MIME = {
   '.ico': 'image/x-icon'
 };
 
+const BLOCKED_PREFIXES = [
+  path.join(ROOT, 'scripts') + path.sep,
+  path.join(ROOT, 'node_modules') + path.sep,
+  path.join(ROOT, '.git') + path.sep
+];
+
+const BLOCKED_FILES = new Set([
+  path.join(ROOT, 'package.json'),
+  path.join(ROOT, 'package-lock.json'),
+  path.join(ROOT, 'site.config.json'),
+  path.join(ROOT, '.gitignore'),
+  path.join(ROOT, '.gitattributes')
+]);
+
 const SECURITY_HEADERS = getSecurityHeaders({
   upgradeInsecure: false,
   hsts: false
 });
+
+function isBlocked(filePath) {
+  if (BLOCKED_FILES.has(filePath)) return true;
+  return BLOCKED_PREFIXES.some(function (prefix) {
+    return filePath === prefix.slice(0, -1) || filePath.startsWith(prefix);
+  });
+}
 
 function resolveAssetPath(filePath) {
   if (!USE_MINIFIED) return filePath;
@@ -37,10 +59,23 @@ function resolveAssetPath(filePath) {
   return filePath;
 }
 
+function resolveDevFixture(urlPath) {
+  if (!urlPath.startsWith('/tests/fixtures/')) return null;
+  const name = path.basename(urlPath);
+  if (!name || name === '.' || name === '..') return null;
+  const full = path.normalize(path.join(DEV_FIXTURES, name));
+  if (!full.startsWith(DEV_FIXTURES)) return null;
+  return full;
+}
+
 function resolveRequestPath(urlPath) {
+  const fixture = resolveDevFixture(urlPath);
+  if (fixture) return fixture;
+
   if (urlPath === '/') return path.join(ROOT, 'index.html');
   let base = path.normalize(path.join(ROOT, urlPath));
   if (!base.startsWith(ROOT)) return null;
+  if (isBlocked(base)) return null;
   try {
     if (fs.existsSync(base) && fs.statSync(base).isDirectory()) {
       base = path.join(base, 'index.html');
@@ -49,6 +84,7 @@ function resolveRequestPath(urlPath) {
       if (fs.existsSync(withIndex)) base = withIndex;
     }
   } catch (_) { /* fall through */ }
+  if (isBlocked(base)) return null;
   return resolveAssetPath(base);
 }
 

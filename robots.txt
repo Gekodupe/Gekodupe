@@ -1,8 +1,27 @@
 User-agent: *
 Allow: /
+Allow: /text-file/
+Allow: /folder-zip/
+Allow: /image-video/
+Allow: /public/
+Allow: /css/
+Allow: /js/
 
 Disallow: /404.html
 Disallow: /node_modules/
-Disallow: /tests/
+Disallow: /scripts/
+Disallow: /package.json
+Disallow: /package-lock.json
+Disallow: /site.config.json
 
-Sitemap: https://gekodupe.github.io/sitemap.xml
+# AI / training crawlers — keep product pages discoverable, block tooling paths
+User-agent: GPTBot
+Allow: /
+Disallow: /scripts/
+Disallow: /node_modules/
+
+User-agent: Google-Extended
+Allow: /
+
+Sitemap: https://gekodupe.github.io/Gekodupe/sitemap.xml
+Host: gekodupe.github.io/Gekodupe

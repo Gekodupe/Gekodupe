@@ -1,5 +1,8 @@
 /* TEAM */
-Project: Geckodupe
-Site: https://gekodupe.github.io
+Project: Geckodupe by Flareform
+Site: https://gekodupe.github.io/Gekodupe
+Publisher: Flareform (https://flareform.com)
 GitHub: https://github.com/orgs/Gekodupe/repositories
 
+/* THANKS */
+Everyone who deduplicates responsibly.

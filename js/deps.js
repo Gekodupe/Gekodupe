@@ -56,7 +56,6 @@
   global.ensureLibsForFormat = ensureLibsForFormat;
 
   var TAB_SCRIPTS = {
-    '2': ['js/demo-preview.js'],
     '3': ['js/benchmark-data.js', 'js/info-stats.js'],
     '4': ['js/folder-app.js'],
     '5': ['js/media-app.js', 'js/media-preview.js']

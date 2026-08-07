@@ -16,7 +16,6 @@ var MEDIA_MAX_BYTES = 10 * 1024 * 1024 * 1024;
 
 function logMediaActivity(msg) {
   var contentEl = document.getElementById('media-activity-log-content');
-  var badgeEl = document.getElementById('media-activity-log-badge');
   if (!contentEl) return;
   var now = new Date();
   var timeStr = '[' + now.toTimeString().split(' ')[0] + '.' + ('00' + now.getMilliseconds()).slice(-3) + ']';
@@ -25,24 +24,19 @@ function logMediaActivity(msg) {
   entry.innerHTML = '<span class="timestamp">' + timeStr + '</span>' + msg;
   contentEl.insertBefore(entry, contentEl.firstChild);
   mediaActivityCount++;
-  if (badgeEl) badgeEl.innerText = mediaActivityCount + ' events';
 }
 
 function toggleMediaActivityLog() {
   var panel = document.getElementById('media-activity-log-panel');
-  var arrow = document.getElementById('media-activity-log-arrow');
   if (!panel) return;
   var isHidden = panel.style.display === 'none';
   panel.style.display = isHidden ? 'block' : 'none';
-  if (arrow) arrow.style.transform = isHidden ? 'rotate(90deg)' : 'rotate(0deg)';
 }
 
 function clearMediaActivityLog() {
   var contentEl = document.getElementById('media-activity-log-content');
-  var badgeEl = document.getElementById('media-activity-log-badge');
   if (contentEl) contentEl.innerHTML = '';
   mediaActivityCount = 0;
-  if (badgeEl) badgeEl.innerText = '0 events';
   showToast('Diagnostics log cleared', 'success');
 }
 

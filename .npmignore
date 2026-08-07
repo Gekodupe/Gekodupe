@@ -1,0 +1,12 @@
+node_modules/
+*.min.js
+*.min.css
+.env
+.env.*
+test-results/
+playwright-report/
+coverage/
+lighthouse-report.json
+.git/
+.gitattributes
+.gitignore

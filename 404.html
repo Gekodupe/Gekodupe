@@ -2,47 +2,177 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Not found - Geckodupe</title>
+  <title>Not found - Geckodupe by Flareform</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex, nofollow">
-  <meta http-equiv="refresh" content="5;url=/#text-file">
+  <meta name="theme-color" content="#f7831e">
+  <meta http-equiv="refresh" content="5;url=./#text-file">
   <link rel="icon" type="image/x-icon" href="public/favicon.ico">
   <link rel="icon" type="image/png" sizes="192x192" href="public/icon-192.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap">
   <style>
-    *,*::before,*::after{box-sizing:border-box}
-    html{height:100%}
-    body{margin:0;min-height:100%;background: #FFFFFF;color:#333;font-family:'Geist',sans-serif;-webkit-font-smoothing:antialiased}
-    .nf-wrap{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:32px 20px}
-    .nf-card{width:100%;max-width:420px;background:#F7F7F4;border:2px solid #E4E1E1;border-radius:8px;padding:36px 40px 32px;text-align:center;box-shadow:rgba(0,0,0,.08) 4px 8px 24px;animation:nfFadeIn .45s ease}
-    @keyframes nfFadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
-    .nf-header{display:flex;flex-direction:column;align-items:center;gap:12px;margin-bottom:18px;padding-bottom:16px;border-bottom:2px dashed rgba(159,156,148,.9)}
-    .nf-logo{width:40px;height:auto;opacity:.32}
-    .nf-code{margin:0;font-family:monospace;font-size:.78em;font-weight:400;letter-spacing:.12em;text-transform:uppercase;color:#D96C10}
-    .nf-title{margin:0;font-family:'Geist',cursive;font-size:1.45em;font-weight:400;color:#333;line-height:1.3}
-    .nf-message{margin:0 0 22px;font-size:.92em;line-height:1.55;color:rgba(90,87,72,.82)}
-    .nf-progress{height:4px;margin:0 auto 14px;max-width:200px;background:rgba(159,156,148,.22);border-radius:2px;overflow:hidden}
-    .nf-progress-bar{display:block;height:100%;width:0%;background:linear-gradient(90deg,#D96C10,#F6821F);border-radius:2px;transition:width .08s linear}
-    .nf-redirect{margin:0 0 20px;font-size:.8em;color:rgba(90,87,72,.55);font-variant-numeric:tabular-nums}
-    .nf-home{display:inline-block;padding:6px 16px;font-family:'Geist',sans-serif;font-size:.88em;font-weight:400;color:#D96C10;text-decoration:none;border:1px solid #F6821F;border-radius:6px;background:transparent;transition:background .2s ease,color .2s ease}
-    .nf-home:hover,.nf-home:focus-visible{background:rgba(246,130,31,.15);color:#6b7a28;outline:none}
-    .nf-home:focus-visible{box-shadow:0 0 0 3px rgba(246,130,31,.3)}
-    @media (prefers-reduced-motion:reduce){.nf-card{animation:none}.nf-progress-bar{transition:none}}
-    @media (max-width:480px){.nf-card{padding:28px 24px 24px}.nf-title{font-size:1.3em}}
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { height: 100%; }
+    body {
+      min-height: 100%;
+      display: flex;
+      flex-direction: column;
+      background: #ffffff;
+      color: #1a1a1a;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 400;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+    .nf-nav {
+      height: 56px;
+      background: #1a1a1a;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      padding: 0 24px;
+      flex-shrink: 0;
+    }
+    .nf-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: inherit;
+    }
+    .nf-brand img {
+      width: 28px;
+      height: 28px;
+      object-fit: contain;
+    }
+    .nf-brand-name {
+      font-size: 14px;
+      line-height: 1;
+      color: #fff;
+    }
+    .nf-brand-sub {
+      font-size: 11px;
+      line-height: 1.2;
+      color: #a1a1aa;
+      letter-spacing: 0.03em;
+      margin-top: 2px;
+    }
+    .nf-wrap {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 48px 24px;
+    }
+    .nf-main {
+      width: 100%;
+      max-width: 480px;
+      text-align: left;
+      animation: nfFadeIn 0.4s ease;
+    }
+    @keyframes nfFadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .nf-code {
+      font-size: 13px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #f7831e;
+      margin-bottom: 12px;
+    }
+    .nf-title {
+      font-size: 32px;
+      font-weight: 400;
+      line-height: 1.2;
+      margin-bottom: 12px;
+      color: #1a1a1a;
+    }
+    .nf-message {
+      font-size: 15px;
+      color: #484848;
+      margin-bottom: 28px;
+    }
+    .nf-progress {
+      height: 3px;
+      background: #e5e7eb;
+      overflow: hidden;
+      margin-bottom: 12px;
+    }
+    .nf-progress-bar {
+      display: block;
+      height: 100%;
+      width: 0%;
+      background: #f7831e;
+      transition: width 0.08s linear;
+    }
+    .nf-redirect {
+      font-size: 13px;
+      color: #6b7280;
+      margin-bottom: 28px;
+      font-variant-numeric: tabular-nums;
+    }
+    .nf-home {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      padding: 8px 20px;
+      background: #1a1a1a;
+      color: #fff;
+      text-decoration: none;
+      font-family: inherit;
+      font-size: 13.5px;
+      font-weight: 400;
+      border: 1px solid #1a1a1a;
+      transition: background 0.2s ease, border-color 0.2s ease;
+    }
+    .nf-home:hover,
+    .nf-home:focus-visible {
+      background: #f7831e;
+      border-color: #f7831e;
+      outline: none;
+    }
+    .nf-home:focus-visible {
+      outline: 2px solid #1a1a1a;
+      outline-offset: 2px;
+    }
+    .nf-footer {
+      padding: 24px;
+      text-align: center;
+      font-size: 11px;
+      color: #6b7280;
+      flex-shrink: 0;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .nf-main { animation: none; }
+      .nf-progress-bar { transition: none; }
+    }
+    @media (max-width: 480px) {
+      .nf-nav { padding: 0 16px; }
+      .nf-title { font-size: 26px; }
+      .nf-wrap { padding: 32px 16px; }
+    }
   </style>
 </head>
 <body>
-  <div class="nf-wrap">
-    <main class="nf-card" role="main" aria-labelledby="nf-title">
-      <header class="nf-header">
-        <img src="public/gecko-symbol.svg" alt="" class="nf-logo" width="40" height="40" aria-hidden="true">
-        <p class="nf-code" aria-hidden="true">404</p>
-        <h1 class="nf-title" id="nf-title">Page not found</h1>
-      </header>
+  <header class="nf-nav">
+    <a href="./#text-file" class="nf-brand" id="nf-brand">
+      <img src="public/logo-white.png" alt="Flareform">
+      <div>
+        <div class="nf-brand-name">Geckodupe</div>
+        <div class="nf-brand-sub">by Flareform</div>
+      </div>
+    </a>
+  </header>
 
-      <p class="nf-message">This page isn&rsquo;t here. Taking you back home.</p>
+  <div class="nf-wrap">
+    <main class="nf-main" role="main" aria-labelledby="nf-title">
+      <p class="nf-code" aria-hidden="true">404</p>
+      <h1 class="nf-title" id="nf-title">Page not found</h1>
+      <p class="nf-message">This page isn&rsquo;t here. Taking you back to Geckodupe.</p>
 
       <div class="nf-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Redirecting home">
         <span class="nf-progress-bar" id="nf-bar"></span>
@@ -50,9 +180,11 @@
 
       <p class="nf-redirect">Redirecting in <span id="nf-seconds">4</span>s</p>
 
-      <a href="/#text-file" class="nf-home" id="nf-home">Go home now</a>
+      <a href="./#text-file" class="nf-home" id="nf-home">Go home now</a>
     </main>
   </div>
+
+  <footer class="nf-footer">&copy; 2026 Geckodupe by Flareform</footer>
 
   <script src="js/404.js"></script>
 </body>

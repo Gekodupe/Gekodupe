@@ -72,27 +72,20 @@ function logActivity(msg) {
   
   contentEl.insertBefore(entry, contentEl.firstChild);
   activityEventCount++;
-  if (badgeEl) badgeEl.innerText = activityEventCount + ' events';
 }
 
 function toggleActivityLog() {
   var panel = document.getElementById('activity-log-panel');
-  var arrow = document.getElementById('activity-log-arrow');
   if (panel) {
     var isHidden = panel.style.display === 'none';
     panel.style.display = isHidden ? 'block' : 'none';
-    if (arrow) {
-      arrow.style.transform = isHidden ? 'rotate(90deg)' : 'rotate(0deg)';
-    }
   }
 }
 
 function clearActivityLog() {
   var contentEl = document.getElementById('activity-log-content');
-  var badgeEl = document.getElementById('activity-log-badge');
   if (contentEl) contentEl.innerHTML = '';
   activityEventCount = 0;
-  if (badgeEl) badgeEl.innerText = '0 events';
   showToast("Diagnostics log cleared", "success");
 }
 
@@ -554,11 +547,10 @@ function handleMobileUpload(inputEl) {
 var tabSlugToId = {};
 var tabIdToSlug = {};
 var TAB_PAGE_TITLES = {
-  '1': 'Text / File',
-  '2': 'Demo',
-  '3': 'How It Works',
-  '4': 'Folder / Zip',
-  '5': 'Img / Vid'
+  '1': 'Text Data',
+  '3': 'About',
+  '4': 'Directories',
+  '5': 'Media'
 };
 
 function updatePageTitle(tabId) {
@@ -569,9 +561,9 @@ function updatePageTitle(tabId) {
 function buildTabRoutes() {
   tabSlugToId = { 'text': '1', 'file': '1', 'folder': '4' };
   tabIdToSlug = {};
-  document.querySelectorAll('.tabs li[data-slug]').forEach(function(li) {
-    var tabId = li.id.replace('t-', '');
-    var slug = li.getAttribute('data-slug');
+  document.querySelectorAll('.nav-tab-btn[data-slug]').forEach(function(btn) {
+    var tabId = btn.id.replace('t-', '');
+    var slug = btn.getAttribute('data-slug');
     if (!tabId || !slug) return;
     tabSlugToId[slug.toLowerCase()] = tabId;
     tabIdToSlug[tabId] = slug;
@@ -589,12 +581,6 @@ function onTabActivated(tabId) {
     ? ensureTabScripts(tabId)
     : Promise.resolve();
 
-  if (tabId === '2') {
-    ready.then(function () {
-      if (typeof updateFolderDemo === 'function') updateFolderDemo();
-      if (typeof updateMediaDemo === 'function') updateMediaDemo();
-    });
-  }
   if (tabId === '3') {
     ready.then(function () {
       if (typeof ensureLib === 'function') return ensureLib('d3');
@@ -628,10 +614,10 @@ function switchToTab(tabId, options) {
   tabId = String(tabId);
   if (!tabIdToSlug[tabId]) tabId = '1';
 
-  document.querySelectorAll('.tabs li').forEach(function(li) {
-    li.classList.remove('current');
-    li.setAttribute('aria-selected', 'false');
-    li.setAttribute('tabindex', '-1');
+  document.querySelectorAll('.nav-tab-btn').forEach(function(btn) {
+    btn.classList.remove('current');
+    btn.setAttribute('aria-selected', 'false');
+    btn.setAttribute('tabindex', '-1');
   });
   document.querySelectorAll('main section').forEach(function(sec) {
     sec.classList.remove('current');
@@ -648,13 +634,20 @@ function switchToTab(tabId, options) {
   if (sectionEl) {
     sectionEl.classList.add('current');
     sectionEl.removeAttribute('hidden');
+    window.scrollTo(0, 0);
   }
 
   if (!options.skipHash) {
     var slug = tabIdToSlug[tabId];
-    if (slug && location.hash.replace(/^#/, '') !== slug) {
-      location.hash = slug;
-      return;
+    if (slug) {
+      try {
+        if (location.hash.replace(/^#/, '') !== slug) {
+          location.hash = slug;
+          return;
+        }
+      } catch (err) {
+        // Ignore iframe security errors for file:// URLs
+      }
     }
   }
 
@@ -675,15 +668,21 @@ function applyRouteFromHash() {
 document.addEventListener('DOMContentLoaded', function() {
   buildTabRoutes();
 
-  document.querySelectorAll('.tabs li').forEach(function(li) {
-    li.addEventListener('click', function() {
-      var url = li.getAttribute('data-url');
+  document.querySelectorAll('.nav-tab-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var url = btn.getAttribute('data-url');
       if (url) {
         window.open(url, '_blank', 'noopener,noreferrer');
         return;
       }
-      var tabId = li.id.replace('t-', '');
-      if (tabIdToSlug[tabId]) location.hash = tabIdToSlug[tabId];
+      var tabId = btn.id.replace('t-', '');
+      if (tabIdToSlug[tabId]) {
+        try {
+          location.hash = tabIdToSlug[tabId];
+        } catch (err) {
+          switchToTab(tabId);
+        }
+      }
     });
   });
 
@@ -693,6 +692,38 @@ document.addEventListener('DOMContentLoaded', function() {
     applyRouteFromHash();
   } else {
     history.replaceState(null, '', '#' + (tabIdToSlug['1'] || 'text-file'));
+  }
+
+  // Mobile Menu Logic
+  var mobileMenuBtn = document.getElementById('mobile-menu-btn');
+  var mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
+  var mobileMenuClose = document.getElementById('mobile-menu-close');
+
+  if (mobileMenuBtn && mobileMenuOverlay && mobileMenuClose) {
+    mobileMenuBtn.addEventListener('click', function() {
+      mobileMenuOverlay.removeAttribute('hidden');
+      document.body.style.overflow = 'hidden';
+    });
+
+    mobileMenuClose.addEventListener('click', function() {
+      mobileMenuOverlay.setAttribute('hidden', '');
+      document.body.style.overflow = '';
+    });
+
+    document.querySelectorAll('.mobile-menu-link[data-tab]').forEach(function(link) {
+      link.addEventListener('click', function() {
+        var tabId = link.getAttribute('data-tab');
+        if (tabIdToSlug[tabId]) {
+          try {
+            location.hash = tabIdToSlug[tabId];
+          } catch (err) {
+            switchToTab(tabId);
+          }
+        }
+        mobileMenuOverlay.setAttribute('hidden', '');
+        document.body.style.overflow = '';
+      });
+    });
   }
 
   document.addEventListener('click', function() {
@@ -757,12 +788,7 @@ document.addEventListener('DOMContentLoaded', function() {
       var selectedOpt = select.options[select.selectedIndex] || select.options[0];
       labelSpan.innerText = selectedOpt ? selectedOpt.text : '';
 
-      var arrowSpan = document.createElement('span');
-      arrowSpan.className = 'custom-dropdown-arrow';
-      arrowSpan.innerHTML = '&#9662;';
-
       trigger.appendChild(labelSpan);
-      trigger.appendChild(arrowSpan);
 
       var menu = document.createElement('div');
       menu.className = 'custom-dropdown-menu';

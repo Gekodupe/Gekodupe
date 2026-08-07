@@ -3,7 +3,7 @@
 
   var DURATION_MS = 3500;
   var TICK_MS = 50;
-  var HOME = location.origin + '/#text-file';
+  var HOME = new URL('./#text-file', location.href).href;
 
   var bar = document.getElementById('nf-bar');
   var progressEl = document.querySelector('.nf-progress');
@@ -12,6 +12,9 @@
   var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   if (homeLink) homeLink.setAttribute('href', HOME);
+
+  var brandLink = document.getElementById('nf-brand');
+  if (brandLink) brandLink.setAttribute('href', HOME);
 
   var redirected = false;
 

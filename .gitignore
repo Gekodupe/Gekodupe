@@ -5,19 +5,6 @@ node_modules/
 css/*.min.css
 js/**/*.min.js
 
-# Generated benchmark data (npm run test:benchmark)
-js/benchmark-results.json
-
-# Audit / perf reports
-lighthouse-report.json
-
-# Test runners
-test-results/
-playwright-report/
-blob-report/
-playwright/.cache/
-coverage/
-
 # Environment
 .env
 .env.*
@@ -34,3 +21,12 @@ yarn-error.log*
 
 # Editors
 .idea/
+.vscode/
+
+# Local test runner leftovers (tooling lives in Flareform/.development/geckodupe)
+test-results/
+playwright-report/
+blob-report/
+playwright/.cache/
+coverage/
+lighthouse-report.json

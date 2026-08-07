@@ -5,90 +5,90 @@ var BENCHMARK_DATA = {
     {
       "label": "1,000 lines",
       "total": 1000,
-      "removed": 501,
-      "remaining": 499,
-      "reductionPct": 50.1,
+      "removed": 489,
+      "remaining": 511,
+      "reductionPct": 48.9,
       "ms": 4,
       "linesPerSec": 250000,
-      "bytesIn": 35249,
-      "bytesOut": 17592,
-      "bytesSaved": 17657,
-      "bytesSavedPct": 50.1
+      "bytesIn": 35215,
+      "bytesOut": 18003,
+      "bytesSaved": 17212,
+      "bytesSavedPct": 48.9
     },
     {
       "label": "5,000 lines",
       "total": 5000,
-      "removed": 2469,
-      "remaining": 2531,
-      "reductionPct": 49.4,
-      "ms": 16,
-      "linesPerSec": 312500,
-      "bytesIn": 180476,
-      "bytesOut": 91352,
-      "bytesSaved": 89124,
-      "bytesSavedPct": 49.4
+      "removed": 2436,
+      "remaining": 2564,
+      "reductionPct": 48.7,
+      "ms": 13,
+      "linesPerSec": 384615,
+      "bytesIn": 180445,
+      "bytesOut": 92537,
+      "bytesSaved": 87908,
+      "bytesSavedPct": 48.7
     },
     {
       "label": "10,000 lines",
       "total": 10000,
-      "removed": 4905,
-      "remaining": 5095,
-      "reductionPct": 49.1,
-      "ms": 29,
-      "linesPerSec": 344828,
-      "bytesIn": 362758,
-      "bytesOut": 184793,
-      "bytesSaved": 177965,
-      "bytesSavedPct": 49.1
+      "removed": 4851,
+      "remaining": 5149,
+      "reductionPct": 48.5,
+      "ms": 24,
+      "linesPerSec": 416667,
+      "bytesIn": 362805,
+      "bytesOut": 186771,
+      "bytesSaved": 176034,
+      "bytesSavedPct": 48.5
     },
     {
       "label": "25,000 lines",
       "total": 25000,
-      "removed": 12251,
-      "remaining": 12749,
-      "reductionPct": 49,
-      "ms": 74,
-      "linesPerSec": 337838,
-      "bytesIn": 918890,
-      "bytesOut": 468615,
-      "bytesSaved": 450275,
-      "bytesSavedPct": 49
+      "removed": 12196,
+      "remaining": 12804,
+      "reductionPct": 48.8,
+      "ms": 69,
+      "linesPerSec": 362319,
+      "bytesIn": 919286,
+      "bytesOut": 470751,
+      "bytesSaved": 448535,
+      "bytesSavedPct": 48.8
     }
   ],
   "savingsDemo": {
     "label": "10k mixed duplicates",
     "total": 10000,
-    "removed": 5163,
-    "remaining": 4837,
-    "reductionPct": 51.6,
-    "ms": 34,
-    "linesPerSec": 294118,
-    "bytesIn": 362709,
-    "bytesOut": 175431,
-    "bytesSaved": 187278,
-    "bytesSavedPct": 51.6
+    "removed": 5193,
+    "remaining": 4807,
+    "reductionPct": 51.9,
+    "ms": 19,
+    "linesPerSec": 526316,
+    "bytesIn": 362733,
+    "bytesOut": 174336,
+    "bytesSaved": 188397,
+    "bytesSavedPct": 51.9
   },
   "logDemo": {
     "label": "5k log entries",
     "total": 5000,
-    "removed": 4450,
-    "remaining": 550,
-    "reductionPct": 89,
-    "ms": 9,
-    "linesPerSec": 555556,
-    "bytesIn": 344003,
-    "bytesOut": 39583,
-    "bytesSaved": 304420,
-    "bytesSavedPct": 88.5
+    "removed": 4438,
+    "remaining": 562,
+    "reductionPct": 88.8,
+    "ms": 8,
+    "linesPerSec": 625000,
+    "bytesIn": 344197,
+    "bytesOut": 40447,
+    "bytesSaved": 303750,
+    "bytesSavedPct": 88.2
   },
   "folderThroughput": [
     {
       "label": "10 files",
       "total": 10,
-      "ms": 8,
+      "ms": 6,
       "filesRemoved": 1,
       "linesRemoved": 0,
-      "filesPerSec": 1250
+      "filesPerSec": 1667
     },
     {
       "label": "25 files",
@@ -101,29 +101,29 @@ var BENCHMARK_DATA = {
     {
       "label": "50 files",
       "total": 50,
-      "ms": 4,
+      "ms": 3,
       "filesRemoved": 1,
       "linesRemoved": 0,
-      "filesPerSec": 12500
+      "filesPerSec": 16667
     }
   ],
   "folderDemo": {
     "totalFiles": 50,
     "filesRemoved": 1,
     "linesRemoved": 0,
-    "ms": 4
+    "ms": 3
   },
   "summary": {
-    "avgReductionPct": 49.4,
-    "peakLinesPerSec": 344828,
+    "avgReductionPct": 48.7,
+    "peakLinesPerSec": 416667,
     "peakAt": "10,000 lines",
-    "largestBatchMs": 74,
+    "largestBatchMs": 69,
     "largestBatchLines": 25000,
     "logReductionPct": 89,
     "savingsDupRatioPct": 40,
     "totalFormats": 7,
     "privacyNote": "100% browser-local",
-    "folderPeakFilesPerSec": 12500,
-    "folderPeakAt": "25 files"
+    "folderPeakFilesPerSec": 16667,
+    "folderPeakAt": "50 files"
   }
 };

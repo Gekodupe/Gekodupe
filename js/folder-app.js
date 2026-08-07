@@ -15,7 +15,6 @@ var FOLDER_MODE_LABELS = {
 
 function logFolderActivity(msg) {
   var contentEl = document.getElementById('folder-activity-log-content');
-  var badgeEl = document.getElementById('folder-activity-log-badge');
   if (!contentEl) return;
   var now = new Date();
   var timeStr = '[' + now.toTimeString().split(' ')[0] + '.' + ('00' + now.getMilliseconds()).slice(-3) + ']';
@@ -24,24 +23,19 @@ function logFolderActivity(msg) {
   entry.innerHTML = '<span class="timestamp">' + timeStr + '</span>' + msg;
   contentEl.insertBefore(entry, contentEl.firstChild);
   folderActivityCount++;
-  if (badgeEl) badgeEl.innerText = folderActivityCount + ' events';
 }
 
 function toggleFolderActivityLog() {
   var panel = document.getElementById('folder-activity-log-panel');
-  var arrow = document.getElementById('folder-activity-log-arrow');
   if (!panel) return;
   var isHidden = panel.style.display === 'none';
   panel.style.display = isHidden ? 'block' : 'none';
-  if (arrow) arrow.style.transform = isHidden ? 'rotate(90deg)' : 'rotate(0deg)';
 }
 
 function clearFolderActivityLog() {
   var contentEl = document.getElementById('folder-activity-log-content');
-  var badgeEl = document.getElementById('folder-activity-log-badge');
   if (contentEl) contentEl.innerHTML = '';
   folderActivityCount = 0;
-  if (badgeEl) badgeEl.innerText = '0 events';
   showToast('Diagnostics log cleared', 'success');
 }
 

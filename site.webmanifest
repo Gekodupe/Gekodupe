@@ -1,12 +1,18 @@
 {
   "name": "Geckodupe by Flareform",
   "short_name": "Geckodupe",
-  "description": "Universal deduplication for text, files, folders, zip archives, and image/video libraries. Excel, CSV, JSON, logs, code, photos, and videos. 100% in your browser. Free and open-source.",
+  "description": "Universal deduplication for text, files, folders, zip archives, and image/video libraries. Excel, CSV, JSON, logs, code, photos, and videos. 100% in your browser.",
   "start_url": "./#text-file",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#FFFFFF",
-  "theme_color": "#F6821F",
+  "lang": "en",
+  "dir": "ltr",
+  "categories": [
+    "utilities",
+    "productivity"
+  ],
+  "background_color": "#ffffff",
+  "theme_color": "#f7831e",
   "icons": [
     {
       "src": "public/icon-192.png",
