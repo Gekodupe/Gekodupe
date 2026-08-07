@@ -310,6 +310,11 @@ function runDeduplicate() {
   var opts = getGlobalOptions();
   var linesCount = masterlistText.split('\n').length;
 
+  if (typeof quotaAllowText === 'function' && !quotaAllowText(linesCount)) {
+    return;
+  }
+  if (typeof quotaConsume === 'function' && linesCount > 0) quotaConsume('text');
+
   var statusEl = document.getElementById('status-text');
   var containerEl = document.getElementById('output-container');
   var outputEl = document.getElementById('output');
@@ -344,8 +349,14 @@ function runDeduplicate() {
     }
     if (result.total > 0) {
       var diag = typeof getPipelineDiagnostics === 'function' ? getPipelineDiagnostics() : null;
+      var verifyOk = !diag || !diag.verification || diag.verification.passed !== false;
       var verifyNote = diag && diag.verification ? ' [' + diag.verification.summary + ']' : '';
-      showToast("Successfully deduplicated " + result.total + " lines!", "success");
+      if (verifyOk) {
+        showToast("Successfully deduplicated " + result.total + " lines!", "success");
+      } else {
+        showToast("Deduplicated with warnings: " + (diag.verification.summary || 'verification incomplete'), "warning");
+        if (statusEl) statusEl.innerText += ' | Warning: ' + (diag.verification.summary || 'verification incomplete');
+      }
       logActivity("Deduplicated " + result.total + " lines (" + result.removed + " removed) in " + elapsed + "ms [Mode: " + currentFormatMode.toUpperCase() + "]" + verifyNote);
     }
   }
@@ -550,7 +561,12 @@ var TAB_PAGE_TITLES = {
   '1': 'Text Data',
   '3': 'About',
   '4': 'Directories',
-  '5': 'Media'
+  '5': 'Media',
+  '6': 'Spam',
+  '7': 'API',
+  '8': 'Pricing',
+  '9': 'Account',
+  '10': 'Geckodupe Docs'
 };
 
 function updatePageTitle(tabId) {
@@ -573,6 +589,8 @@ function buildTabRoutes() {
 function getTabIdFromHash() {
   var hash = (location.hash || '').replace(/^#/, '').trim().toLowerCase();
   if (!hash) return '1';
+  var q = hash.indexOf('?');
+  if (q >= 0) hash = hash.slice(0, q);
   return tabSlugToId[hash] || '1';
 }
 
@@ -606,6 +624,41 @@ function onTabActivated(tabId) {
       }
     });
     if (typeof preloadLib === 'function') preloadLib('jszip');
+  }
+  if (tabId === '6') {
+    ready.then(function () {
+      if (typeof initSpamTab === 'function') initSpamTab();
+      if (typeof window.initCustomDropdowns === 'function') {
+        var spamSection = document.getElementById('s-6');
+        if (spamSection) window.initCustomDropdowns(spamSection);
+      }
+    });
+  }
+  if (tabId === '7') {
+    ready.then(function () {
+      if (typeof ensureLib === 'function') return ensureLib('d3');
+    }).then(function () {
+      if (typeof initApiTab === 'function') initApiTab();
+    }).catch(function () {
+      if (typeof initApiTab === 'function') initApiTab();
+    });
+  }
+  if (tabId === '8') {
+    ready.then(function () {
+      if (typeof initPricingTab === 'function') initPricingTab();
+    });
+  }
+  if (tabId === '9') {
+    ready.then(function () {
+      if (typeof initAccountTab === 'function') initAccountTab();
+    });
+  }
+  if (tabId === '10') {
+    ready.then(function () {
+      if (typeof initDocsTab === 'function') initDocsTab();
+    });
+  } else if (typeof teardownDocsTab === 'function') {
+    teardownDocsTab();
   }
 }
 
@@ -658,6 +711,8 @@ function switchToTab(tabId, options) {
 
 function applyRouteFromHash() {
   var hash = (location.hash || '').replace(/^#/, '').trim().toLowerCase();
+  var q = hash.indexOf('?');
+  if (q >= 0) hash = hash.slice(0, q);
   if (hash && !tabSlugToId[hash]) {
     history.replaceState(null, '', '#' + (tabIdToSlug['1'] || 'text-file'));
   }

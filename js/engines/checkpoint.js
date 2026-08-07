@@ -5,6 +5,13 @@ var GECKODUPE_LAST_CHECKPOINT_ID = null;
 function geckoDeepClone(val) {
   if (val === null || val === undefined) return val;
   if (typeof val === 'string' || typeof val === 'number' || typeof val === 'boolean') return val;
+  if (typeof ArrayBuffer !== 'undefined' && val instanceof ArrayBuffer) {
+    return val.slice(0);
+  }
+  if (typeof DataView !== 'undefined' && val instanceof DataView) {
+    var buf = val.buffer.slice(val.byteOffset, val.byteOffset + val.byteLength);
+    return new DataView(buf);
+  }
   if (val instanceof Uint8Array || (typeof val.length === 'number' && typeof val.BYTES_PER_ELEMENT === 'number')) {
     return cloneBinaryData(val);
   }
@@ -69,6 +76,9 @@ function getLastCheckpointId() {
 
 function cloneBinaryData(data) {
   if (data == null) return null;
+  if (typeof ArrayBuffer !== 'undefined' && data instanceof ArrayBuffer) {
+    return data.slice(0);
+  }
   if (typeof data.length === 'number' && typeof data.BYTES_PER_ELEMENT === 'number') {
     var copy = new Uint8Array(data.length);
     for (var i = 0; i < data.length; i++) copy[i] = data[i];

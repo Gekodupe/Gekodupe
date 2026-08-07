@@ -58,7 +58,12 @@
   var TAB_SCRIPTS = {
     '3': ['js/benchmark-data.js', 'js/info-stats.js'],
     '4': ['js/folder-app.js'],
-    '5': ['js/media-app.js', 'js/media-preview.js']
+    '5': ['js/media-app.js', 'js/media-preview.js'],
+    '6': ['js/spam-app.js'],
+    '7': ['js/api-app.js'],
+    '8': ['js/pricing-app.js'],
+    '9': ['js/account-app.js'],
+    '10': ['js/docs-app.js']
   };
   var tabScriptLoads = {};
 

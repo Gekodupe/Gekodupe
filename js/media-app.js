@@ -417,7 +417,7 @@ function collectMediaEntriesFromDirectory(entry, base) {
                   } catch (e) { /* ignore */ }
                   results.push(file);
                   res();
-                });
+                }, function() { res(); });
               });
             }
             if (ent.isDirectory) {
@@ -430,7 +430,9 @@ function collectMediaEntriesFromDirectory(entry, base) {
             return Promise.resolve();
           });
         });
-        chain.then(readBatch);
+        chain.then(readBatch).catch(function() { resolve(results); });
+      }, function() {
+        resolve(results);
       });
     }
     readBatch();
@@ -781,6 +783,11 @@ async function deduplicateMedia() {
     return;
   }
 
+  if (typeof quotaAllowMedia === 'function' && !quotaAllowMedia(mediaProjectFiles.length)) {
+    return;
+  }
+  if (typeof quotaConsume === 'function') quotaConsume('media');
+
   var container = document.getElementById('media-output-container');
   var output = document.getElementById('media-output');
   var status = document.getElementById('media-status-text');
@@ -907,7 +914,15 @@ async function deduplicateMedia() {
         ? 'Removed ' + s.filesRemoved + ' variation(s) of your target'
         : 'Removed ' + s.filesRemoved + ' variation duplicate(s)')
       : (s.passthroughFiles && !s.totalMedia ? 'All files left unchanged' : 'No duplicates found');
-    showToast(toastMsg, 'success');
+    if (s.errors && s.errors > 0) {
+      toastMsg += ' (' + s.errors + ' decode error' + (s.errors === 1 ? '' : 's') + ')';
+      if (status) status.textContent += ' | Decode errors: ' + s.errors;
+      showToast(toastMsg, s.filesRemoved ? 'success' : 'warning');
+    } else if (verification && verification.passed === false) {
+      showToast('Completed with warnings: ' + (verification.summary || 'verification incomplete'), 'warning');
+    } else {
+      showToast(toastMsg, 'success');
+    }
     logMediaActivity('Done in ' + elapsed + 'ms. Removed ' + s.filesRemoved + ' duplicate(s). ' + verification.summary);
     if (typeof updateMediaPreviewButton === 'function') updateMediaPreviewButton();
   } catch (e) {

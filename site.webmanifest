@@ -1,7 +1,7 @@
 {
   "name": "Geckodupe by Flareform",
   "short_name": "Geckodupe",
-  "description": "Universal deduplication for text, files, folders, zip archives, and image/video libraries. Excel, CSV, JSON, logs, code, photos, and videos. 100% in your browser.",
+  "description": "Local-first data normalization and deduplication for text, files, folders, zip archives, image/video libraries, and spam. Everything becomes comparable first. 100% in your browser.",
   "start_url": "./#text-file",
   "scope": "./",
   "display": "standalone",

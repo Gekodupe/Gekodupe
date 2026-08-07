@@ -113,9 +113,20 @@ function runTextPipeline(txt, options) {
       attempt.result = result;
       attempts.push(attempt);
 
-      if (verification.passed || r === GECKO_PIPELINE_MAX_RETRIES - 1) {
+      if (verification.passed) {
         finalResult = result;
         finalVerification = verification;
+        break;
+      }
+
+      if (r === GECKO_PIPELINE_MAX_RETRIES - 1) {
+        finalResult = result;
+        finalVerification = verification;
+        if (!finalResult.error) {
+          finalResult = Object.assign({}, result, {
+            warning: 'Verification did not fully pass: ' + (verification.summary || 'checks failed')
+          });
+        }
         break;
       }
 
@@ -266,10 +277,115 @@ function processLinesDirect(txt, mode, lineOpts) {
   return invokeTextEngine(txt, mode || 'txt', lineOpts);
 }
 
+function runSpamPipeline(input, options) {
+  options = options || {};
+  var opts = typeof spamDefaultOpts === 'function'
+    ? spamDefaultOpts(options)
+    : options;
+
+  var emptyScore = {
+    score: 0,
+    reasons: ['empty'],
+    decision: 'soft_reject',
+    fingerprint: '',
+    normalized: '',
+    mode: opts.mode || 'form'
+  };
+
+  if (input == null || (typeof input === 'string' && !String(input).trim())) {
+    var emptyRun = {
+      type: 'spam',
+      score: emptyScore,
+      result: { cleaned: '', removedCount: 0, keptCount: 0, removed: [], score: emptyScore, error: 'empty' },
+      checkpointId: null,
+      mode: opts.mode,
+      opts: opts
+    };
+    GECKO_LAST_PIPELINE_RUN = emptyRun;
+    return emptyRun;
+  }
+
+  var checkpointPayload = { type: 'spam', opts: opts };
+  if (typeof input === 'string') {
+    if (input.length <= 200000) checkpointPayload.input = input;
+    else {
+      checkpointPayload.inputBytes = input.length;
+      checkpointPayload.inputHash = typeof spamSimpleHash === 'function' ? spamSimpleHash(input.slice(0, 4096)) : null;
+    }
+  } else {
+    checkpointPayload.input = input;
+  }
+
+  var checkpointId = typeof createCheckpoint === 'function'
+    ? createCheckpoint('spam-pre', checkpointPayload)
+    : null;
+
+  try {
+    var score = typeof spamScorePayload === 'function'
+      ? spamScorePayload(input, opts)
+      : emptyScore;
+
+    var cleaned = typeof spamCleanText === 'function'
+      ? spamCleanText(typeof input === 'string' ? input : JSON.stringify(input || {}, null, 2), opts)
+      : { cleaned: '', removedCount: 0, keptCount: 0, removed: [], score: score };
+
+    if (cleaned && cleaned.parseError) {
+      score = Object.assign({}, score, {
+        decision: 'soft_reject',
+        reasons: (score.reasons || []).concat(['parse_error'])
+      });
+    }
+
+    var run = {
+      type: 'spam',
+      score: score,
+      result: cleaned,
+      checkpointId: checkpointId,
+      mode: opts.mode,
+      opts: opts
+    };
+
+    GECKO_LAST_PIPELINE_RUN = run;
+    if (typeof safeLog === 'function') {
+      safeLog('Spam pipeline: ' + score.decision + ' score=' + score.score +
+        ' removed=' + cleaned.removedCount);
+    }
+    return run;
+  } catch (e) {
+    var failScore = {
+      score: 0,
+      reasons: ['engine_error'],
+      decision: 'soft_reject',
+      fingerprint: '',
+      normalized: '',
+      mode: opts.mode || 'form'
+    };
+    var failRun = {
+      type: 'spam',
+      score: failScore,
+      result: {
+        cleaned: '',
+        removedCount: 0,
+        keptCount: 0,
+        removed: [],
+        score: failScore,
+        error: e && e.message ? e.message : String(e)
+      },
+      checkpointId: checkpointId,
+      mode: opts.mode,
+      opts: opts
+    };
+    GECKO_LAST_PIPELINE_RUN = failRun;
+    if (typeof safeLog === 'function') safeLog('Spam pipeline error: ' + failRun.result.error);
+    return failRun;
+  }
+}
+
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = {
     runTextPipeline: runTextPipeline,
     runFolderPipeline: runFolderPipeline,
+    runSpamPipeline: runSpamPipeline,
     revertLastPipelineRun: revertLastPipelineRun,
     getLastPipelineRun: getLastPipelineRun,
     registerMediaPipelineRun: registerMediaPipelineRun,

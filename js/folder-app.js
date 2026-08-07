@@ -175,6 +175,10 @@ function loadFolderFromFileList(fileList) {
     return;
   }
 
+  if (files.length > 8000) {
+    showToast('Very large project (' + files.length + ' files). Consider splitting or adding skip paths.', 'warning');
+  }
+
   folderProjectFiles = [];
   folderProjectName = (files[0].webkitRelativePath || files[0].name).split('/')[0] || 'project';
   setFolderLoading(true);
@@ -272,7 +276,7 @@ function collectEntriesFromDirectory(entry, base) {
                   } catch (e) { /* ignore */ }
                   results.push(file);
                   res();
-                });
+                }, function() { res(); });
               });
             }
             if (ent.isDirectory) {
@@ -285,7 +289,9 @@ function collectEntriesFromDirectory(entry, base) {
             return Promise.resolve();
           });
         });
-        chain.then(readBatch);
+        chain.then(readBatch).catch(function() { resolve(results); });
+      }, function() {
+        resolve(results);
       });
     }
     readBatch();
@@ -487,6 +493,11 @@ function deduplicateFolder() {
     return;
   }
 
+  if (typeof quotaAllowFolder === 'function' && !quotaAllowFolder(folderProjectFiles.length)) {
+    return;
+  }
+  if (typeof quotaConsume === 'function') quotaConsume('folder');
+
   var container = document.getElementById('folder-output-container');
   var output = document.getElementById('folder-output');
   var status = document.getElementById('folder-status-text');
@@ -546,7 +557,12 @@ function deduplicateFolder() {
             ' (' + elapsed + 'ms)';
         }
       }
-      showToast(isReport ? 'Scan complete' : 'Successfully deduplicated project!', 'success');
+      var verifyPassed = !pipelineRun.verification || pipelineRun.verification.passed !== false;
+      if (verifyPassed) {
+        showToast(isReport ? 'Scan complete' : 'Successfully deduplicated project!', 'success');
+      } else {
+        showToast('Completed with warnings: ' + (pipelineRun.verification.summary || 'verification incomplete'), 'warning');
+      }
       logFolderActivity('Done in ' + elapsed + 'ms' + (verifyNote ? ' | ' + verifyNote : ''));
     } catch (e) {
       console.error(e);
@@ -648,6 +664,9 @@ function downloadFolderZip() {
     }
     showToast('Downloaded ' + a.download, 'success');
     logFolderActivity('Downloaded zip (' + files.length + ' files)');
+  }).catch(function(err) {
+    showToast('Zip failed: ' + (err && err.message ? err.message : String(err)), 'error');
+    logFolderActivity('Zip download failed: ' + (err && err.message ? err.message : String(err)));
   });
   };
 

@@ -3,6 +3,7 @@ Allow: /
 Allow: /text-file/
 Allow: /folder-zip/
 Allow: /image-video/
+Allow: /spam/
 Allow: /public/
 Allow: /css/
 Allow: /js/

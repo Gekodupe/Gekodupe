@@ -2,7 +2,8 @@
 
 const CDN_SCRIPT_ORIGINS = [
   'https://cdnjs.cloudflare.com',
-  'https://d3js.org'
+  'https://d3js.org',
+  'https://cdn.jsdelivr.net'
 ];
 
 function buildContentSecurityPolicy(options) {
@@ -11,10 +12,12 @@ function buildContentSecurityPolicy(options) {
     "default-src 'self'",
     "script-src 'self' " + CDN_SCRIPT_ORIGINS.join(' '),
     "script-src-attr 'unsafe-inline'",
-    "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://unpkg.com",
-    "font-src 'self' https://fonts.gstatic.com data: https://unpkg.com",
+    "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://unpkg.com https://cdn.jsdelivr.net",
+    "font-src 'self' https://fonts.gstatic.com data: https://unpkg.com https://cdn.jsdelivr.net",
     "img-src 'self' data: blob:",
-    "connect-src 'self'",
+    "connect-src 'self' https://geckodupe-spam.nic-58f.workers.dev https://*.workers.dev https://cdn.jsdelivr.net",
+    "frame-src 'self'",
+    "child-src 'self'",
     "worker-src 'self' blob:",
     "object-src 'none'",
     "base-uri 'self'",

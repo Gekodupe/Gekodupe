@@ -3,7 +3,15 @@
 
   var DURATION_MS = 3500;
   var TICK_MS = 50;
-  var HOME = new URL('./#text-file', location.href).href;
+
+  function appHomeUrl() {
+    var path = location.pathname || '/';
+    var m = path.match(/^\/(Gekodupe|Geckodupe)(?=\/|$)/i);
+    var base = m ? '/' + m[1] + '/' : '/';
+    return location.origin + base + '#text-file';
+  }
+
+  var HOME = appHomeUrl();
 
   var bar = document.getElementById('nf-bar');
   var progressEl = document.querySelector('.nf-progress');

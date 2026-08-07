@@ -24,10 +24,10 @@ const LANDING_PAGES = [
     slug: 'text-file',
     dir: 'text-file',
     title: 'Text / File Deduplication',
-    description: 'Remove duplicate lines from pasted text, CSV, Excel, JSON, logs, code, and todo lists in your browser. No uploads, 100% private.',
-    h1: 'Text and file deduplication',
-    lead: 'Paste or upload text and spreadsheets. Geckodupe removes duplicate rows and lines locally in your browser — Excel, CSV, JSON, logs, code, and more.',
-    keywords: 'text deduplication, remove duplicate lines, csv dedupe, excel duplicate rows, json dedupe, log deduplication'
+    description: 'Normalize and remove duplicate lines from pasted text, CSV, Excel, JSON, logs, code, and todo lists in your browser. No uploads, 100% private.',
+    h1: 'Text and file normalization',
+    lead: 'Paste or upload text and spreadsheets. Geckodupe normalizes rows so they become comparable, then keeps one canonical copy. Excel, CSV, JSON, logs, code, and more.',
+    keywords: 'text normalization, text deduplication, remove duplicate lines, csv dedupe, excel duplicate rows, json dedupe, log deduplication'
   },
   {
     slug: 'folder-zip',
@@ -46,6 +46,51 @@ const LANDING_PAGES = [
     h1: 'Image and video library deduplication',
     lead: 'Drop a folder or zip of photos and videos. Geckodupe compares visual fingerprints to collapse burst shots, resized exports, and near-duplicate clips — with optional reference-target mode.',
     keywords: 'photo deduplication, duplicate images, video dedupe, near duplicate photos, burst photo cleanup'
+  },
+  {
+    slug: 'spam',
+    dir: 'spam',
+    title: 'Spam Prevention',
+    description: 'Normalize and despam form dumps, logs, and lists in your browser. Score honeypots, URL floods, disposable mail, bait, and near-duplicate bursts. 100% local.',
+    h1: 'Spam prevention and list despam',
+    lead: 'Paste form payloads, log lines, or mailing lists. Geckodupe normalizes them so retries and floods become comparable, then strips spam so you keep real submissions.',
+    keywords: 'spam prevention, form spam, despam logs, honeypot detection, disposable email, bait detection, normalization'
+  },
+  {
+    slug: 'api',
+    dir: 'api',
+    title: 'API Access',
+    description: 'Create Geckodupe API keys for hosted normalization, despam, spam prevention, and event idempotency. View usage charts after signing in on Account.',
+    h1: 'Geckodupe API',
+    lead: 'Keys and usage for Express, Fastify, Hono, Bun, Workers, or Node. Sign in on Account first. No Cloudflare setup on your side.',
+    keywords: 'geckodupe api, api key, spam prevention api, idempotency api, form spam api'
+  },
+  {
+    slug: 'pricing',
+    dir: 'pricing',
+    title: 'Pricing',
+    description: 'Geckodupe plans for local tools and hosted API. Guest soft caps, Free starter API, Starter, Pro, and Business via Stripe. Cancel anytime in the customer portal.',
+    h1: 'Geckodupe pricing',
+    lead: 'Try locally as a guest, sign in for Free API allowance, or upgrade for production volume. Billing by Stripe — edit or cancel anytime.',
+    keywords: 'geckodupe pricing, spam api pricing, form spam plans, geckodupe subscription'
+  },
+  {
+    slug: 'account',
+    dir: 'account',
+    title: 'Account',
+    description: 'Sign in to Geckodupe, verify email, manage billing, and return to your API keys. Secure sessions with password or magic link.',
+    h1: 'Geckodupe account',
+    lead: 'Create an account or sign back in. Manage Stripe billing, verify email, and open the API tab for keys.',
+    keywords: 'geckodupe account, sign in, billing portal, verify email'
+  },
+  {
+    slug: 'docs',
+    dir: 'docs-landing',
+    title: 'Geckodupe Docs',
+    description: 'Geckodupe API documentation: quick start, SDK, spam and events endpoints, plans, security, and local tools.',
+    h1: 'Geckodupe Docs',
+    lead: 'Everything you need to use the Geckodupe API and browser tools. Straight answers, full coverage.',
+    keywords: 'geckodupe docs, api documentation, spam api docs, geckodupe sdk'
   }
 ];
 
@@ -65,13 +110,17 @@ function buildLandingPage(page) {
   const pageUrl = siteUrl + '/' + page.dir + '/';
   const appUrl = appHashUrl(page.slug);
   const redirectScript = 'location.replace(new URL(' + JSON.stringify(appUrl) + ', location.href).href)';
+  // Spam landing avoids em dashes in titles and visible copy
+  const titleJoin = page.slug === 'spam' ? ' - ' : ' — ';
+  const pageTitleFull = page.title + titleJoin + brandName;
+  const appTitleFull = brandName + titleJoin + page.title;
   const jsonLd = {
     '@context': 'https://schema.org',
     '@graph': [
       {
         '@type': 'WebApplication',
         '@id': pageUrl + '#app',
-        name: brandName + ' — ' + page.title,
+        name: appTitleFull,
         url: pageUrl,
         description: page.description,
         applicationCategory: 'UtilitiesApplication',
@@ -94,7 +143,7 @@ function buildLandingPage(page) {
         '@type': 'WebPage',
         '@id': pageUrl + '#webpage',
         url: pageUrl,
-        name: page.title + ' — ' + brandName,
+        name: pageTitleFull,
         description: page.description,
         isPartOf: { '@id': siteUrl + '/#website' },
         about: { '@id': pageUrl + '#app' },
@@ -107,7 +156,7 @@ function buildLandingPage(page) {
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>${escapeHtml(page.title)} — ${escapeHtml(brandName)}</title>
+  <title>${escapeHtml(pageTitleFull)}</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="${escapeHtml(page.description)}">
   <meta name="keywords" content="${escapeHtml(page.keywords)}">
@@ -122,7 +171,7 @@ function buildLandingPage(page) {
   <meta property="og:type" content="website">
   <meta property="og:locale" content="${escapeHtml(locale)}">
   <meta property="og:site_name" content="${escapeHtml(brandName)}">
-  <meta property="og:title" content="${escapeHtml(page.title)} — ${escapeHtml(brandName)}">
+  <meta property="og:title" content="${escapeHtml(pageTitleFull)}">
   <meta property="og:description" content="${escapeHtml(page.description)}">
   <meta property="og:url" content="${pageUrl}">
   <meta property="og:image" content="${iconUrl}">
@@ -130,7 +179,7 @@ function buildLandingPage(page) {
   <meta property="og:image:height" content="${ogImageHeight}">
   <meta property="og:image:alt" content="${escapeHtml(brandName)} icon">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="${escapeHtml(page.title)} — ${escapeHtml(brandName)}">
+  <meta name="twitter:title" content="${escapeHtml(pageTitleFull)}">
   <meta name="twitter:description" content="${escapeHtml(page.description)}">
   <meta name="twitter:image" content="${iconUrl}">
   <meta name="twitter:image:alt" content="${escapeHtml(brandName)} icon">
@@ -294,6 +343,7 @@ const robots = [
   'Allow: /text-file/',
   'Allow: /folder-zip/',
   'Allow: /image-video/',
+  'Allow: /spam/',
   'Allow: /public/',
   'Allow: /css/',
   'Allow: /js/',
@@ -509,4 +559,4 @@ fs.writeFileSync(indexPath, index);
 
 writeLandingPages();
 
-process.stdout.write('site-meta: wrote robots.txt, sitemap.xml, site.webmanifest, _headers, humans.txt, .well-known/security.txt, and 3 SEO landing pages\n');
+process.stdout.write('site-meta: wrote robots.txt, sitemap.xml, site.webmanifest, _headers, humans.txt, .well-known/security.txt, and ' + LANDING_PAGES.length + ' SEO landing pages\n');

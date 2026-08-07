@@ -1515,4 +1515,242 @@ tr:nth-child(even) td { background: var(--surface); color: #fff !important; }
   border: none;
 }
 
+/* Quotas & pricing */
+.quota-banner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px 16px;
+  margin: 0 0 16px;
+  padding: 10px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: var(--surface);
+  color: #ffffff;
+  font-size: 13px;
+}
+
+.quota-banner [data-quota-label] {
+  color: #ffffff;
+}
+
+.quota-banner-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.quota-link-btn {
+  background: transparent;
+  border: none;
+  color: #f7831e;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.quota-gate {
+  margin: 0 0 20px;
+  padding: 14px 16px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: var(--surface);
+}
+
+.quota-gate p {
+  margin: 0 0 12px;
+  color: #ffffff;
+  font-size: 14px;
+}
+
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-top: 8px;
+}
+
+.pricing-card {
+  border: 1px solid var(--border);
+  background: var(--surface);
+  padding: 18px 16px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-height: 100%;
+}
+
+.pricing-card-featured {
+  border-color: #f7831e;
+}
+
+.pricing-card-name {
+  margin: 0;
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #f7831e;
+}
+
+.pricing-card-price {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 400;
+  color: #fff;
+}
+
+.pricing-card-period {
+  font-size: 14px;
+  color: var(--text-tertiary);
+  margin-left: 2px;
+}
+
+.pricing-card-blurb {
+  margin: 0;
+  font-size: 13px;
+  color: var(--text-secondary);
+  min-height: 2.6em;
+}
+
+.pricing-card-features {
+  margin: 4px 0 12px;
+  padding-left: 18px;
+  color: var(--text-secondary);
+  font-size: 13px;
+  flex: 1;
+}
+
+.pricing-card-features li {
+  margin-bottom: 4px;
+}
+
+.pricing-card > button {
+  margin-top: auto;
+  width: 100%;
+}
+
+.api-usage-panel .api-chart {
+  width: 100%;
+  min-height: 48px;
+  margin-top: 8px;
+}
+
+.api-usage-svg .chart-axis text {
+  fill: #5C5A60;
+  font-size: 11px;
+}
+
+.api-usage-svg .chart-axis-y .tick line {
+  stroke: rgba(92, 90, 96, 0.1);
+}
+
+/* ---------- Docs mode: app nav + docs rail + content ---------- */
+.app-shell.docs-mode {
+  grid-template-columns: 240px 220px 1fr;
+}
+
+.docs-sidebar {
+  display: none;
+  background: #1a1a1a;
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 28px 12px 32px;
+  grid-column: 2;
+  grid-row: 2;
+  position: sticky;
+  top: var(--nav-h);
+  height: calc(100vh - var(--nav-h));
+  overflow-y: auto;
+}
+
+.app-shell.docs-mode .docs-sidebar {
+  display: flex;
+  flex-direction: column;
+}
+
+.app-shell.docs-mode .docs-sidebar[hidden] {
+  display: flex !important;
+}
+
+.docs-sidebar-label {
+  margin: 0 4px 14px;
+  padding: 0 12px;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.docs-nav-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.docs-nav-btn {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  border: none;
+  color: #fff;
+  font: inherit;
+  font-size: 14px;
+  padding: 10px 14px;
+  cursor: pointer;
+  border-radius: 0;
+}
+
+.docs-nav-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.docs-nav-btn.current {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+#main-content.page-content {
+  min-width: 0;
+}
+
+.app-shell.docs-mode #main-content {
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  grid-column: 3;
+}
+
+section.docs-panel.current {
+  display: block;
+  height: calc(100vh - var(--nav-h));
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.docs-frame {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  background: #fff;
+}
+
+@media (max-width: 980px) {
+  .app-shell.docs-mode {
+    grid-template-columns: 1fr;
+  }
+  .app-shell.docs-mode .docs-sidebar {
+    display: none !important;
+  }
+  .app-shell.docs-mode #main-content {
+    padding: 0;
+  }
+  section.docs-panel.current {
+    height: calc(100vh - var(--nav-h) - 8px);
+  }
+}
+
 

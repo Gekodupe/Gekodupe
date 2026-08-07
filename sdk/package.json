@@ -1,0 +1,56 @@
+{
+  "name": "geckodupe",
+  "version": "0.1.1",
+  "description": "Local-first data normalization and spam/idempotency engine. Use a Geckodupe API key for hosted burst and event dedupe — no Cloudflare setup required.",
+  "license": "GPL-3.0-or-later",
+  "author": "Flareform",
+  "homepage": "https://gekodupe.github.io/Gekodupe/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Gekodupe/Gekodupe.git",
+    "directory": "sdk"
+  },
+  "keywords": [
+    "geckodupe",
+    "dedupe",
+    "normalize",
+    "spam",
+    "idempotency",
+    "webhook",
+    "express",
+    "fastify",
+    "hono"
+  ],
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "examples"
+  ],
+  "scripts": {
+    "build": "tsup src/index.ts --format esm,cjs --dts --clean --sourcemap",
+    "test": "npm run build && node --test test/*.test.js",
+    "prepublishOnly": "npm run build"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "devDependencies": {
+    "tsup": "^8.5.0",
+    "typescript": "^5.8.3"
+  },
+  "dependencies": {
+    "@flareform/geckodupe": "file:.."
+  }
+}

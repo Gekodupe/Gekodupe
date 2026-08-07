@@ -1,0 +1,158 @@
+/* Geckodupe Docsify theme: matches app nav (#1a1a1a) + content */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap');
+
+:root {
+  --theme-color: #f7831e;
+  --docs-sidebar-bg: #1a1a1a;
+  --docs-sidebar-text: #ffffff;
+  --docs-sidebar-muted: rgba(255, 255, 255, 0.55);
+  --docs-content-bg: #ffffff;
+  --docs-text: #1a1a1a;
+  --docs-muted: #484848;
+  --docs-border: #e5e7eb;
+  --docs-code-bg: #f3f4f6;
+}
+
+html, body {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400;
+  background: var(--docs-content-bg);
+  color: var(--docs-text);
+}
+
+/* Hide docsify's own sidebar; parent app provides the connected rail */
+.sidebar,
+.sidebar-toggle {
+  display: none !important;
+}
+
+.main {
+  width: 100% !important;
+  left: 0 !important;
+  padding-left: 0 !important;
+}
+
+.content {
+  left: 0 !important;
+  right: 0 !important;
+  padding-top: 28px !important;
+  position: relative !important;
+}
+
+.markdown-section {
+  max-width: 820px !important;
+  color: var(--docs-text) !important;
+  font-size: 14.5px !important;
+  line-height: 1.65 !important;
+}
+
+.markdown-section h1 {
+  font-size: 28px !important;
+  font-weight: 400 !important;
+  margin: 0 0 12px !important;
+  color: #1a1a1a !important;
+  border-bottom: none !important;
+}
+
+.markdown-section h2 {
+  font-size: 18px !important;
+  font-weight: 400 !important;
+  margin: 32px 0 10px !important;
+  color: #1a1a1a !important;
+  border-bottom: 1px solid var(--docs-border) !important;
+  padding-bottom: 8px !important;
+}
+
+.markdown-section h3 {
+  font-size: 15px !important;
+  font-weight: 500 !important;
+  margin: 22px 0 8px !important;
+  color: #1a1a1a !important;
+}
+
+.markdown-section p,
+.markdown-section li {
+  color: var(--docs-muted) !important;
+}
+
+.markdown-section a {
+  color: #f7831e !important;
+  font-weight: 400 !important;
+  text-decoration: none !important;
+}
+
+.markdown-section a:hover {
+  text-decoration: underline !important;
+  text-underline-offset: 3px !important;
+}
+
+.markdown-section code {
+  background: var(--docs-code-bg) !important;
+  color: #1a1a1a !important;
+  font-family: ui-monospace, 'Geist Mono', Consolas, monospace !important;
+  font-size: 0.9em !important;
+  border-radius: 0 !important;
+  padding: 2px 5px !important;
+}
+
+.markdown-section pre {
+  background: #111111 !important;
+  border-radius: 0 !important;
+  border: 1px solid #1a1a1a !important;
+  margin: 14px 0 !important;
+}
+
+.markdown-section pre > code {
+  background: transparent !important;
+  color: #f5f5f5 !important;
+  padding: 0 !important;
+}
+
+.markdown-section table {
+  display: block;
+  overflow-x: auto;
+  border-collapse: collapse;
+  margin: 16px 0 !important;
+}
+
+.markdown-section th,
+.markdown-section td {
+  border: 1px solid var(--docs-border) !important;
+  padding: 10px 12px !important;
+  text-align: left !important;
+  font-size: 13px !important;
+}
+
+.markdown-section th {
+  background: #f9fafb !important;
+  color: #1a1a1a !important;
+  font-weight: 500 !important;
+}
+
+.markdown-section blockquote {
+  border-left: 3px solid #f7831e !important;
+  background: rgba(247, 131, 30, 0.06) !important;
+  color: var(--docs-muted) !important;
+  margin: 16px 0 !important;
+  padding: 10px 14px !important;
+}
+
+.docsify-pagination-container {
+  border-top: 1px solid var(--docs-border) !important;
+  margin-top: 40px !important;
+}
+
+.pagination-item-title {
+  color: #1a1a1a !important;
+  font-weight: 400 !important;
+}
+
+.pagination-item a {
+  color: #f7831e !important;
+}
+
+@media screen and (max-width: 768px) {
+  .sidebar {
+    background: var(--docs-sidebar-bg) !important;
+  }
+}
