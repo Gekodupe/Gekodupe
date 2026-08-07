@@ -145,10 +145,20 @@ function apiRenderSignedIn(account) {
 
 var apiLogsCache = [];
 
+function apiDedupeLogText(text) {
+  if (!text || !String(text).trim() || String(text).indexOf('No requests yet') === 0) return text;
+  if (typeof processLog !== 'function') return text;
+  try {
+    var result = processLog(text, false, false, true, 'original', 0.92, 'all', false, true);
+    var lines = (result && result.lines) || [];
+    return lines.length ? lines.join('\n') : text;
+  } catch (e) {
+    return text;
+  }
+}
+
 async function apiRefreshLogs() {
   var rawEl = document.getElementById('api-logs-raw');
-  var dedupedEl = document.getElementById('api-logs-deduped');
-  var dedupeLabel = document.getElementById('api-logs-dedupe-label');
   if (!apiSession) {
     if (rawEl) rawEl.value = '';
     return;
@@ -157,58 +167,14 @@ async function apiRefreshLogs() {
     var res = await apiFetch('/v1/account/logs');
     apiLogsCache = (res && res.lines) || [];
     if (rawEl) {
-      rawEl.value = apiLogsCache.length
-        ? apiLogsCache.join('\n')
-        : 'No requests yet. Call score, clean, check, or events from your server.';
+      if (!apiLogsCache.length) {
+        rawEl.value = 'No requests yet. Call score, clean, check, or events from your server.';
+      } else {
+        rawEl.value = apiDedupeLogText(apiLogsCache.join('\n'));
+      }
     }
-    if (dedupedEl) {
-      dedupedEl.value = '';
-      dedupedEl.hidden = true;
-    }
-    if (dedupeLabel) dedupeLabel.hidden = true;
   } catch (e) {
     if (rawEl) rawEl.value = (e && e.message) || 'Could not load logs';
-  }
-}
-
-function apiDedupeLogs() {
-  var rawEl = document.getElementById('api-logs-raw');
-  var dedupedEl = document.getElementById('api-logs-deduped');
-  var dedupeLabel = document.getElementById('api-logs-dedupe-label');
-  var text = rawEl ? String(rawEl.value || '') : '';
-  if (!text.trim() || text.indexOf('No requests yet') === 0) {
-    if (typeof showToast === 'function') showToast('Nothing to dedupe yet', 'warning');
-    return;
-  }
-  if (typeof processLog !== 'function') {
-    if (typeof showToast === 'function') showToast('Log engine not loaded', 'warning');
-    return;
-  }
-  try {
-    var result = processLog(text, false, false, true, 'original', 0.92, 'all', false, true);
-    var lines = (result && result.lines) || [];
-    var out = lines.join('\n');
-    if (dedupedEl) {
-      dedupedEl.value = out;
-      dedupedEl.hidden = false;
-    }
-    if (dedupeLabel) {
-      dedupeLabel.hidden = false;
-      dedupeLabel.textContent =
-        'Deduped · ' +
-        ((result && result.remaining) || lines.length) +
-        ' kept of ' +
-        ((result && result.total) || text.split('\n').length) +
-        ' (log mode)';
-    }
-    if (typeof showToast === 'function') {
-      showToast(
-        'Deduped logs: removed ' + ((result && result.removed) || 0) + ' duplicate lines',
-        'success'
-      );
-    }
-  } catch (e) {
-    if (typeof showToast === 'function') showToast((e && e.message) || 'Dedupe failed', 'error');
   }
 }
 

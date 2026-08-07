@@ -984,15 +984,18 @@
 
           <div class="api-panel" id="api-logs-panel">
             <p class="api-panel-title">Request logs</p>
-            <p class="api-panel-desc">Recent spam and events API calls for your account (metadata only, no payloads). Dedupe with Geckodupe log mode to collapse retries and near-duplicates.</p>
-            <textarea id="api-logs-raw" class="api-mono" readonly rows="8" placeholder="No requests yet. Call score, clean, check, or events from your server."></textarea>
-            <div class="button-group" style="margin-top:12px;flex-wrap:wrap;gap:8px;">
-              <button type="button" class="secondary-btn" onclick="apiRefreshLogs()">Refresh</button>
-              <button type="button" onclick="apiDedupeLogs()">Dedupe with Geckodupe</button>
-              <button type="button" class="secondary-btn" onclick="apiCopy('api-logs-raw')">Copy</button>
+            <p class="api-panel-desc">Recent spam and events API calls for your account (metadata only, no payloads).</p>
+            <div class="api-logs-field">
+              <div class="api-logs-actions">
+                <button type="button" class="api-logs-icon-btn" onclick="apiRefreshLogs()" title="Refresh" aria-label="Refresh logs">
+                  <i class="ph-fill ph-arrow-clockwise" aria-hidden="true"></i>
+                </button>
+                <button type="button" class="api-logs-icon-btn" onclick="apiCopy('api-logs-raw')" title="Copy" aria-label="Copy logs">
+                  <i class="ph-fill ph-copy" aria-hidden="true"></i>
+                </button>
+              </div>
+              <textarea id="api-logs-raw" class="api-mono" readonly rows="8" placeholder="No requests yet. Call score, clean, check, or events from your server."></textarea>
             </div>
-            <p class="api-panel-desc api-panel-desc--spaced" id="api-logs-dedupe-label" hidden>Deduped</p>
-            <textarea id="api-logs-deduped" class="api-mono" readonly rows="6" hidden></textarea>
           </div>
 
           <div class="api-panel" id="api-create-panel">
