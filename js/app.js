@@ -765,15 +765,37 @@ document.addEventListener('DOMContentLoaded', function() {
       document.body.style.overflow = '';
     });
 
+    var docsToggle = document.getElementById('mobile-docs-toggle');
+    var docsPanel = document.getElementById('mobile-docs-panel');
+    if (docsToggle && docsPanel) {
+      docsToggle.addEventListener('click', function(e) {
+        e.preventDefault();
+        var open = docsToggle.getAttribute('aria-expanded') === 'true';
+        docsToggle.setAttribute('aria-expanded', open ? 'false' : 'true');
+        if (open) docsPanel.setAttribute('hidden', '');
+        else docsPanel.removeAttribute('hidden');
+      });
+    }
+
     document.querySelectorAll('.mobile-menu-link[data-tab]').forEach(function(link) {
       link.addEventListener('click', function() {
         var tabId = link.getAttribute('data-tab');
+        var docsHash = link.getAttribute('data-docs-hash');
         if (tabIdToSlug[tabId]) {
           try {
             location.hash = tabIdToSlug[tabId];
           } catch (err) {
             switchToTab(tabId);
           }
+        }
+        if (docsHash && tabId === '10') {
+          setTimeout(function () {
+            if (typeof docsNavigate === 'function') docsNavigate(docsHash);
+            else if (typeof initDocsTab === 'function') {
+              initDocsTab();
+              if (typeof docsNavigate === 'function') docsNavigate(docsHash);
+            }
+          }, 120);
         }
         mobileMenuOverlay.setAttribute('hidden', '');
         document.body.style.overflow = '';

@@ -64,7 +64,8 @@ function docsBuildNav() {
 function docsEnsureFrame() {
   var frame = document.getElementById('docs-frame');
   if (!frame) return;
-  if (!frame.getAttribute('src')) {
+  var src = frame.getAttribute('src') || '';
+  if (!src || src === 'about:blank') {
     frame.setAttribute('src', 'docs/index.html');
   }
 }

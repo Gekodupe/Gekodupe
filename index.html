@@ -218,7 +218,22 @@
         <button class="mobile-menu-link" data-tab="6">Spam</button>
         <button class="mobile-menu-link" data-tab="7">API</button>
         <button class="mobile-menu-link" data-tab="8">Pricing</button>
-        <button class="mobile-menu-link" data-tab="10">Geckodupe Docs</button>
+        <div class="mobile-menu-docs">
+          <button type="button" class="mobile-menu-link mobile-menu-docs-toggle" id="mobile-docs-toggle" aria-expanded="false" aria-controls="mobile-docs-panel">
+            Geckodupe Docs
+            <span class="mobile-docs-chevron" aria-hidden="true"></span>
+          </button>
+          <div id="mobile-docs-panel" class="mobile-docs-panel" hidden>
+            <button type="button" class="mobile-menu-link mobile-docs-link" data-tab="10" data-docs-hash="#/">Home</button>
+            <button type="button" class="mobile-menu-link mobile-docs-link" data-tab="10" data-docs-hash="#/quickstart">Quick start</button>
+            <button type="button" class="mobile-menu-link mobile-docs-link" data-tab="10" data-docs-hash="#/api-keys">Get an API key</button>
+            <button type="button" class="mobile-menu-link mobile-docs-link" data-tab="10" data-docs-hash="#/sdk">SDK</button>
+            <button type="button" class="mobile-menu-link mobile-docs-link" data-tab="10" data-docs-hash="#/spam-api">Spam API</button>
+            <button type="button" class="mobile-menu-link mobile-docs-link" data-tab="10" data-docs-hash="#/events-api">Events API</button>
+            <button type="button" class="mobile-menu-link mobile-docs-link" data-tab="10" data-docs-hash="#/plans">Plans</button>
+            <button type="button" class="mobile-menu-link mobile-docs-link" data-tab="10" data-docs-hash="#/account-billing">Account and billing</button>
+          </div>
+        </div>
         <button class="mobile-menu-link" data-tab="3">About ?</button>
         <button class="mobile-menu-link" data-tab="9">Account</button>
         <div style="margin-top: auto; display: flex; flex-direction: column; gap: 0px; padding-bottom: 24px;">
@@ -1041,103 +1056,103 @@
         <p class="tool-intro">Sign in, verify email, manage billing, and return anytime. Mail comes from Blacnova Development (nic@blacnova.net).</p>
         <span class="status-text" id="acct-status-text"></span>
 
-        <div id="acct-signed-out">
-          <div id="acct-mode-password" class="folder-skip-panel">
-            <p class="folder-skip-title">Sign in</p>
-            <p class="folder-skip-desc">Password account with optional magic link. Remember me keeps you signed in on this device.</p>
-            <div class="options-row" style="flex-wrap:wrap;gap:12px;align-items:flex-end;">
-              <div class="control-group" style="flex:1;min-width:200px;">
-                <label for="acct-email">Email</label>
-                <input type="email" id="acct-email" class="folder-skip-input" placeholder="you@company.com" autocomplete="email" style="width:100%;padding:10px 12px;">
-              </div>
-              <div class="control-group" style="flex:1;min-width:200px;">
-                <label for="acct-password">Password</label>
-                <input type="password" id="acct-password" class="folder-skip-input" placeholder="At least 10 characters" autocomplete="current-password" style="width:100%;padding:10px 12px;">
-              </div>
+        <div id="acct-signed-out" class="auth-stack">
+          <div id="acct-mode-password" class="auth-card">
+            <p class="auth-card-title">Sign in</p>
+            <p class="auth-card-desc">Use your password, or switch to a one-time email code.</p>
+            <div class="auth-field">
+              <label for="acct-email">Email</label>
+              <input type="email" id="acct-email" class="auth-input" placeholder="you@company.com" autocomplete="email">
             </div>
-            <label style="display:flex;align-items:center;gap:8px;margin:12px 0;font-size:14px;color:#484848;">
+            <div class="auth-field">
+              <label for="acct-password">Password</label>
+              <input type="password" id="acct-password" class="auth-input" placeholder="At least 10 characters" autocomplete="current-password">
+            </div>
+            <label class="auth-check">
               <input type="checkbox" id="acct-remember" checked> Remember me on this device
             </label>
-            <div class="button-group" style="flex-wrap:wrap;gap:8px;">
-              <button type="button" onclick="acctLogin()">Sign in</button>
+            <div class="auth-actions">
+              <button type="button" class="auth-primary" onclick="acctLogin()">Sign in</button>
               <button type="button" class="secondary-btn" onclick="acctRegister()">Create account</button>
-              <button type="button" class="secondary-btn" onclick="acctMode('magic')">Email me a code</button>
-              <button type="button" class="secondary-btn" onclick="acctMode('forgot')">Forgot password</button>
+            </div>
+            <div class="auth-links">
+              <button type="button" class="auth-text-btn" onclick="acctMode('magic')">Email me a code</button>
+              <button type="button" class="auth-text-btn" onclick="acctMode('forgot')">Forgot password</button>
             </div>
           </div>
 
-          <div id="acct-mode-magic" class="folder-skip-panel" style="display:none;">
-            <p class="folder-skip-title">Magic link</p>
-            <p class="folder-skip-desc">We email a one-time code. No password needed.</p>
-            <div class="options-row" style="flex-wrap:wrap;gap:12px;align-items:flex-end;">
-              <div class="control-group" style="flex:1;min-width:220px;">
-                <label for="acct-email-magic">Email</label>
-                <input type="email" id="acct-email-magic" class="folder-skip-input" placeholder="you@company.com" autocomplete="email" style="width:100%;padding:10px 12px;">
-              </div>
-              <button type="button" onclick="acctStartSignIn()">Email me a code</button>
+          <div id="acct-mode-magic" class="auth-card" style="display:none;">
+            <p class="auth-card-title">Magic link</p>
+            <p class="auth-card-desc">We email a one-time code. No password needed.</p>
+            <div class="auth-field">
+              <label for="acct-email-magic">Email</label>
+              <input type="email" id="acct-email-magic" class="auth-input" placeholder="you@company.com" autocomplete="email">
+            </div>
+            <div class="auth-actions">
+              <button type="button" class="auth-primary" onclick="acctStartSignIn()">Email me a code</button>
               <button type="button" class="secondary-btn" onclick="acctMode('password')">Back</button>
             </div>
           </div>
 
-          <div id="acct-mode-forgot" class="folder-skip-panel" style="display:none;">
-            <p class="folder-skip-title">Reset password</p>
-            <p class="folder-skip-desc">We’ll email a reset link if that account exists.</p>
-            <div class="options-row" style="flex-wrap:wrap;gap:12px;align-items:flex-end;">
-              <div class="control-group" style="flex:1;min-width:220px;">
-                <label for="acct-forgot-email">Email</label>
-                <input type="email" id="acct-forgot-email" class="folder-skip-input" placeholder="you@company.com" autocomplete="email" style="width:100%;padding:10px 12px;">
-              </div>
-              <button type="button" onclick="acctForgot()">Send reset link</button>
+          <div id="acct-mode-forgot" class="auth-card" style="display:none;">
+            <p class="auth-card-title">Reset password</p>
+            <p class="auth-card-desc">If that account exists, we send a reset link.</p>
+            <div class="auth-field">
+              <label for="acct-forgot-email">Email</label>
+              <input type="email" id="acct-forgot-email" class="auth-input" placeholder="you@company.com" autocomplete="email">
+            </div>
+            <div class="auth-actions">
+              <button type="button" class="auth-primary" onclick="acctForgot()">Send reset link</button>
               <button type="button" class="secondary-btn" onclick="acctMode('password')">Back</button>
             </div>
           </div>
 
-          <div id="acct-mode-reset" class="folder-skip-panel" style="display:none;">
-            <p class="folder-skip-title">Choose a new password</p>
+          <div id="acct-mode-reset" class="auth-card" style="display:none;">
+            <p class="auth-card-title">Choose a new password</p>
             <input type="hidden" id="acct-reset-token" value="">
-            <div class="control-group" style="max-width:320px;">
+            <div class="auth-field">
               <label for="acct-reset-password">New password</label>
-              <input type="password" id="acct-reset-password" class="folder-skip-input" placeholder="At least 10 characters" autocomplete="new-password" style="width:100%;padding:10px 12px;">
+              <input type="password" id="acct-reset-password" class="auth-input" placeholder="At least 10 characters" autocomplete="new-password">
             </div>
-            <div class="button-group" style="margin-top:12px;">
-              <button type="button" onclick="acctResetPassword()">Update password</button>
+            <div class="auth-actions">
+              <button type="button" class="auth-primary" onclick="acctResetPassword()">Update password</button>
               <button type="button" class="secondary-btn" onclick="acctMode('password')">Back</button>
             </div>
           </div>
 
-          <div id="acct-code-panel" class="folder-skip-panel" style="display:none;margin-top:16px;">
-            <p class="folder-skip-title">Enter code</p>
-            <p class="folder-skip-desc">Sent to <span id="acct-email-hint"></span>. Or open the link in that email.</p>
+          <div id="acct-code-panel" class="auth-card" style="display:none;">
+            <p class="auth-card-title">Enter code</p>
+            <p class="auth-card-desc">Sent to <span id="acct-email-hint"></span>. Or open the link in that email.</p>
             <input type="hidden" id="acct-code-email" value="">
-            <div class="options-row" style="flex-wrap:wrap;gap:12px;align-items:flex-end;">
-              <div class="control-group" style="flex:1;min-width:180px;">
-                <label for="acct-code">Code</label>
-                <input type="text" id="acct-code" class="folder-skip-input" placeholder="ABC123" autocomplete="one-time-code" maxlength="8" style="width:100%;padding:10px 12px;letter-spacing:0.12em;text-transform:uppercase;">
-              </div>
-              <button type="button" onclick="acctVerify()">Verify &amp; continue</button>
+            <div class="auth-field">
+              <label for="acct-code">Code</label>
+              <input type="text" id="acct-code" class="auth-input auth-input-code" placeholder="ABC123" autocomplete="one-time-code" maxlength="8">
+            </div>
+            <div class="auth-actions">
+              <button type="button" class="auth-primary" onclick="acctVerify()">Verify and continue</button>
             </div>
           </div>
         </div>
 
         <div id="acct-signed-in" style="display:none;">
-          <div class="folder-skip-panel">
-            <p class="folder-skip-title">Signed in</p>
-            <p class="folder-skip-desc"><span id="acct-user-email"></span></p>
-            <p class="folder-skip-desc" id="acct-user-plan" style="margin-top:6px;"></p>
-            <p class="folder-skip-desc" id="acct-usage-line" style="margin-top:6px;"></p>
-            <div class="button-group" style="flex-wrap:wrap;gap:8px;margin-top:12px;">
-              <button type="button" onclick="acctOpenBilling()">Manage billing</button>
+          <div class="auth-card">
+            <p class="auth-card-title">Signed in</p>
+            <p class="auth-card-desc"><span id="acct-user-email"></span></p>
+            <p class="auth-card-meta" id="acct-user-plan"></p>
+            <p class="auth-card-meta" id="acct-usage-line"></p>
+            <div class="auth-actions auth-actions-wrap">
+              <button type="button" class="auth-primary" onclick="acctOpenBilling()">Manage billing</button>
               <button type="button" class="secondary-btn" onclick="quotaGoPricing()">View pricing</button>
               <button type="button" class="secondary-btn" onclick="acctGoApi()">Open API</button>
               <button type="button" class="secondary-btn" onclick="acctSignOut()">Sign out</button>
             </div>
-            <p class="folder-skip-desc" style="margin-top:12px;">Manage billing opens Stripe’s portal to update payment method, download invoices, or cancel your subscription.</p>
+            <p class="auth-card-desc" style="margin-top:12px;">Manage billing opens Stripe’s portal to update payment method, download invoices, or cancel your subscription.</p>
           </div>
 
-          <div id="acct-verify-panel" class="folder-skip-panel" style="display:none;margin-top:16px;">
-            <p class="folder-skip-title">Verify email</p>
-            <p class="folder-skip-desc">Confirm your address before creating API keys.</p>
-            <button type="button" onclick="acctResendVerify()">Resend verification email</button>
+          <div id="acct-verify-panel" class="auth-card" style="display:none;margin-top:16px;">
+            <p class="auth-card-title">Verify email</p>
+            <p class="auth-card-desc">Confirm your address before creating API keys.</p>
+            <button type="button" class="auth-primary" onclick="acctResendVerify()">Resend verification email</button>
           </div>
         </div>
       </section>
@@ -1238,9 +1253,18 @@
             <span class="demo-heading-icon" aria-hidden="true">
               <i class="ph-fill ph-image" style="font-size: 32px;"></i>
             </span>
-            Img / Vid libraries
+            Img / Vid
           </h3>
-          <p class="info-folder-note__text">Drop a folder or zip of photos and videos. Geckodupe compares file content visually, not by filename, so renamed copies and burst sequences collapse to a small set of unique shots. Optional reference-target mode keeps one file you pick and removes only its variations. Use the skip list on the Img/Vid tab to leave specific files untouched. Everything runs locally in your browser.</p>
+          <p class="info-folder-note__text">Images decode in your browser, scale to several sizes, and convert to grayscale before hashing so a thumbnail can still match a full export.</p>
+          <p class="info-math-eq" style="text-align:left;">Y = 0.299R + 0.587G + 0.114B</p>
+          <p class="info-folder-note__text">Five perceptual hashes capture gradient, brightness, block layout, fine detail, and color placement. Bit mismatches between fingerprints form the Hamming distance.</p>
+          <p class="info-math-eq" style="text-align:left;">d(h<sub>1</sub>, h<sub>2</sub>) = Σ<sub>i</sub> [h<sub>1i</sub> ≠ h<sub>2i</sub>]</p>
+          <p class="info-folder-note__text">Your similarity slider (75% to 100%) sets how many bit differences you allow. The score uses the mean of the two largest hash distances. At 100%, only SHA-256 byte matches count.</p>
+          <p class="info-math-eq" style="text-align:left;">match% = 100(1 − d/64)</p>
+          <p class="info-math-eq" style="text-align:left;">S<sub>img</sub> = 1 − d<sub>strict</sub>/64 ≥ 1 − d<sub>max</sub>/64</p>
+          <p class="info-folder-note__text">Videos are sampled on a timer. Frames get hashes and hue histograms, timelines are aligned with banded dynamic time warping, and each matched pair is scored.</p>
+          <p class="info-math-eq" style="text-align:left;">S<sub>frame</sub> = 0.42·S<sub>hash</sub> + 0.38·S<sub>hue</sub> + 0.08·S<sub>luma</sub> + 0.07·S<sub>contrast</sub> + 0.05·S<sub>sat</sub></p>
+          <p class="info-folder-note__text">Burst sequences collapse by comparing filename neighbors. LSH banding and union-find keep large libraries fast.</p>
           <p class="info-folder-note__skips">Handles <span class="info-tag">burst frames</span><span class="info-tag">resized copies</span><span class="info-tag">video near-dupes</span><span class="info-tag">reference target</span></p>
         </div>
 
@@ -1409,14 +1433,13 @@
             <i class="ph-fill ph-info"></i> About ?
           </button>
         </li>
-        <li role="presentation">
-          <button class="nav-tab-btn" id="t-9" role="tab" aria-selected="false" aria-controls="s-9" tabindex="-1" data-slug="account">
-            <i class="ph-fill ph-user-circle"></i> Account
-          </button>
-        </li>
       </ul>
-      <div style="margin-top: auto; font-size: 11px; color: var(--text-tertiary); text-align: center; padding-top: 32px;">
-        &copy; 2026 Geckodupe by Flareform
+      <div class="sidebar-footer">
+        <button class="nav-tab-btn nav-tab-btn--account" id="t-9" role="tab" aria-selected="false" aria-controls="s-9" tabindex="-1" data-slug="account">
+          <i class="ph-fill ph-user-circle" aria-hidden="true"></i>
+          <span>Account</span>
+        </button>
+        <div class="sidebar-copyright">&copy; 2026 Geckodupe by Flareform</div>
       </div>
     </aside>
 
