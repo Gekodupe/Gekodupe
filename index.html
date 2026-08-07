@@ -1237,38 +1237,6 @@
           <p class="info-folder-note__skips">Skips <span class="info-tag">node_modules</span><span class="info-tag">.git</span><span class="info-tag">dist</span><span class="info-tag">vendor</span></p>
         </div>
 
-        <div class="info-folder-note info-media-note">
-          <h3 class="info-folder-note__title demo-heading demo-heading--lime" style="flex-direction: row; justify-content: flex-end; text-align: right;">
-            <span class="demo-heading-icon" aria-hidden="true">
-              <i class="ph-fill ph-shield-warning" style="font-size: 32px;"></i>
-            </span>
-            Spam prevention
-          </h3>
-          <p class="info-folder-note__text">Normalize and clean form dumps, logs, and lists in the browser. Heuristics catch honeypots, link floods, disposable emails, bait phrases, and near-duplicate junk so retries and floods collapse and you keep only real submissions and lines. For apps and servers, sign in on Account, then open API for a key.</p>
-          <p class="info-folder-note__skips">Handles <span class="info-tag">normalize</span><span class="info-tag">honeypots</span><span class="info-tag">URL floods</span><span class="info-tag">API keys</span></p>
-        </div>
-
-        <div class="info-folder-note info-media-note">
-          <h3 class="info-folder-note__title demo-heading demo-heading--lime" style="flex-direction: row; justify-content: flex-end; text-align: right;">
-            <span class="demo-heading-icon" aria-hidden="true">
-              <i class="ph-fill ph-image" style="font-size: 32px;"></i>
-            </span>
-            Img / Vid
-          </h3>
-          <p class="info-folder-note__text">Images decode in your browser, scale to several sizes, and convert to grayscale before hashing so a thumbnail can still match a full export.</p>
-          <p class="info-math-eq" style="text-align:left;">Y = 0.299R + 0.587G + 0.114B</p>
-          <p class="info-folder-note__text">Five perceptual hashes capture gradient, brightness, block layout, fine detail, and color placement. Bit mismatches between fingerprints form the Hamming distance.</p>
-          <p class="info-math-eq" style="text-align:left;">d(h<sub>1</sub>, h<sub>2</sub>) = Σ<sub>i</sub> [h<sub>1i</sub> ≠ h<sub>2i</sub>]</p>
-          <p class="info-folder-note__text">Your similarity slider (75% to 100%) sets how many bit differences you allow. The score uses the mean of the two largest hash distances. At 100%, only SHA-256 byte matches count.</p>
-          <p class="info-math-eq" style="text-align:left;">match% = 100(1 − d/64)</p>
-          <p class="info-math-eq" style="text-align:left;">S<sub>img</sub> = 1 − d<sub>strict</sub>/64 ≥ 1 − d<sub>max</sub>/64</p>
-          <p class="info-folder-note__text">Videos are sampled on a timer. Frames get hashes and hue histograms, timelines are aligned with banded dynamic time warping, and each matched pair is scored.</p>
-          <p class="info-math-eq" style="text-align:left;">S<sub>frame</sub> = 0.42·S<sub>hash</sub> + 0.38·S<sub>hue</sub> + 0.08·S<sub>luma</sub> + 0.07·S<sub>contrast</sub> + 0.05·S<sub>sat</sub></p>
-          <p class="info-folder-note__text">Burst sequences collapse by comparing filename neighbors. LSH banding and union-find keep large libraries fast.</p>
-          <p class="info-folder-note__skips">Handles <span class="info-tag">burst frames</span><span class="info-tag">resized copies</span><span class="info-tag">video near-dupes</span><span class="info-tag">reference target</span></p>
-        </div>
-
-
         <div class="info-math-flow">
 
           <div class="info-math-block">
@@ -1320,6 +1288,19 @@
               <p>Videos are sampled on a timer. Frames get hashes and hue histograms, timelines are aligned with banded dynamic time warping, and each matched pair is scored.</p>
               <p class="info-math-eq">S<sub>frame</sub> = 0.42·S<sub>hash</sub> + 0.38·S<sub>hue</sub> + 0.08·S<sub>luma</sub> + 0.07·S<sub>contrast</sub> + 0.05·S<sub>sat</sub></p>
               <p>Burst sequences collapse by comparing filename neighbors. LSH banding and union-find keep large libraries fast.</p>
+            </div>
+          </div>
+
+          <div class="info-math-block">
+            <div class="info-stats-copy">
+              <h3 class="demo-heading demo-heading--yellow" style="flex-direction: row; justify-content: flex-end; text-align: right;">
+                <span class="demo-heading-icon" aria-hidden="true">
+                  <i class="ph-fill ph-shield-warning" style="font-size: 32px;"></i>
+                </span>
+                Spam prevention
+              </h3>
+              <p>Normalize and clean form dumps, logs, and lists in the browser. Heuristics catch honeypots, link floods, disposable emails, bait phrases, and near-duplicate junk so retries and floods collapse and you keep only real submissions and lines. For apps and servers, sign in on Account, then open API for a key.</p>
+              <p class="info-folder-note__skips">Handles <span class="info-tag">normalize</span><span class="info-tag">honeypots</span><span class="info-tag">URL floods</span><span class="info-tag">API keys</span></p>
             </div>
           </div>
 
