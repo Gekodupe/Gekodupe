@@ -69,7 +69,7 @@ const LANDING_PAGES = [
     slug: 'pricing',
     dir: 'pricing',
     title: 'Pricing',
-    description: 'Geckodupe plans for local tools and hosted API. Guest soft caps, Free starter API, Starter, Pro, and Business via Stripe. Cancel anytime in the customer portal.',
+    description: 'Geckodupe plans for local tools and hosted API. Guest soft caps, Free, Starter, and Pro via Stripe. Cancel anytime in the customer portal.',
     h1: 'Geckodupe pricing',
     lead: 'Try locally as a guest, sign in for Free API allowance, or upgrade for production volume. Billing by Stripe — edit or cancel anytime.',
     keywords: 'geckodupe pricing, spam api pricing, form spam plans, geckodupe subscription'

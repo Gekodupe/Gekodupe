@@ -12,7 +12,7 @@
 
 ## Pricing tab
 
-- Compare Free, Starter, Pro, Business
+- Compare Free, Starter, and Pro
 - Start Checkout (must be signed in)
 - Open Stripe portal when signed in
 

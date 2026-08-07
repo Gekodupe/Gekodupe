@@ -12,21 +12,26 @@
 <body>
   <div id="app">Loading docs…</div>
   <script>
-    window.$docsify = {
-      name: 'Geckodupe Docs',
-      nameLink: '#/',
-      repo: '',
-      loadSidebar: false,
-      subMaxLevel: 2,
-      auto2top: true,
-      homepage: 'README.md',
-      search: 'auto',
-      themeColor: '#f7831e',
-      notFoundPage: true,
-      executeScript: false,
-      noEmoji: true,
-      hideSidebar: true
-    };
+    (function () {
+      var path = location.pathname || '';
+      var base = path.replace(/\/[^/]*$/, '/');
+      if (base.indexOf('/docs') === -1 && path.indexOf('/docs') === -1) {
+        base = path.replace(/\/?$/, '/') + 'docs/';
+      }
+      window.$docsify = {
+        el: '#app',
+        name: 'Geckodupe Docs',
+        loadSidebar: false,
+        subMaxLevel: 2,
+        auto2top: true,
+        homepage: 'README.md',
+        themeColor: '#f7831e',
+        notFoundPage: '_404.md',
+        noEmoji: true,
+        routerMode: 'hash',
+        basePath: base
+      };
+    })();
   </script>
   <script src="https://cdn.jsdelivr.net/npm/docsify@4/lib/docsify.min.js"></script>
 </body>

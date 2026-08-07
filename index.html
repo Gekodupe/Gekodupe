@@ -973,66 +973,66 @@
 
         <h1>API</h1>
 
-        <p class="tool-intro">Create keys and watch usage for hosted normalize, despam, spam prevention, and event idempotency. Sign in on the Account tab first — no Cloudflare setup on your side.</p>
+        <p class="tool-intro">Create keys and watch usage for hosted normalize, despam, spam prevention, and event idempotency. Sign in on Account first.</p>
 
         <span class="status-text" id="api-status-text"></span>
 
-        <div id="api-gate" class="folder-skip-panel">
-          <p class="folder-skip-title">Sign in required</p>
-          <p class="folder-skip-desc">API keys and usage live with your account. Create an account or sign back in to continue.</p>
-            <div class="button-group" style="flex-wrap:wrap;gap:8px;">
+        <div id="api-gate" class="api-panel">
+          <p class="api-panel-title">Sign in required</p>
+          <p class="api-panel-desc">API keys and usage live with your account. Create an account or sign back in to continue.</p>
+          <div class="button-group" style="flex-wrap:wrap;gap:8px;">
             <button type="button" onclick="apiGoAccount()">Open Account</button>
             <button type="button" class="secondary-btn" onclick="quotaGoPricing()">Pricing</button>
             <button type="button" class="secondary-btn" onclick="location.hash='docs';if(typeof switchToTab==='function')switchToTab('10')">Docs</button>
           </div>
         </div>
 
-        <div id="api-workspace" style="display:none;">
-          <div class="folder-skip-panel">
-            <p class="folder-skip-title">Workspace</p>
-            <p class="folder-skip-desc"><span id="api-user-email"></span></p>
-            <p class="folder-skip-desc" id="api-user-plan" style="margin-top:6px;"></p>
+        <div id="api-workspace" class="api-workspace" style="display:none;">
+          <div class="api-panel">
+            <p class="api-panel-title">Workspace</p>
+            <p class="api-panel-desc"><span id="api-user-email"></span></p>
+            <p class="api-panel-meta" id="api-user-plan"></p>
             <div class="button-group" style="flex-wrap:wrap;gap:8px;">
               <button type="button" class="secondary-btn" onclick="apiGoAccount()">Account &amp; billing</button>
               <button type="button" class="secondary-btn" onclick="quotaGoPricing()">Pricing</button>
             </div>
           </div>
 
-          <div class="folder-skip-panel api-usage-panel" style="margin-top:16px;">
-            <p class="folder-skip-title">Usage</p>
-            <p class="folder-skip-desc" id="api-usage-today-label">Loading…</p>
+          <div class="api-panel api-usage-panel">
+            <p class="api-panel-title">Usage</p>
+            <p class="api-panel-desc" id="api-usage-today-label">Loading…</p>
             <div id="api-chart-today" class="api-chart" role="img" aria-label="Today API quota usage"></div>
-            <p class="folder-skip-desc" id="api-usage-week-label" style="margin-top:12px;">Last 7 days</p>
+            <p class="api-panel-desc api-panel-desc--spaced" id="api-usage-week-label">Last 7 days</p>
             <div id="api-chart-week" class="api-chart" role="img" aria-label="Seven day API usage"></div>
           </div>
 
-          <div class="folder-skip-panel" style="margin-top:16px;">
-            <p class="folder-skip-title">Create API key</p>
-            <p class="folder-skip-desc">One key works for score, clean, check, and event idempotency across Express, Fastify, Hono, Bun, Workers, Node, and more. Email must be verified on Account.</p>
-            <div class="options-row" style="flex-wrap:wrap;gap:12px;align-items:flex-end;">
+          <div class="api-panel">
+            <p class="api-panel-title">Create API key</p>
+            <p class="api-panel-desc">One key works for score, clean, check, and event idempotency. Email must be verified on Account.</p>
+            <div class="api-create-row">
               <div class="control-group" style="flex:1;min-width:180px;">
                 <label for="api-key-label">Label</label>
-                <input type="text" id="api-key-label" class="folder-skip-input" placeholder="Production" maxlength="64" style="width:100%;padding:10px 12px;">
+                <input type="text" id="api-key-label" class="api-input" placeholder="Production" maxlength="64">
               </div>
               <button type="button" onclick="apiCreateKey()">Create key</button>
             </div>
           </div>
 
-          <div id="api-new-key-panel" class="folder-skip-panel" style="display:none;margin-top:16px;">
-            <p class="folder-skip-title">Your new key</p>
-            <p class="folder-skip-desc">Copy it now. We will not show the full key again.</p>
-            <textarea id="api-new-key-value" readonly rows="2" style="width:100%;font-family:ui-monospace,monospace;font-size:13px;" onclick="this.focus();this.select()"></textarea>
-            <label for="api-env-example" style="display:block;margin-top:12px;">Env variable</label>
-            <textarea id="api-env-example" readonly rows="2" style="width:100%;font-family:ui-monospace,monospace;font-size:13px;" onclick="this.focus();this.select()"></textarea>
+          <div id="api-new-key-panel" class="api-panel" style="display:none;">
+            <p class="api-panel-title">Your new key</p>
+            <p class="api-panel-desc">Copy it now. We will not show the full key again.</p>
+            <textarea id="api-new-key-value" class="api-mono" readonly rows="2" onclick="this.focus();this.select()"></textarea>
+            <label for="api-env-example" class="api-field-label">Env variable</label>
+            <textarea id="api-env-example" class="api-mono" readonly rows="2" onclick="this.focus();this.select()"></textarea>
             <div class="button-group" style="margin-top:12px;">
               <button type="button" onclick="apiCopy('api-new-key-value')">Copy key</button>
               <button type="button" class="secondary-btn" onclick="apiCopy('api-env-example')">Copy env line</button>
             </div>
-            <p class="folder-skip-desc" style="margin-top:12px;">Then: <code>npm install geckodupe</code> and use <code>createClient({ apiKey: process.env.GECKODUPE_API_KEY })</code> on your server only.</p>
+            <p class="api-panel-desc api-panel-desc--spaced">Then: <code>npm install geckodupe</code> and use <code>createClient({ apiKey: process.env.GECKODUPE_API_KEY })</code> on your server only.</p>
           </div>
 
-          <div class="folder-skip-panel" style="margin-top:16px;">
-            <p class="folder-skip-title">Your keys</p>
+          <div class="api-panel">
+            <p class="api-panel-title">Your keys</p>
             <div id="api-key-list"></div>
           </div>
         </div>
@@ -1041,22 +1041,22 @@
       <!-- Pricing Section -->
       <section id='s-8' role="tabpanel" aria-labelledby="t-8" style="position: relative; z-index: 0;" hidden>
         <h1>Pricing</h1>
-        <p class="tool-intro">Guest tools stay local with soft caps. Sign in for Free API allowance, or upgrade for production volume. Billing is handled securely by Stripe — edit payment method, invoices, or cancel anytime in the customer portal.</p>
-        <div class="button-group" style="margin-bottom:16px;flex-wrap:wrap;gap:8px;">
+        <p class="tool-intro">Guest tools stay local with soft caps. Free unlocks API keys and a daily request allowance. Upgrade when you need production volume. Billing runs through Stripe.</p>
+        <div class="pricing-toolbar">
           <button type="button" id="pricing-portal-btn" class="secondary-btn" style="display:none;" onclick="pricingOpenPortal()">Manage subscription</button>
           <button type="button" class="secondary-btn" onclick="quotaGoSignIn()">Account</button>
         </div>
         <div id="pricing-grid" class="pricing-grid" aria-live="polite"></div>
-        <p class="folder-skip-desc" style="margin-top:20px;">Subscriptions renew monthly until canceled. Cancel or change plans from Manage subscription (Stripe Customer Portal). Taxes may apply based on location. By upgrading you agree to pay the listed price for the selected plan.</p>
+        <p class="pricing-fineprint">Subscriptions renew monthly until canceled. Change or cancel anytime in the Stripe customer portal. Taxes may apply by location.</p>
       </section>
 
       <!-- Account Section -->
       <section id='s-9' role="tabpanel" aria-labelledby="t-9" style="position: relative; z-index: 0;" hidden>
         <h1>Account</h1>
-        <p class="tool-intro">Sign in, verify email, manage billing, and return anytime. Mail comes from Blacnova Development (nic@blacnova.net).</p>
+        <p class="tool-intro">Sign in, verify email, manage billing, and return anytime.</p>
         <span class="status-text" id="acct-status-text"></span>
 
-        <div id="acct-signed-out" class="auth-stack">
+        <div id="acct-signed-out" class="auth-stack auth-stack--centered">
           <div id="acct-mode-password" class="auth-card">
             <p class="auth-card-title">Sign in</p>
             <p class="auth-card-desc">Use your password, or switch to a one-time email code.</p>
@@ -1134,7 +1134,7 @@
           </div>
         </div>
 
-        <div id="acct-signed-in" style="display:none;">
+        <div id="acct-signed-in" class="auth-stack auth-stack--centered" style="display:none;">
           <div class="auth-card">
             <p class="auth-card-title">Signed in</p>
             <p class="auth-card-desc"><span id="acct-user-email"></span></p>

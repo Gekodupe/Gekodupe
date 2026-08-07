@@ -29,10 +29,9 @@ Authorization: Bearer gd_live_...
 
 | Plan | Max keys | API requests / day |
 |------|----------|--------------------|
-| Free | 2 | 500 |
+| Free | 3 | 1,500 |
 | Starter | 5 | 25,000 |
 | Pro | 10 | 200,000 |
-| Business | 25 | 1,000,000 |
 
 Quota is shared across all keys on the account.
 

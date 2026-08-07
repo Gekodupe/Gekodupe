@@ -4,10 +4,9 @@
 
 | Plan | Price / mo | API / day | Max keys |
 |------|------------|-----------|----------|
-| Free | $0 | 500 | 2 |
+| Free | $5 | 1,500 | 3 |
 | Starter | $19 | 25,000 | 5 |
 | Pro | $49 | 200,000 | 10 |
-| Business | $149 | 1,000,000 | 25 |
 
 When the daily API quota is hit, endpoints return `429` with a clear error. Upgrade on **Pricing** or wait until UTC midnight for the day bucket to roll.
 

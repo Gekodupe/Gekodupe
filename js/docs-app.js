@@ -16,6 +16,14 @@ var DOCS_NAV = [
 ];
 
 var docsNavReady = false;
+var docsFrameReady = false;
+
+function docsFrameUrl(hash) {
+  var base = new URL('docs/index.html', location.href).href;
+  var target = hash || '#/';
+  if (target.charAt(0) !== '#') target = '#' + target;
+  return base + target;
+}
 
 function docsSetActive(hash) {
   var current = hash || '#/';
@@ -30,14 +38,10 @@ function docsNavigate(hash) {
   var frame = document.getElementById('docs-frame');
   if (!frame) return;
   var target = hash || '#/';
-  try {
-    if (frame.contentWindow) {
-      frame.contentWindow.location.hash = target.replace(/^#/, '#');
-    }
-  } catch (e) {
-    frame.src = 'docs/index.html' + target;
-  }
-  docsSetActive(target.indexOf('#') === 0 ? target : '#' + target);
+  if (target.charAt(0) !== '#') target = '#' + target;
+  frame.src = docsFrameUrl(target);
+  docsFrameReady = true;
+  docsSetActive(target);
 }
 
 function docsBuildNav() {
@@ -64,9 +68,9 @@ function docsBuildNav() {
 function docsEnsureFrame() {
   var frame = document.getElementById('docs-frame');
   if (!frame) return;
-  var src = frame.getAttribute('src') || '';
-  if (!src || src === 'about:blank') {
-    frame.setAttribute('src', 'docs/index.html');
+  if (!docsFrameReady) {
+    frame.src = docsFrameUrl('#/');
+    docsFrameReady = true;
   }
 }
 

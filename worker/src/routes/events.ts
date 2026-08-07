@@ -67,7 +67,7 @@ export async function handleEventRoutes(request: Request, env: Env, path: string
   const quota = await enforceApiQuota(env, {
     tenant: auth.tenant,
     email: auth.email,
-    plan: auth.email ? undefined : 'business'
+    plan: auth.email ? undefined : 'pro'
   });
   if (!quota.ok) {
     return jsonResponse(

@@ -1,7 +1,7 @@
 import { requireSession } from '../lib/auth';
 import { jsonResponse } from '../lib/cors';
 import type { Env } from '../lib/env';
-import { PLANS, planFromPriceId, type PlanId } from '../lib/plans';
+import { PLANS, PUBLIC_PLAN_IDS, planFromPriceId, type PlanId } from '../lib/plans';
 import { getPriceIds, stripeRequest, verifyStripeSignature } from '../lib/stripe';
 import { getApiUsage, getUsageHistory, getUser, putUser, tenantIdFromEmail, userPlan } from '../lib/users';
 import { readJsonBody } from '../lib/validate';
@@ -40,9 +40,9 @@ export async function handleBillingRoutes(
 
   if (path === '/v1/billing/plans' && request.method === 'GET') {
     const prices = getPriceIds(env);
-    const list = (['free', 'starter', 'pro', 'business'] as PlanId[]).map((id) => ({
+    const list = PUBLIC_PLAN_IDS.map((id) => ({
       ...PLANS[id],
-      priceId: id === 'free' ? null : prices[id] || null
+      priceId: prices[id] || null
     }));
     return jsonResponse({ plans: list, guest: PLANS.guest }, 200, request);
   }
@@ -73,7 +73,9 @@ export async function handleBillingRoutes(
         .toLowerCase();
       const planMeta = (obj.metadata && obj.metadata.plan) as string | undefined;
       const plan: PlanId =
-        planMeta === 'starter' || planMeta === 'pro' || planMeta === 'business' ? planMeta : 'starter';
+        planMeta === 'free' || planMeta === 'starter' || planMeta === 'pro' || planMeta === 'business'
+          ? planMeta
+          : 'free';
       if (email) {
         const user = (await getUser(env, email)) || { email, createdAt: Date.now(), keyIds: [] };
         if (obj.customer) {
@@ -158,8 +160,8 @@ export async function handleBillingRoutes(
     const parsed = await readJsonBody(request, 8 * 1024);
     if (!parsed.ok) return jsonResponse({ error: parsed.error }, parsed.status, request);
     const plan = String(parsed.body.plan || '');
-    if (plan !== 'starter' && plan !== 'pro' && plan !== 'business') {
-      return jsonResponse({ error: 'Choose starter, pro, or business' }, 400, request);
+    if (plan !== 'free' && plan !== 'starter' && plan !== 'pro') {
+      return jsonResponse({ error: 'Choose free, starter, or pro' }, 400, request);
     }
     const prices = getPriceIds(env);
     const priceId = prices[plan];

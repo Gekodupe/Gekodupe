@@ -34,7 +34,7 @@ async function pricingFetch(path, opts) {
 }
 
 function pricingFmtMoney(n) {
-  if (!n) return 'Free';
+  if (n == null || n === 0) return '$0';
   return '$' + n;
 }
 
@@ -46,11 +46,11 @@ function pricingRenderPlans(payload) {
   grid.innerHTML = '';
 
   if (guest) {
-    var g = document.createElement('div');
-    g.className = 'pricing-card';
+    var g = document.createElement('article');
+    g.className = 'pricing-card pricing-card--guest';
     g.innerHTML =
       '<p class="pricing-card-name">' + guest.name + '</p>' +
-      '<p class="pricing-card-price">$0</p>' +
+      '<p class="pricing-card-price">$0<span class="pricing-card-period">/mo</span></p>' +
       '<p class="pricing-card-blurb">' + guest.blurb + '</p>' +
       '<ul class="pricing-card-features">' +
       (guest.features || []).map(function (f) { return '<li>' + f + '</li>'; }).join('') +
@@ -60,11 +60,11 @@ function pricingRenderPlans(payload) {
   }
 
   plans.forEach(function (p) {
-    var card = document.createElement('div');
+    var card = document.createElement('article');
     card.className = 'pricing-card' + (p.id === 'pro' ? ' pricing-card-featured' : '');
     var cta = '';
     if (p.id === 'free') {
-      cta = '<button type="button" class="secondary-btn" onclick="quotaGoSignIn()">Get Free</button>';
+      cta = '<button type="button" onclick="pricingCheckout(\'free\')">Get Free</button>';
     } else {
       cta = '<button type="button" onclick="pricingCheckout(\'' + p.id + '\')">Upgrade</button>';
     }
@@ -72,7 +72,7 @@ function pricingRenderPlans(payload) {
     card.innerHTML =
       '<p class="pricing-card-name">' + p.name + '</p>' +
       '<p class="pricing-card-price">' + pricingFmtMoney(p.priceMonthly) +
-      (p.priceMonthly ? '<span class="pricing-card-period">/mo</span>' : '') + '</p>' +
+      '<span class="pricing-card-period">/mo</span></p>' +
       '<p class="pricing-card-blurb">' + (p.blurb || '') + '</p>' +
       '<ul class="pricing-card-features">' + feats + '</ul>' +
       cta;
@@ -137,7 +137,7 @@ async function initPricingTab() {
   } catch (e) {
     var grid = document.getElementById('pricing-grid');
     if (grid) {
-      grid.innerHTML = '<p class="folder-skip-desc">Could not load plans. Try again shortly.</p>';
+      grid.innerHTML = '<p class="pricing-fineprint">Could not load plans. Try again shortly.</p>';
     }
   }
   var portalBtn = document.getElementById('pricing-portal-btn');

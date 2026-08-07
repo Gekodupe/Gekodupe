@@ -41,11 +41,11 @@ export const PLANS: Record<PlanId, PlanInfo> = {
   free: {
     id: 'free',
     name: 'Free',
-    priceMonthly: 0,
+    priceMonthly: 5,
     blurb: 'Signed-in local tools plus a starter API allowance.',
     limits: {
-      apiRequestsPerDay: 500,
-      maxKeys: 2,
+      apiRequestsPerDay: 1500,
+      maxKeys: 3,
       textMaxLines: 25000,
       textRunsPerDay: 50,
       folderMaxFiles: 500,
@@ -53,7 +53,7 @@ export const PLANS: Record<PlanId, PlanInfo> = {
       spamMaxLines: 20000,
       spamRunsPerDay: 50
     },
-    features: ['Higher local limits', '2 API keys', '500 API requests / day', 'Event idempotency']
+    features: ['Higher local limits', '3 API keys', '1500 API requests / day', 'Event idempotency']
   },
   starter: {
     id: 'starter',
@@ -89,6 +89,7 @@ export const PLANS: Record<PlanId, PlanInfo> = {
     },
     features: ['200k API requests / day', '10 API keys', 'Burst memory', 'Checkout portal']
   },
+  // Kept for existing Stripe subscriptions; not shown in Pricing UI
   business: {
     id: 'business',
     name: 'Business',
@@ -108,23 +109,26 @@ export const PLANS: Record<PlanId, PlanInfo> = {
   }
 };
 
+export const PUBLIC_PLAN_IDS: PlanId[] = ['free', 'starter', 'pro'];
+
 export function parsePriceIds(raw: string | undefined): Record<string, string> {
-  if (!raw) {
-    return {
-      starter: 'price_1U1dxXGrsdJU1djqpVvONZKS',
-      pro: 'price_1U1dxZGrsdJU1djqZaZ3dTdL',
-      business: 'price_1U1dxbGrsdJU1djqptRwdqEM'
-    };
-  }
+  const defaults = {
+    free: 'price_1U1eRCGrsdJU1djqi8mF21Fw',
+    starter: 'price_1U1dxXGrsdJU1djqpVvONZKS',
+    pro: 'price_1U1dxZGrsdJU1djqZaZ3dTdL',
+    business: 'price_1U1dxbGrsdJU1djqptRwdqEM'
+  };
+  if (!raw) return defaults;
   try {
     const obj = JSON.parse(raw) as Record<string, string>;
     return {
-      starter: obj.starter || 'price_1U1dxXGrsdJU1djqpVvONZKS',
-      pro: obj.pro || 'price_1U1dxZGrsdJU1djqZaZ3dTdL',
-      business: obj.business || 'price_1U1dxbGrsdJU1djqptRwdqEM'
+      free: obj.free || defaults.free,
+      starter: obj.starter || defaults.starter,
+      pro: obj.pro || defaults.pro,
+      business: obj.business || defaults.business
     };
   } catch {
-    return parsePriceIds(undefined);
+    return defaults;
   }
 }
 

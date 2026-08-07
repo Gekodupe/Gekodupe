@@ -129,11 +129,10 @@ function apiRenderKeyList(account) {
   }
   keys.forEach(function (k) {
     var row = document.createElement('div');
-    row.className = 'options-row';
-    row.style.cssText = 'justify-content:space-between;align-items:center;gap:12px;margin-bottom:10px;flex-wrap:wrap;';
+    row.className = 'api-key-row';
     row.innerHTML =
       '<div><strong style="font-weight:500;">' + (k.label || 'Default') + '</strong>' +
-      '<div style="font-size:13px;color:#484848;margin-top:2px;">' + (k.prefix || '') + '</div></div>';
+      '<div class="api-panel-meta" style="margin:2px 0 0;">' + (k.prefix || '') + '</div></div>';
     var btn = document.createElement('button');
     btn.type = 'button';
     btn.className = 'secondary-btn';

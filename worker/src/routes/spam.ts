@@ -98,7 +98,7 @@ export async function handleSpamRoutes(request: Request, env: Env, path: string)
   const quota = await enforceApiQuota(env, {
     tenant: auth.tenant,
     email: auth.email,
-    plan: auth.email ? undefined : 'business'
+    plan: auth.email ? undefined : 'pro'
   });
   if (!quota.ok) {
     emit(env, ['quota', path, auth.tenant, quota.plan]);
