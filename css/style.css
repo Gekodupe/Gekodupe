@@ -1834,7 +1834,7 @@ tr:nth-child(even) td { background: var(--surface); color: #fff !important; }
   display: flex;
   flex-direction: column;
   gap: 14px;
-  max-width: 520px;
+  max-width: 640px;
   margin-left: auto;
   margin-right: auto;
   width: 100%;
@@ -1844,7 +1844,7 @@ tr:nth-child(even) td { background: var(--surface); color: #fff !important; }
 #s-9 > .tool-intro,
 #s-9 > #acct-status-text {
   text-align: center;
-  max-width: 520px;
+  max-width: 640px;
   margin-left: auto;
   margin-right: auto;
 }
@@ -1854,14 +1854,14 @@ tr:nth-child(even) td { background: var(--surface); color: #fff !important; }
 }
 
 .auth-stack {
-  max-width: 520px;
+  max-width: 640px;
 }
 
 .auth-card {
   border: 1px solid var(--border);
   background: #fafafa;
   padding: 18px 16px 16px;
-  max-width: 520px;
+  max-width: 640px;
   width: 100%;
   color: #1a1a1a;
 }

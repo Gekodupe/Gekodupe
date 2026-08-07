@@ -104,9 +104,9 @@ const LANDING_PAGES = [
   {
     slug: 'support',
     dir: 'support',
-    title: 'Support',
+    title: 'Get Support',
     description: 'Contact Geckodupe support for billing, API keys, local tools, and account help. Operated by Flareform.',
-    h1: 'Support',
+    h1: 'Get Support',
     lead: 'Get help with Geckodupe billing, API keys, local tools, and your account.',
     keywords: 'geckodupe support, contact, billing help, api help, flareform support'
   }
