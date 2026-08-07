@@ -54,16 +54,25 @@ async function acctFetch(path, opts) {
     'Content-Type': 'application/json'
   }, opts.headers || {});
   if (acctSession) headers.Authorization = 'Bearer ' + acctSession;
-  var res = await fetch(GECKODUPE_API_BASE + path, {
-    method: opts.method || 'GET',
-    headers: headers,
-    body: opts.body != null ? JSON.stringify(opts.body) : undefined
-  });
+  var res;
+  try {
+    res = await fetch(GECKODUPE_API_BASE + path, {
+      method: opts.method || 'GET',
+      headers: headers,
+      body: opts.body != null ? JSON.stringify(opts.body) : undefined
+    });
+  } catch (e) {
+    var net = new Error('Network error — could not reach Geckodupe API');
+    net.status = 0;
+    throw net;
+  }
+  var text = '';
+  try { text = await res.text(); } catch (e) { text = ''; }
   var data = null;
   try {
-    data = await res.json();
+    data = text ? JSON.parse(text) : null;
   } catch (e) {
-    data = { error: 'Invalid response' };
+    data = { error: res.status >= 500 ? 'Server error — try again in a moment' : 'Invalid response' };
   }
   if (!res.ok) {
     var err = new Error((data && (data.error || data.message)) || ('Request failed (' + res.status + ')'));
@@ -71,7 +80,7 @@ async function acctFetch(path, opts) {
     err.body = data;
     throw err;
   }
-  return data;
+  return data || {};
 }
 
 function acctMode(mode) {
