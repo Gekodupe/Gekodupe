@@ -1238,17 +1238,6 @@
         <h2>Why Deduplicate?</h2>
         <p>Duplicate rows in spreadsheets, repeated log lines, redundant list items, and near-identical photos all inflate storage and slow down every tool that touches your data. Geckodupe strips the noise so you keep only what matters.</p>
 
-        <div class="info-folder-note" style="text-align: right;">
-          <h3 class="info-folder-note__title demo-heading demo-heading--yellow" style="flex-direction: row; justify-content: flex-end; text-align: right;">
-            <span class="demo-heading-icon" aria-hidden="true">
-              <i class="ph-fill ph-folder" style="font-size: 32px;"></i>
-            </span>
-            Folders &amp; zip archives
-          </h3>
-          <p class="info-folder-note__text">Load a project or archive, deduplicate files and lines, download a cleaned .zip. Add your own skip paths on the Folder/Zip tab to leave specific files untouched. Spreadsheets inside archives are supported.</p>
-          <p class="info-folder-note__skips">Skips <span class="info-tag">node_modules</span><span class="info-tag">.git</span><span class="info-tag">dist</span><span class="info-tag">vendor</span></p>
-        </div>
-
         <div class="info-math-flow">
 
           <div class="info-math-block">
@@ -1301,6 +1290,17 @@
               <p class="info-math-eq">S<sub>frame</sub> = 0.42·S<sub>hash</sub> + 0.38·S<sub>hue</sub> + 0.08·S<sub>luma</sub> + 0.07·S<sub>contrast</sub> + 0.05·S<sub>sat</sub></p>
               <p>Burst sequences collapse by comparing filename neighbors. LSH banding and union-find keep large libraries fast.</p>
             </div>
+          </div>
+
+          <div class="info-folder-note info-folder-note--title-right">
+            <h3 class="info-folder-note__title demo-heading demo-heading--yellow">
+              <span class="demo-heading-icon" aria-hidden="true">
+                <i class="ph-fill ph-folder" style="font-size: 32px;"></i>
+              </span>
+              Folders &amp; zip archives
+            </h3>
+            <p class="info-folder-note__text">Load a project or archive, deduplicate files and lines, download a cleaned .zip. Add your own skip paths on the Folder/Zip tab to leave specific files untouched. Spreadsheets inside archives are supported.</p>
+            <p class="info-folder-note__skips">Skips <span class="info-tag">node_modules</span><span class="info-tag">.git</span><span class="info-tag">dist</span><span class="info-tag">vendor</span></p>
           </div>
 
           <div class="info-math-block">
