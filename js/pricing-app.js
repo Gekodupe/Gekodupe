@@ -46,7 +46,7 @@ function pricingRenderPlans(payload) {
 
   plans.forEach(function (p) {
     var card = document.createElement('article');
-    card.className = 'pricing-card' + (p.id === 'pro' ? ' pricing-card-featured' : '');
+    card.className = 'pricing-card';
     var cta = '';
     if (p.id === 'free') {
       cta = '<button type="button" onclick="pricingCheckout(\'free\')">Get Basic</button>';
