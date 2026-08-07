@@ -29,7 +29,7 @@ Authorization: Bearer gd_live_...
 
 | Plan | Max keys | API requests / day |
 |------|----------|--------------------|
-| Free | 3 | 1,500 |
+| Basic | 3 | 1,500 |
 | Starter | 5 | 25,000 |
 | Pro | 10 | 200,000 |
 

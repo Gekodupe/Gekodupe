@@ -42,29 +42,14 @@ function pricingRenderPlans(payload) {
   var grid = document.getElementById('pricing-grid');
   if (!grid) return;
   var plans = (payload && payload.plans) || [];
-  var guest = payload && payload.guest;
   grid.innerHTML = '';
-
-  if (guest) {
-    var g = document.createElement('article');
-    g.className = 'pricing-card pricing-card--guest';
-    g.innerHTML =
-      '<p class="pricing-card-name">' + guest.name + '</p>' +
-      '<p class="pricing-card-price">$0<span class="pricing-card-period">/mo</span></p>' +
-      '<p class="pricing-card-blurb">' + guest.blurb + '</p>' +
-      '<ul class="pricing-card-features">' +
-      (guest.features || []).map(function (f) { return '<li>' + f + '</li>'; }).join('') +
-      '</ul>' +
-      '<button type="button" class="secondary-btn" onclick="quotaGoSignIn()">Account</button>';
-    grid.appendChild(g);
-  }
 
   plans.forEach(function (p) {
     var card = document.createElement('article');
     card.className = 'pricing-card' + (p.id === 'pro' ? ' pricing-card-featured' : '');
     var cta = '';
     if (p.id === 'free') {
-      cta = '<button type="button" onclick="pricingCheckout(\'free\')">Get Free</button>';
+      cta = '<button type="button" onclick="pricingCheckout(\'free\')">Get Basic</button>';
     } else {
       cta = '<button type="button" onclick="pricingCheckout(\'' + p.id + '\')">Upgrade</button>';
     }

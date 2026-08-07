@@ -97,7 +97,7 @@ function acctRenderSignedIn(account) {
 
   var planEl = document.getElementById('acct-user-plan');
   if (planEl) {
-    var plan = (account && account.planName) || (account && account.plan) || 'Free';
+    var plan = (account && account.planName) || (account && account.plan) || 'Basic';
     var status = (account && account.planStatus) || 'active';
     var line = plan + ' · ' + status.replace(/_/g, ' ');
     if (account && account.emailVerified === false) line += ' · email not verified';

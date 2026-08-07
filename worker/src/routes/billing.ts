@@ -44,7 +44,7 @@ export async function handleBillingRoutes(
       ...PLANS[id],
       priceId: prices[id] || null
     }));
-    return jsonResponse({ plans: list, guest: PLANS.guest }, 200, request);
+    return jsonResponse({ plans: list }, 200, request);
   }
 
   if (path === '/v1/billing/webhook' && request.method === 'POST') {

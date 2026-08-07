@@ -40,7 +40,7 @@ export const PLANS: Record<PlanId, PlanInfo> = {
   },
   free: {
     id: 'free',
-    name: 'Free',
+    name: 'Basic',
     priceMonthly: 5,
     blurb: 'Signed-in local tools plus a starter API allowance.',
     limits: {

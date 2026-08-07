@@ -12,7 +12,7 @@
 
 ## Pricing tab
 
-- Compare Free, Starter, and Pro
+- Compare Basic, Starter, and Pro
 - Start Checkout (must be signed in)
 - Open Stripe portal when signed in
 
@@ -23,7 +23,7 @@
 - Cancel subscription
 - Return to Geckodupe Account when done
 
-Canceled paid plans fall back to Free limits after Stripe confirms the change (webhook).
+Canceled paid plans fall back to Basic limits after Stripe confirms the change (webhook).
 
 ## Related API routes (session auth)
 

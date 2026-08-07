@@ -104,7 +104,7 @@ function apiRenderSignedIn(account) {
 
   var planEl = document.getElementById('api-user-plan');
   if (planEl) {
-    var plan = (account && account.planName) || (account && account.plan) || 'Free';
+    var plan = (account && account.planName) || (account && account.plan) || 'Basic';
     var usage = account && account.usage;
     var line = plan;
     if (usage) {
