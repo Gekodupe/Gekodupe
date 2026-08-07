@@ -1517,8 +1517,18 @@ tr:nth-child(even) td { background: var(--surface); color: #fff !important; }
   .control-group { width: 100%; }
   .button-group { flex-direction: column; width: 100%; }
   
-  button:not(.toast-close):not(.clear-diagnostics-btn):not(.demo-preview-close-btn) {
+  button:not(.toast-close):not(.clear-diagnostics-btn):not(.demo-preview-close-btn):not(.auth-text-btn):not(.quota-link-btn) {
     width: 100%;
+  }
+
+  .auth-links {
+    flex-wrap: nowrap;
+    gap: 16px;
+  }
+
+  .auth-text-btn {
+    width: auto !important;
+    flex: 0 0 auto;
   }
 
   .nav-brand-name { font-size: 13px; }
