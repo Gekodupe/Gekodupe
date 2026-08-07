@@ -142,6 +142,11 @@
     }
   }
 
+  function planLabel(plan) {
+    var map = { free: 'Basic', starter: 'Starter', pro: 'Pro', business: 'Business', guest: 'Guest' };
+    return map[plan] || (plan ? plan.charAt(0).toUpperCase() + plan.slice(1) : 'Guest');
+  }
+
   function gateMessage(tool, detail) {
     var signed = !!state.email;
     if (!signed) {
@@ -165,12 +170,13 @@
     var runsKey = tool === 'spam' ? 'spam' : 'text';
     var runsMax = tool === 'spam' ? lim.spamRunsPerDay : lim.textRunsPerDay;
     var usage = usageBucket().data;
+    var label = planLabel(state.plan);
     if (lines > max) {
       return {
         ok: false,
         message: gateMessage(
           tool,
-          'This ' + tool + ' run is over your ' + state.plan + ' limit (' + max.toLocaleString() + ' lines).'
+          'This ' + tool + ' run is over your ' + label + ' limit (' + max.toLocaleString() + ' lines).'
         )
       };
     }
@@ -179,7 +185,7 @@
         ok: false,
         message: gateMessage(
           tool,
-          'Daily ' + tool + ' run limit reached (' + runsMax + '/day on ' + state.plan + ').'
+          'Daily ' + tool + ' run limit reached (' + runsMax + '/day on ' + label + ').'
         )
       };
     }
@@ -189,12 +195,13 @@
   function checkFiles(tool, count) {
     var lim = state.limits;
     var max = tool === 'media' ? lim.mediaMaxFiles : lim.folderMaxFiles;
+    var label = planLabel(state.plan);
     if (count > max) {
       return {
         ok: false,
         message: gateMessage(
           tool,
-          'Too many files for ' + state.plan + ' (' + max.toLocaleString() + ' max).'
+          'Too many files for ' + label + ' (' + max.toLocaleString() + ' max).'
         )
       };
     }
@@ -244,11 +251,6 @@
       return false;
     }
     return true;
-  }
-
-  function planLabel(plan) {
-    var map = { free: 'Basic', starter: 'Starter', pro: 'Pro', business: 'Business', guest: 'Guest' };
-    return map[plan] || (plan ? plan.charAt(0).toUpperCase() + plan.slice(1) : 'Guest');
   }
 
   function quotaRenderBanners() {

@@ -25,7 +25,7 @@ async function applyRateLimit(env: Env, request: Request, auth?: AuthOk): Promis
     const r = await env.SPAM_RATE_LIMITER.limit({ key: clientKey(request, auth) });
     return r.success;
   } catch {
-    return false;
+    return true;
   }
 }
 
@@ -98,7 +98,7 @@ export async function handleSpamRoutes(request: Request, env: Env, path: string)
   const quota = await enforceApiQuota(env, {
     tenant: auth.tenant,
     email: auth.email,
-    plan: auth.email ? undefined : 'pro'
+    plan: auth.email ? undefined : 'free'
   });
   if (!quota.ok) {
     emit(env, ['quota', path, auth.tenant, quota.plan]);

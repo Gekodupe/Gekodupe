@@ -24,7 +24,8 @@ async function rateOk(env: Env, key: string): Promise<boolean> {
     const r = await env.SPAM_RATE_LIMITER.limit({ key });
     return r.success;
   } catch {
-    return false;
+    // Fail open if the limiter binding errors — do not lock out all auth
+    return true;
   }
 }
 
@@ -80,7 +81,8 @@ export async function handleAuthRoutes(request: Request, env: Env, path: string)
     const user = ensureUserShape(email, existing);
     user.passwordSalt = salt;
     user.passwordHash = hash;
-    user.emailVerified = false;
+    // Preserve verification if this email already signed in via magic link
+    user.emailVerified = !!(existing && existing.emailVerified);
     user.plan = user.plan || 'free';
     await putUser(env, user);
 
@@ -91,7 +93,7 @@ export async function handleAuthRoutes(request: Request, env: Env, path: string)
       { expirationTtl: VERIFY_TTL_SEC }
     );
     const link = appOrigin(env) + '/#account?verify=' + encodeURIComponent(verifyToken);
-    await sendBrevoEmail(env, {
+    const mailed = await sendBrevoEmail(env, {
       to: email,
       subject: 'Verify your Geckodupe email',
       html:
@@ -113,9 +115,12 @@ export async function handleAuthRoutes(request: Request, env: Env, path: string)
         session: session.sessionId,
         email,
         expiresIn: session.expiresIn,
-        emailVerified: false,
+        emailVerified: !!user.emailVerified,
         plan: userPlan(user),
-        message: 'Account created. Check your email to verify.'
+        emailSent: mailed.ok,
+        message: mailed.ok
+          ? 'Account created. Check your email to verify.'
+          : 'Account created, but verification email could not be sent. Use Resend verification after sign-in.'
       },
       201,
       request
@@ -378,7 +383,7 @@ export async function handleAuthRoutes(request: Request, env: Env, path: string)
       { expirationTtl: VERIFY_TTL_SEC }
     );
     const link = appOrigin(env) + '/#account?verify=' + encodeURIComponent(verifyToken);
-    await sendBrevoEmail(env, {
+    const mailed = await sendBrevoEmail(env, {
       to: session.email,
       subject: 'Verify your Geckodupe email',
       html:
@@ -390,7 +395,14 @@ export async function handleAuthRoutes(request: Request, env: Env, path: string)
         '" style="color:#f7831e">Verify email</a></p></div>',
       text: 'Verify your Geckodupe email: ' + link
     });
-    return jsonResponse({ ok: true, message: 'Verification email sent.' }, 200, request);
+    if (!mailed.ok) {
+      return jsonResponse(
+        { error: mailed.error || 'Could not send verification email. Try again shortly.' },
+        502,
+        request
+      );
+    }
+    return jsonResponse({ ok: true, message: 'Verification email sent.', emailSent: true }, 200, request);
   }
 
   if (path === '/v1/auth/me' && request.method === 'GET') {

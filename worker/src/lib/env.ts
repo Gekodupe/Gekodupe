@@ -10,6 +10,8 @@ export interface Env {
   BREVO_SENDER_EMAIL?: string;
   BREVO_SENDER_NAME?: string;
   APP_ORIGIN?: string;
+  CORS_ORIGINS?: string;
+  ALLOW_OPEN_API?: string;
   STRIPE_SECRET_KEY?: string;
   STRIPE_PRICE_IDS?: string;
   STRIPE_WEBHOOK_SECRET?: string;

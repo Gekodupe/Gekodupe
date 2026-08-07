@@ -9,9 +9,16 @@ describe('auth', () => {
     assert.equal(parseApiKeys('{"prod":"k1"}').has('k1'), true);
   });
 
-  it('allows open access when no keys configured', async () => {
+  it('rejects open access when no keys configured', async () => {
     const req = new Request('https://api.example/v1/spam/score');
     const env = { GECKODUPE_SPAM: { get: async () => null } };
+    const r = await requireApiKey(req, env);
+    assert.equal(r.ok, false);
+  });
+
+  it('allows open access only when ALLOW_OPEN_API is set', async () => {
+    const req = new Request('https://api.example/v1/spam/score');
+    const env = { GECKODUPE_SPAM: { get: async () => null }, ALLOW_OPEN_API: '1' };
     const r = await requireApiKey(req, env);
     assert.equal(r.ok, true);
     if (r.ok) assert.ok(r.tenant.startsWith('t'));

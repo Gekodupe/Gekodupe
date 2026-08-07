@@ -6,6 +6,24 @@ const DEFAULT_ORIGINS = [
   'http://localhost:8787'
 ];
 
+function originsFromEnv(env?: { APP_ORIGIN?: string; CORS_ORIGINS?: string }): string[] {
+  const extra: string[] = [];
+  if (env?.APP_ORIGIN) {
+    try {
+      extra.push(new URL(env.APP_ORIGIN).origin);
+    } catch {
+      /* ignore bad APP_ORIGIN */
+    }
+  }
+  if (env?.CORS_ORIGINS) {
+    env.CORS_ORIGINS.split(/[,\s]+/).forEach((o) => {
+      const v = String(o || '').trim().replace(/\/+$/, '');
+      if (v) extra.push(v);
+    });
+  }
+  return extra;
+}
+
 function isAllowedOrigin(origin: string, extraOrigins?: string[]): boolean {
   if (!origin) return false;
   const allow = new Set([...(extraOrigins || []), ...DEFAULT_ORIGINS]);
@@ -14,9 +32,12 @@ function isAllowedOrigin(origin: string, extraOrigins?: string[]): boolean {
   return false;
 }
 
-export function corsHeaders(request: Request, extraOrigins?: string[]): HeadersInit {
+export function corsHeaders(
+  request: Request,
+  env?: { APP_ORIGIN?: string; CORS_ORIGINS?: string }
+): HeadersInit {
   const origin = request.headers.get('Origin') || '';
-  const allowed = isAllowedOrigin(origin, extraOrigins);
+  const allowed = isAllowedOrigin(origin, originsFromEnv(env));
 
   const headers: Record<string, string> = {
     'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
@@ -30,13 +51,18 @@ export function corsHeaders(request: Request, extraOrigins?: string[]): HeadersI
   return headers;
 }
 
-export function jsonResponse(data: unknown, status = 200, request?: Request): Response {
+export function jsonResponse(
+  data: unknown,
+  status = 200,
+  request?: Request,
+  env?: { APP_ORIGIN?: string; CORS_ORIGINS?: string }
+): Response {
   const headers = new Headers({
     'Content-Type': 'application/json; charset=utf-8',
     'Cache-Control': 'no-store'
   });
   if (request) {
-    const cors = corsHeaders(request);
+    const cors = corsHeaders(request, env);
     Object.entries(cors).forEach(([k, v]) => headers.set(k, v));
   }
   return new Response(JSON.stringify(data), { status, headers });

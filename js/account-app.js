@@ -161,7 +161,13 @@ async function acctRegister() {
     acctSaveSession(res.session, res.email);
     await acctRefreshAccount();
     acctSetStatus(res.message || 'Account created');
-    if (typeof showToast === 'function') showToast('Account created — check email to verify', 'success');
+    if (typeof showToast === 'function') {
+      if (res.emailSent === false) {
+        showToast(res.message || 'Account created — verification email failed to send', 'warning');
+      } else {
+        showToast('Account created — check email to verify', 'success');
+      }
+    }
   } catch (e) {
     acctSetStatus(e.message || 'Could not register');
     if (typeof showToast === 'function') showToast(e.message || 'Register failed', 'error');

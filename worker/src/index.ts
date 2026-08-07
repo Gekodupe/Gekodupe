@@ -15,7 +15,7 @@ export default {
       const path = url.pathname.replace(/\/+$/, '') || '/';
 
       if (request.method === 'OPTIONS') {
-        return new Response(null, { status: 204, headers: corsHeaders(request) });
+        return new Response(null, { status: 204, headers: corsHeaders(request, env) });
       }
 
       if (path === '/v1/health' || path === '/health') {
@@ -23,11 +23,15 @@ export default {
           {
             ok: true,
             service: 'geckodupe-api',
-            version: '1.3.3',
-            time: new Date().toISOString()
+            version: '1.3.4',
+            time: new Date().toISOString(),
+            emailConfigured: !!env.BREVO_API_KEY,
+            stripeConfigured: !!env.STRIPE_SECRET_KEY,
+            openApi: env.ALLOW_OPEN_API === '1' || env.ALLOW_OPEN_API === 'true'
           },
           200,
-          request
+          request,
+          env
         );
       }
 
@@ -52,11 +56,12 @@ export default {
           hint: 'Try GET /v1/health, /v1/auth/*, /v1/account, /v1/billing/*, or POST /v1/spam/*|/v1/events/check'
         },
         404,
-        request
+        request,
+        env
       );
     } catch (err) {
-      const message = err instanceof Error ? err.message : 'Internal error';
-      return jsonResponse({ error: message }, 500, request);
+      console.error('geckodupe worker error', err);
+      return jsonResponse({ error: 'Internal error' }, 500, request, env);
     }
   }
 } satisfies ExportedHandler<Env>;

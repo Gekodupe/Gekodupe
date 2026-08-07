@@ -70,8 +70,8 @@ export async function requireApiKey(request: Request, env: Env): Promise<AuthOk 
     }
   }
 
-  // Open demo only when no static keys are configured
-  if (staticKeys.size === 0) {
+  // Open demo only when explicitly enabled (never default in production)
+  if (staticKeys.size === 0 && (env.ALLOW_OPEN_API === '1' || env.ALLOW_OPEN_API === 'true')) {
     const effective = token || 'dev';
     return { ok: true, token: effective, tenant: tenantIdFromKey(effective) };
   }

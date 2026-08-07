@@ -18,9 +18,11 @@ Authenticate with a Geckodupe API key from the product. No infrastructure setup 
 
 ## Start here
 
-1. [Quick start](quickstart.md)
+1. [Quick start](quickstart.md) — account, key, first call
 2. [Get an API key](api-keys.md)
-3. [SDK](sdk.md) or [Spam API](spam-api.md)
+3. [SDK](sdk.md) or [Spam API](spam-api.md) / [Events API](events-api.md)
+4. [Local browser tools](local-tools.md) — options and settings for Text, Directories, Media, Spam
+5. [Account and billing](account-billing.md) · [Plans](plans.md) · [Security](security.md)
 
 ## Surfaces
 
