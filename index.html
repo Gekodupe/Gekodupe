@@ -1053,10 +1053,10 @@
       <!-- Account Section -->
       <section id='s-9' role="tabpanel" aria-labelledby="t-9" style="position: relative; z-index: 0;" hidden>
         <h1>Account</h1>
-        <p class="tool-intro">Sign in, verify email, manage billing, and return anytime.</p>
+        <p class="tool-intro">Sign in to manage billing, create API keys, and unlock higher local tool limits. Email verification is required before minting keys.</p>
         <span class="status-text" id="acct-status-text"></span>
 
-        <div id="acct-signed-out" class="auth-stack auth-stack--centered">
+        <div id="acct-signed-out" class="acct-workspace">
           <div id="acct-mode-password" class="auth-card">
             <p class="auth-card-title">Sign in</p>
             <p class="auth-card-desc">Use your password, or switch to a one-time email code.</p>
@@ -1082,21 +1082,21 @@
           </div>
 
           <div id="acct-mode-magic" class="auth-card" style="display:none;">
-            <p class="auth-card-title">Magic link</p>
-            <p class="auth-card-desc">We email a one-time code. No password needed.</p>
+            <p class="auth-card-title">Email code</p>
+            <p class="auth-card-desc">We send a one-time code. No password needed.</p>
             <div class="auth-field">
               <label for="acct-email-magic">Email</label>
               <input type="email" id="acct-email-magic" class="auth-input" placeholder="you@company.com" autocomplete="email">
             </div>
             <div class="auth-actions">
-              <button type="button" class="auth-primary" onclick="acctStartSignIn()">Email me a code</button>
+              <button type="button" class="auth-primary" onclick="acctStartSignIn()">Send code</button>
               <button type="button" class="secondary-btn" onclick="acctMode('password')">Back</button>
             </div>
           </div>
 
           <div id="acct-mode-forgot" class="auth-card" style="display:none;">
             <p class="auth-card-title">Reset password</p>
-            <p class="auth-card-desc">If that account exists, we send a reset link.</p>
+            <p class="auth-card-desc">If that account exists, we email a reset link.</p>
             <div class="auth-field">
               <label for="acct-forgot-email">Email</label>
               <input type="email" id="acct-forgot-email" class="auth-input" placeholder="you@company.com" autocomplete="email">
@@ -1109,6 +1109,7 @@
 
           <div id="acct-mode-reset" class="auth-card" style="display:none;">
             <p class="auth-card-title">Choose a new password</p>
+            <p class="auth-card-desc">Pick a password with at least 10 characters.</p>
             <input type="hidden" id="acct-reset-token" value="">
             <div class="auth-field">
               <label for="acct-reset-password">New password</label>
@@ -1122,7 +1123,7 @@
 
           <div id="acct-code-panel" class="auth-card" style="display:none;">
             <p class="auth-card-title">Enter code</p>
-            <p class="auth-card-desc">Sent to <span id="acct-email-hint"></span>. Or open the link in that email.</p>
+            <p class="auth-card-desc">Sent to <span id="acct-email-hint"></span>. You can also open the link in that email.</p>
             <input type="hidden" id="acct-code-email" value="">
             <div class="auth-field">
               <label for="acct-code">Code</label>
@@ -1130,29 +1131,40 @@
             </div>
             <div class="auth-actions">
               <button type="button" class="auth-primary" onclick="acctVerify()">Verify and continue</button>
+              <button type="button" class="secondary-btn" onclick="acctMode('password')">Back</button>
             </div>
           </div>
         </div>
 
-        <div id="acct-signed-in" class="auth-stack auth-stack--centered" style="display:none;">
+        <div id="acct-signed-in" class="acct-workspace" style="display:none;">
           <div class="auth-card">
-            <p class="auth-card-title">Signed in</p>
-            <p class="auth-card-desc"><span id="acct-user-email"></span></p>
-            <p class="auth-card-meta" id="acct-user-plan"></p>
-            <p class="auth-card-meta" id="acct-usage-line"></p>
+            <p class="auth-card-title">Profile</p>
+            <p class="auth-card-desc" id="acct-user-email"></p>
+            <div class="acct-stat-grid">
+              <p class="acct-stat">
+                <span class="acct-stat-label">Plan</span>
+                <span class="acct-stat-value" id="acct-user-plan"></span>
+              </p>
+              <p class="acct-stat">
+                <span class="acct-stat-label">Usage</span>
+                <span class="acct-stat-value" id="acct-usage-line"></span>
+              </p>
+            </div>
             <div class="auth-actions auth-actions-wrap">
               <button type="button" class="auth-primary" onclick="acctOpenBilling()">Manage billing</button>
-              <button type="button" class="secondary-btn" onclick="quotaGoPricing()">View pricing</button>
-              <button type="button" class="secondary-btn" onclick="acctGoApi()">Open API</button>
+              <button type="button" class="secondary-btn" onclick="quotaGoPricing()">Pricing</button>
+              <button type="button" class="secondary-btn" onclick="acctGoApi()">API keys</button>
               <button type="button" class="secondary-btn" onclick="acctSignOut()">Sign out</button>
             </div>
-            <p class="auth-card-desc" style="margin-top:12px;">Manage billing opens Stripe’s portal to update payment method, download invoices, or cancel your subscription.</p>
+            <p class="auth-card-desc" style="margin:14px 0 0;">Billing opens Stripe to update payment method, download invoices, or cancel.</p>
           </div>
 
-          <div id="acct-verify-panel" class="auth-card" style="display:none;margin-top:16px;">
+          <div id="acct-verify-panel" class="auth-card" style="display:none;">
             <p class="auth-card-title">Verify email</p>
             <p class="auth-card-desc">Confirm your address before creating API keys.</p>
-            <button type="button" class="auth-primary" onclick="acctResendVerify()">Resend verification email</button>
+            <div class="auth-actions">
+              <button type="button" class="auth-primary" onclick="acctResendVerify()">Resend verification email</button>
+            </div>
           </div>
         </div>
       </section>

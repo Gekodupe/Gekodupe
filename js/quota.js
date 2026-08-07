@@ -246,6 +246,11 @@
     return true;
   }
 
+  function planLabel(plan) {
+    var map = { free: 'Basic', starter: 'Starter', pro: 'Pro', business: 'Business', guest: 'Guest' };
+    return map[plan] || (plan ? plan.charAt(0).toUpperCase() + plan.slice(1) : 'Guest');
+  }
+
   function quotaRenderBanners() {
     document.querySelectorAll('[data-quota-banner]').forEach(function (el) {
       var tool = el.getAttribute('data-quota-banner');
@@ -258,7 +263,7 @@
         if (tool === 'media') label = 'Guest · up to ' + lim.mediaMaxFiles + ' files';
         if (tool === 'spam') label = 'Guest · ' + lim.spamMaxLines.toLocaleString() + ' lines · ' + usage.spam + '/' + lim.spamRunsPerDay + ' runs today';
       } else {
-        label = (state.plan.charAt(0).toUpperCase() + state.plan.slice(1)) + ' plan · local tools unlocked';
+        label = planLabel(state.plan) + ' · local tools unlocked';
       }
       var textEl = el.querySelector('[data-quota-label]');
       if (textEl) textEl.textContent = label;

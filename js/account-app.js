@@ -99,22 +99,27 @@ function acctRenderSignedIn(account) {
   if (planEl) {
     var plan = (account && account.planName) || (account && account.plan) || 'Basic';
     var status = (account && account.planStatus) || 'active';
-    var line = plan + ' · ' + status.replace(/_/g, ' ');
+    var line = plan;
+    if (status && status !== 'active') line += ' · ' + status.replace(/_/g, ' ');
     if (account && account.emailVerified === false) line += ' · email not verified';
     planEl.textContent = line;
   }
 
   var usageEl = document.getElementById('acct-usage-line');
-  if (usageEl && account && account.usage) {
-    usageEl.textContent =
-      (account.usage.apiUsedToday || 0).toLocaleString() +
-      ' / ' +
-      (account.usage.apiLimit || 0).toLocaleString() +
-      ' API requests today · ' +
-      (account.usage.keys || 0) +
-      ' / ' +
-      (account.usage.maxKeys || 0) +
-      ' keys';
+  if (usageEl) {
+    if (account && account.usage) {
+      usageEl.textContent =
+        (account.usage.apiUsedToday || 0).toLocaleString() +
+        ' / ' +
+        (account.usage.apiLimit || 0).toLocaleString() +
+        ' API today · ' +
+        (account.usage.keys || 0) +
+        '/' +
+        (account.usage.maxKeys || 0) +
+        ' keys';
+    } else {
+      usageEl.textContent = '—';
+    }
   }
 
   var verifyPanel = document.getElementById('acct-verify-panel');

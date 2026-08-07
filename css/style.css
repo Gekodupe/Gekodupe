@@ -1597,10 +1597,10 @@ tr:nth-child(even) td { background: var(--surface); color: #fff !important; }
 /* Quotas & pricing */
 .quota-banner {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   align-items: center;
   justify-content: space-between;
-  gap: 10px 16px;
+  gap: 12px;
   margin: 0 0 16px;
   padding: 10px 14px;
   border: 1px solid rgba(255, 255, 255, 0.12);
@@ -1609,15 +1609,22 @@ tr:nth-child(even) td { background: var(--surface); color: #fff !important; }
   font-size: 13px;
 }
 
-.quota-banner [data-quota-label],
-.quota-banner span {
+.quota-banner [data-quota-label] {
   color: #ffffff !important;
+  flex: 1 1 auto;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .quota-banner-actions {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
+  display: inline-flex;
+  flex-wrap: nowrap;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 12px;
+  white-space: nowrap;
 }
 
 .quota-link-btn {
@@ -1626,9 +1633,12 @@ tr:nth-child(even) td { background: var(--surface); color: #fff !important; }
   color: #f7831e !important;
   padding: 0;
   font: inherit;
+  font-size: 13px;
+  line-height: 1.2;
   cursor: pointer;
   text-decoration: underline;
   text-underline-offset: 3px;
+  white-space: nowrap;
 }
 
 .quota-gate {
@@ -1643,6 +1653,10 @@ tr:nth-child(even) td { background: var(--surface); color: #fff !important; }
   margin: 0 0 12px;
   color: #ffffff !important;
   font-size: 14px;
+}
+
+.quota-gate .quota-banner-actions {
+  flex-wrap: wrap;
 }
 
 /* Shared panels used by tools / API */
@@ -1677,54 +1691,45 @@ tr:nth-child(even) td { background: var(--surface); color: #fff !important; }
   border-radius: 0;
 }
 
-/* Auth forms */
+/* Account / auth — match API & Pricing light panels */
+.acct-workspace {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  max-width: 520px;
+}
+
 .auth-stack {
-  max-width: 440px;
-}
-
-.auth-stack--centered {
-  margin-left: auto;
-  margin-right: auto;
-}
-
-#s-9 .tool-intro {
-  text-align: center;
-  max-width: 440px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-#s-9 > h1 {
-  text-align: center;
+  max-width: 520px;
 }
 
 .auth-card {
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  background: #1a1a1a;
-  padding: 22px 20px 20px;
-  max-width: 440px;
+  border: 1px solid var(--border);
+  background: #fafafa;
+  padding: 18px 16px 16px;
+  max-width: 520px;
   width: 100%;
-  color: #f5f5f5;
+  color: #1a1a1a;
 }
 
 .auth-card-title {
   margin: 0 0 6px;
-  font-size: 18px;
-  font-weight: 400;
-  color: #ffffff;
+  font-size: 14px;
+  font-weight: 500;
+  color: #1a1a1a;
 }
 
 .auth-card-desc {
-  margin: 0 0 18px;
+  margin: 0 0 16px;
   font-size: 13px;
-  color: rgba(255, 255, 255, 0.65);
+  color: #484848;
   line-height: 1.5;
 }
 
 .auth-card-meta {
   margin: 0 0 8px;
   font-size: 13px;
-  color: rgba(255, 255, 255, 0.55);
+  color: #6b7280;
 }
 
 .auth-field {
@@ -1735,27 +1740,27 @@ tr:nth-child(even) td { background: var(--surface); color: #fff !important; }
   display: block;
   margin-bottom: 6px;
   font-size: 13px;
-  color: rgba(255, 255, 255, 0.85);
+  color: #484848;
 }
 
 .auth-input {
   display: block;
   width: 100%;
-  padding: 11px 12px;
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  background: #111111;
-  color: #ffffff;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  background: #fff;
+  color: #1a1a1a;
   font: inherit;
   font-size: 14px;
   border-radius: 0;
 }
 
 .auth-input::placeholder {
-  color: rgba(255, 255, 255, 0.35);
+  color: #9ca3af;
 }
 
 .auth-input:focus {
-  outline: 2px solid rgba(247, 131, 30, 0.45);
+  outline: 2px solid rgba(247, 131, 30, 0.35);
   outline-offset: 1px;
   border-color: #f7831e;
 }
@@ -1772,7 +1777,7 @@ tr:nth-child(even) td { background: var(--surface); color: #fff !important; }
   gap: 8px;
   margin: 4px 0 16px;
   font-size: 13px;
-  color: rgba(255, 255, 255, 0.65);
+  color: #484848;
 }
 
 .auth-actions {
@@ -1787,25 +1792,25 @@ tr:nth-child(even) td { background: var(--surface); color: #fff !important; }
 }
 
 .auth-primary {
-  background: #f7831e !important;
+  background: #1a1a1a !important;
   color: #fff !important;
-  border: 1px solid #f7831e !important;
+  border: 1px solid #1a1a1a !important;
 }
 
 .auth-primary:hover {
-  background: #d96c10 !important;
-  border-color: #d96c10 !important;
+  background: #f7831e !important;
+  border-color: #f7831e !important;
 }
 
 .auth-card .secondary-btn {
-  background: transparent !important;
-  color: #fff !important;
-  border: 1px solid rgba(255, 255, 255, 0.28) !important;
+  background: #fff !important;
+  color: #1a1a1a !important;
+  border: 1px solid var(--border) !important;
 }
 
 .auth-card .secondary-btn:hover {
-  border-color: #f7831e !important;
-  color: #fff !important;
+  border-color: #1a1a1a !important;
+  color: #1a1a1a !important;
 }
 
 .auth-links {
@@ -1814,7 +1819,7 @@ tr:nth-child(even) td { background: var(--surface); color: #fff !important; }
   gap: 12px 16px;
   margin-top: 16px;
   padding-top: 14px;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: 1px solid var(--border);
 }
 
 .auth-text-btn {
@@ -1827,6 +1832,39 @@ tr:nth-child(even) td { background: var(--surface); color: #fff !important; }
   cursor: pointer;
   text-decoration: underline;
   text-underline-offset: 3px;
+}
+
+.acct-stat-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px 16px;
+  margin: 4px 0 14px;
+}
+
+.acct-stat {
+  margin: 0;
+}
+
+.acct-stat-label {
+  display: block;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #6b7280;
+  margin-bottom: 2px;
+}
+
+.acct-stat-value {
+  font-size: 14px;
+  color: #1a1a1a;
+}
+
+#acct-status-text {
+  display: block;
+  margin: 0 0 12px;
+  min-height: 1.2em;
+  font-size: 13px;
+  color: #6b7280;
 }
 
 .pricing-toolbar {
@@ -2136,19 +2174,12 @@ section.docs-panel.current {
     height: calc(100vh - var(--nav-h) - 8px);
   }
   .auth-stack,
-  .auth-card {
+  .auth-card,
+  .acct-workspace {
     max-width: none;
   }
-  #s-9 .tool-intro,
-  #s-9 > h1 {
-    text-align: left;
-    max-width: none;
-    margin-left: 0;
-    margin-right: 0;
-  }
-  .auth-stack--centered {
-    margin-left: 0;
-    margin-right: 0;
+  .acct-stat-grid {
+    grid-template-columns: 1fr;
   }
 }
 
