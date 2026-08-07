@@ -1,6 +1,6 @@
 {
   "name": "@flareform/geckodupe",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Geckodupe by Flareform - heuristic deduplication and anti-spam engine for text, files, folders, and media. 100% browser-based.",
   "homepage": "https://gekodupe.github.io/Gekodupe/",
   "private": false,
