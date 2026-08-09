@@ -8,6 +8,8 @@ Geckodupe normalizes messy input so it becomes comparable, then deduplicates, de
 https://geckodupe-spam.nic-58f.workers.dev
 ```
 
+API Worker source: [Gekodupe/GeckodupeAPI](https://github.com/Gekodupe/GeckodupeAPI).
+
 ## Install
 
 ```bash

@@ -49,8 +49,8 @@
     "build": "node scripts/build.js",
     "site-meta": "node scripts/site-meta.js",
     "serve": "node scripts/serve.js",
-    "worker:dev": "npm --prefix worker run dev",
-    "worker:deploy": "npm --prefix worker run deploy",
+    "worker:dev": "npm --prefix ../../GeckodupeAPI run dev",
+    "worker:deploy": "npm --prefix ../../GeckodupeAPI run deploy",
     "sdk:build": "npm --prefix sdk run build",
     "sdk:test": "npm --prefix sdk test",
     "sdk:publish": "npm --prefix sdk publish --access public"

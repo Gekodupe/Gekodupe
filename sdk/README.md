@@ -14,6 +14,8 @@ You only need a **Geckodupe API key**. You do not need Cloudflare, Workers, or K
 https://geckodupe-spam.nic-58f.workers.dev
 ```
 
+Worker source: [Gekodupe/GeckodupeAPI](https://github.com/Gekodupe/GeckodupeAPI).
+
 ## What it solves
 
 | Problem | How |

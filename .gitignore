@@ -31,7 +31,4 @@ playwright/.cache/
 coverage/
 lighthouse-report.json
 
-# Worker
-worker/node_modules/
-worker/.wrangler/
-worker/dist/
+# API Worker lives in ../../GeckodupeAPI (Gekodupe/GeckodupeAPI)
